@@ -1,7 +1,7 @@
 const CACHE_NAME = 'j-nav-v1';
 const ASSETS = [
-  './',
-  'index.html',  // 确保仓库里文件名确实是这个
+  './',          // 更加稳妥的首页指向
+  'index.html',
   'style.css',
   'script.js',
   'data.js',
@@ -9,9 +9,16 @@ const ASSETS = [
 ];
 
 self.addEventListener('install', (e) => {
+  // 强制跳过等待，让新版本立即生效
+  self.skipWaiting();
   e.waitUntil(
     caches.open(CACHE_NAME).then(cache => {
-      return cache.addAll(ASSETS).catch(err => console.log('缓存失败的项目:', err));
+      // 使用 map 尝试一个一个加载，防止其中一个 404 导致全部失败
+      return Promise.all(
+        ASSETS.map(url => {
+          return cache.add(url).catch(err => console.log('资源缓存失败:', url, err));
+        })
+      );
     })
   );
 });
