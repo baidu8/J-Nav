@@ -174,11 +174,11 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 });
 if ('serviceWorker' in navigator) {
-    window.addEventListener('load', () => {
-        // 建议去掉开头的 ./ 直接写文件名
-        // 同时 scope 建议也用相对路径 './'，它会自动对应到 /J-Nav/
-        navigator.serviceWorker.register('sw.js', { scope: './' })
-            .then(reg => console.log('SW Registered', reg.scope))
-            .catch(err => console.error('SW Failed', err));
-    });
+  navigator.serviceWorker.register('/J-Nav/sw.js', {
+    scope: '/J-Nav/'
+  }).then(() => {
+    console.log('Service Worker 注册成功');
+  }).catch(err => {
+    console.error('Service Worker 注册失败', err);
+  });
 }
