@@ -1,6 +1,6 @@
 const CACHE_NAME = 'j-nav-v2';
 const ASSETS = [
-  '',          // 更加稳妥的首页指向
+  '../',          // 更加稳妥的首页指向
   'index.html',
   'style.css',
   'script.js',
@@ -38,3 +38,4 @@ self.addEventListener('activate', (e) => {
     })
   );
 });
+
