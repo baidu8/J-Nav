@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>J-Nav</title>
+    <link rel="icon" type="image/svg+xml" href="icons/logo.svg" />
+    <link rel="apple-touch-icon" sizes="180x180" href="icons/apple-touch-icon.png" />
+    <link rel="manifest" href="icons/site.webmanifest" />
+    <link rel="shortcut icon" href="icons/favicon.ico" />
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="mobile-header">
+        <button id="menu-toggle">☰</button>
+        <div class="mobile-logo-box" id="back-to-top-mobile">
+            <img src="icons/logo.svg" alt="Logo">
+            <span>J-Nav</span>
+        </div>
+    </div>
+
+    <aside id="sidebar">
+        <div class="logo-container">
+            <img src="icons/logo.svg" class="logo-img" alt="Logo">
+            <span class="logo-text">J-Nav</span>
+        </div>
+        <nav id="nav-list"></nav>
+    </aside>
+
+    <div id="sidebar-overlay"></div>
+
+    <main id="main-content">
+        <div class="search-wrapper">
+            <div class="search-container">
+                <div class="engine-selector" id="engine-selector">
+                    <img src="icons/Google.png" id="current-engine-icon" alt="engine">
+                    <ul class="engine-list" id="engine-list">
+                        <li data-url="https://www.google.com/search?q=" data-icon="icons/Google.png">Google</li>
+                        <li data-url="https://www.bing.com/search?q=" data-icon="icons/bing.ico">必应</li>
+                        <li data-url="https://www.baidu.com/s?wd=" data-icon="icons/baidu.png">百度</li>
+                    </ul>
+                </div>
+                <input type="text" id="search-input" placeholder="输入搜索内容..." autocomplete="off">
+                <button id="search-btn">搜索</button>
+            </div>
+        </div>
+
+        <div id="nav-display"></div>
+    </main>
+
+    <div id="back-to-top-pc">▲</div>
+
+    <script src="data.js"></script>
+    <script src="script.js"></script>
+    <footer style="text-align: center; padding: 20px; color: #999; font-size: 12px;">
+    © 2024 J-Nav · <a href="你的仓库地址" target="_blank" style="color: #999;">GitHub</a>
+</footer>
+</body>
+</html>
