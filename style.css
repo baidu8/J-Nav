@@ -162,3 +162,12 @@ body.no-scroll { overflow: hidden; }
 .icon-container.no-icon { background: #4a90e2; }
 .icon-container.no-icon .letter-icon { display: block; }
 #current-engine-icon { width: 24px; height: 24px; object-fit: contain; image-rendering: -webkit-optimize-contrast; }
+#main-content {
+    min-height: 100vh; /* 确保内容不满一屏时，footer 也能沉在下面 */
+    display: flex;
+    flex-direction: column;
+}
+
+#nav-display {
+    flex: 1; /* 这会让导航内容占据剩余空间，把 footer 挤到底部 */
+}
