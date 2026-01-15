@@ -1,42 +1,59 @@
-const CACHE_NAME = 'j-nav-v2';
+const CACHE_NAME = 'j-nav-v3';
+const BASE_PATH = '/J-Nav/';
+
 const ASSETS = [
-  '',          // 更加稳妥的首页指向
-  'index.html',
-  'style.css',
-  'script.js',
-  'data.js',
-  'icons/logo.svg'
+  BASE_PATH,
+  BASE_PATH + 'index.html',
+  BASE_PATH + 'style.css',
+  BASE_PATH + 'script.js',
+  BASE_PATH + 'data.js',
+  BASE_PATH + 'icons/logo.svg'
 ];
 
-self.addEventListener('install', (e) => {
-  // 强制跳过等待，让新版本立即生效
+/* 安装：预缓存资源 */
+self.addEventListener('install', event => {
+  event.waitUntil(
+    caches.open(CACHE_NAME).then(cache => {
+      return cache.addAll(ASSETS);
+    })
+  );
   self.skipWaiting();
-  e.waitUntil(
-    caches.open(CACHE_NAME).键，然后(cache => {
-      // 使用 map 尝试一个一个加载，防止其中一个 404 导致全部失败
-      return Promise.全部(
-        ASSETS.map(url => {
-          return cache.add(url).catch(err => console.log('资源缓存失败:', url, err));
+});
+
+/* 激活：清理旧缓存 */
+self.addEventListener('activate', event => {
+  event.waitUntil(
+    caches.keys().then(keys => {
+      return Promise.all(
+        keys.map(key => {
+          if (key !== CACHE_NAME) return caches.delete(key);
         })
       );
     })
   );
+  self.clients.claim();
 });
 
-self.addEventListener('fetch', (e) => {
-  e.respondWith(
-    caches.match(e.request).键，然后(res => res || fetch(e.request))
-  );
-});
+/* 拦截请求：缓存优先，网络兜底 */
+self.addEventListener('fetch', event => {
+  if (event.request.method !== 'GET') return;
 
-self.addEventListener('activate', (e) => {
-  e.waitUntil(
-    caches.keys().键，然后(keys => {
-      return Promise.全部(
-        keys.filter(key => key !== CACHE_NAME).map(key => caches.delete(key))
-      );
+  event.respondWith(
+    caches.match(event.request).then(cached => {
+      if (cached) return cached;
+
+      return fetch(event.request).then(response => {
+        const copy = response.clone();
+        caches.open(CACHE_NAME).then(cache => {
+          cache.put(event.request, copy);
+        });
+        return response;
+      }).catch(() => {
+        // 离线时兜底回首页
+        if (event.request.mode === 'navigate') {
+          return caches.match(BASE_PATH + 'index.html');
+        }
+      });
     })
   );
 });
-
-
