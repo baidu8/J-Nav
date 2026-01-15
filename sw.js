@@ -1,4 +1,4 @@
-const CACHE_NAME = 'j-nav-v1';
+const CACHE_NAME = 'j-nav-v2';
 const ASSETS = [
   './',          // 更加稳妥的首页指向
   'index.html',
@@ -26,5 +26,14 @@ self.addEventListener('install', (e) => {
 self.addEventListener('fetch', (e) => {
   e.respondWith(
     caches.match(e.request).then(res => res || fetch(e.request))
+  );
+});
+self.addEventListener('activate', (e) => {
+  e.waitUntil(
+    caches.keys().then(keys => {
+      return Promise.all(
+        keys.filter(key => key !== CACHE_NAME).map(key => caches.delete(key))
+      );
+    })
   );
 });

@@ -55,4 +55,4 @@ J-Nav/
 性能：优化了图片加载逻辑，设置了 2s 异常自动处理。
 
 📄 开源协议
-本项目采用 MIT License 协议。
+本项目采用 [MIT License](https://github.com/baidu8/J-Nav/blob/main/LICENSE) 协议。
