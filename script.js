@@ -174,11 +174,9 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 });
 if ('serviceWorker' in navigator) {
-  navigator.serviceWorker.register('/J-Nav/sw.js', {
-    scope: '/J-Nav/'
-  }).then(() => {
-    console.log('Service Worker 注册成功');
-  }).catch(err => {
-    console.error('Service Worker 注册失败', err);
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('/sw.js') // 确保 sw.js 放在根目录
+      .then(reg => console.log('SW 注册成功', reg.scope))
+      .catch(err => console.error('SW 注册失败', err));
   });
 }
