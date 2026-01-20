@@ -227,6 +227,41 @@ window.bookmarkData = [
             "type": "folder",
             "children": [
               {
+                "name": "低端影视",
+                "type": "bookmark",
+                "url": "https://ddys.vip/"
+              },
+              {
+                "name": "低端影视(发布页)",
+                "type": "bookmark",
+                "url": "https://www.ddys.diy/"
+              },
+              {
+                "name": "低端影视",
+                "type": "bookmark",
+                "url": "https://www.ddys.run/"
+              },
+              {
+                "name": "云影",
+                "type": "bookmark",
+                "url": "https://www.yuny.tv/"
+              },
+              {
+                "name": "网飞猫_最新Netflix新剧_韩国电影免费在线观看",
+                "type": "bookmark",
+                "url": "https://www.ncat22.com/"
+              },
+              {
+                "name": "星空影院",
+                "type": "bookmark",
+                "url": "https://ixkw.cc/"
+              },
+              {
+                "name": "韩剧网",
+                "type": "bookmark",
+                "url": "https://www.hanju7.com/"
+              },
+              {
                 "name": "IPTV、APTV 直播源 m3u（0921 大更新） - 轩源的网络日志 - Xuanyuan's Blog",
                 "type": "bookmark",
                 "url": "https://xuanyuan.me/blog/archives/1162"
@@ -257,44 +292,39 @@ window.bookmarkData = [
                 "url": "https://www.btbdys.com/"
               },
               {
-                "name": "虾米解析-全网最稳视频解析接口",
+                "name": "虾米解析",
                 "type": "bookmark",
                 "url": "https://jx.xmflv.com/?url="
               },
               {
-                "name": "星空影院",
+                "name": "�",
                 "type": "bookmark",
-                "url": "https://ixkw.cc/"
+                "url": "https://www.8090g.cn/?url="
               },
               {
-                "name": "网飞猫_最新Netflix新剧_韩国电影免费在线观看",
+                "name": "云解析",
                 "type": "bookmark",
-                "url": "https://www.ncat22.com/"
+                "url": "https://yparse.ik9.cc/index.php?url="
               },
               {
-                "name": "韩剧网",
+                "name": "盘古",
                 "type": "bookmark",
-                "url": "https://www.hanju7.com/"
+                "url": "https://www.playm3u8.cn/jiexi.php?url="
               },
               {
-                "name": "云影",
+                "name": "m3u8",
                 "type": "bookmark",
-                "url": "https://www.yuny.tv/"
+                "url": "https://jx.m3u8.tv/jiexi/?url="
               },
               {
-                "name": "低端影视(发布页)",
+                "name": "ck",
                 "type": "bookmark",
-                "url": "https://www.ddys.diy/"
+                "url": "https://www.ckplayer.vip/jiexi/?url="
               },
               {
-                "name": "低端影视",
+                "name": "七七",
                 "type": "bookmark",
-                "url": "https://www.ddys.run/"
-              },
-              {
-                "name": "低端影视",
-                "type": "bookmark",
-                "url": "https://ddys.vip/"
+                "url": "https://jx.77flv.cc/?url="
               }
             ]
           },
@@ -904,6 +934,11 @@ window.bookmarkData = [
                 "name": "在线PS",
                 "type": "bookmark",
                 "url": "https://www.tuyitu.com/ps/sources/"
+              },
+              {
+                "name": "图标转换器",
+                "type": "bookmark",
+                "url": "https://favicon.io/favicon-converter/"
               }
             ]
           },
@@ -994,6 +1029,11 @@ window.bookmarkData = [
             "name": "格式转换",
             "type": "folder",
             "children": [
+              {
+                "name": "Favicon(图标转换)",
+                "type": "bookmark",
+                "url": "https://realfavicongenerator.net/your-favicon-is-ready"
+              },
               {
                 "name": "在线免费将 TGZ 转换为 ZIP",
                 "type": "bookmark",
@@ -1088,6 +1128,11 @@ window.bookmarkData = [
                 "url": "https://www.lddgo.net/string/uuid"
               },
               {
+                "name": "UUID生成器",
+                "type": "bookmark",
+                "url": "https://uuid.bmcx.com/"
+              },
+              {
                 "name": "Favicon.ico图标生成器 ",
                 "type": "bookmark",
                 "url": "https://www.logosc.cn/logo/favicon"
@@ -1139,6 +1184,11 @@ window.bookmarkData = [
             "name": "测速",
             "type": "folder",
             "children": [
+              {
+                "name": "宽带测试",
+                "type": "bookmark",
+                "url": "https://wangsuceshi.bmcx.com/"
+              },
               {
                 "name": "17CE(网站测速)",
                 "type": "bookmark",
@@ -1706,6 +1756,11 @@ window.bookmarkData = [
             "type": "folder",
             "children": [
               {
+                "name": "和风天气",
+                "type": "bookmark",
+                "url": "https://dev.qweather.com/"
+              },
+              {
                 "name": "Thum.io(获取网站截图)",
                 "type": "bookmark",
                 "url": "https://www.thum.io/"
@@ -1978,6 +2033,38 @@ window.bookmarkData = [
         ]
       },
       {
+        "name": "🔔资源分享",
+        "type": "folder",
+        "children": [
+          {
+            "name": "mv合集",
+            "type": "bookmark",
+            "url": "https://www.aliyundrive.com/s/jsNeewKA9yM"
+          },
+          {
+            "name": "阿里云盘资源分享",
+            "type": "bookmark",
+            "url": "https://docs.qq.com/sheet/DUllHUnhoanpCZlRD?tab=BB08J2&_t=1676717052164"
+          },
+          {
+            "name": "学习资料(密码ksx8)",
+            "type": "bookmark",
+            "url": "https://cloud.189.cn/web/share?code=jmA7rmRVFr22"
+          }
+        ]
+      },
+      {
+        "name": "教程文档",
+        "type": "folder",
+        "children": [
+          {
+            "name": "IDM 6.42.58 绿色安装版 - 下载工具 - OSSSR.COM",
+            "type": "bookmark",
+            "url": "https://www.osssr.com/657.html"
+          }
+        ]
+      },
+      {
         "name": "🅱️大厂生态",
         "type": "folder",
         "children": [
@@ -2216,6 +2303,62 @@ window.bookmarkData = [
                 "url": "https://github.com/ansoncloud8"
               }
             ]
+          }
+        ]
+      },
+      {
+        "name": "🤖AI机器人",
+        "type": "folder",
+        "children": [
+          {
+            "name": "豆包",
+            "type": "bookmark",
+            "url": "https://www.doubao.com/chat/"
+          },
+          {
+            "name": "Copilot",
+            "type": "bookmark",
+            "url": "https://copilot.microsoft.com/?itrid=65b7b3f1546d4a308b4fb9d46bb5524b"
+          },
+          {
+            "name": "ChatGPT",
+            "type": "bookmark",
+            "url": "https://chatgpt.com/"
+          },
+          {
+            "name": "Grok",
+            "type": "bookmark",
+            "url": "https://grok.com/"
+          },
+          {
+            "name": "必应ai画图",
+            "type": "bookmark",
+            "url": "https://cn.bing.com/create"
+          },
+          {
+            "name": "海艺",
+            "type": "bookmark",
+            "url": "https://seaart.ai/home"
+          },
+          {
+            "name": "幻彩画笔",
+            "type": "bookmark",
+            "url": "https://visionarybrush.com/"
+          },
+          {
+            "name": "DeepAI(画图+聊天)",
+            "type": "bookmark",
+            "url": "https://deepai.org/"
+          },
+          {
+            "name": "Walles.AI",
+            "type": "bookmark",
+            "url": "https://walles.ai/chat"
+          },
+          {
+            "name": "即梦AI - 一站式AI创作平台",
+            "type": "bookmark",
+            "url": "https://jimeng.jianying.com/ai-tool/home"
           }
         ]
       }
