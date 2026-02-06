@@ -84,7 +84,7 @@ body.no-scroll { overflow: hidden; }
 .sub-menu {
     display: grid;
     grid-template-rows: 0fr; /* 默认闭合状态，高度占比为 0 */
-    transition: grid-template-rows 0.3s ease-out; /* 针对网格行做动画 */
+    transition: grid-template-rows 0.5s ease-out; /* 针对网格行做动画 */
     overflow: hidden;
 }
 
@@ -217,15 +217,6 @@ body.no-scroll { overflow: hidden; }
 }
 #back-to-top-pc:hover { transform: scale(1.1); background: #f0f0f0; }
 
-#update-toast {
-    position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%);
-    background: #333; color: #fff; padding: 10px 20px; border-radius: 30px;
-    display: flex; align-items: center; gap: 15px; font-size: 14px;
-    z-index: 10001; transition: all 0.4s cubic-bezier(0.18, 0.89, 0.32, 1.28);
-    box-shadow: 0 5px 20px rgba(0,0,0,0.2);
-}
-.toast-hidden { bottom: -100px !important; opacity: 0; }
-#update-toast button { background: var(--primary-color); border: none; color: #fff; padding: 4px 12px; border-radius: 15px; cursor: pointer; }
 
 /* 9. 响应式布局 */
 @media (max-width: 768px) {
@@ -250,46 +241,48 @@ body.no-scroll { overflow: hidden; }
     .grid { grid-template-columns: 1fr 1fr !important; gap: 10px; }
     .search-wrapper { margin-bottom: 30px; }
 }
-
 @keyframes fadeIn { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: translateY(0); } }
 
-/* 1. 气泡容器基础：胶囊造型 */
+/* --- 更新提示气泡 (Toast) --- */
 #update-toast {
+    /* 1. 定位与层级 */
     position: fixed;
-    bottom: 30px; /* 悬浮在底部 */
+    bottom: 30px;
     left: 50%;
-    transform: translateX(-50%); /* 水平居中 */
-    background: rgba(40, 40, 40, 0.95); /* 深色半透明，显高级 */
-    backdrop-filter: blur(8px); /* 毛玻璃效果 */
-    color: white;
-    padding: 10px 20px;
-    border-radius: 50px; /* 胶囊形状 */
+    transform: translateX(-50%);
+    z-index: 10001;
+
+    /* 2. 视觉造型：胶囊、深色半透明、毛玻璃 */
     display: flex;
     align-items: center;
     gap: 15px;
+    padding: 10px 20px;
+    border-radius: 50px;
+    background: rgba(40, 40, 40, 0.95);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px); /* 兼容 Safari */
+    color: white;
     font-size: 14px;
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
-    z-index: 10001;
-    border: 1px solid rgba(255, 255, 255, 0.1);
     
-    /* 动画平滑过渡 */
-    transition: all 0.5s cubic-bezier(0.68, -0.55, 0.27, 1.55);
-}
+    /* 3. 边框与阴影 */
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
 
-/* 2. 隐藏状态：往下掉并透明 */
+    /* 4. 入场/退场动画：带点弹性的曲线 */
+    transition: all 0.5s cubic-bezier(0.18, 0.89, 0.32, 1.28);
+}
+/* 隐藏状态 */
 .toast-hidden {
-    bottom: -80px !important;
+    bottom: -100px !important;
     opacity: 0;
-    pointer-events: none;
+    pointer-events: none; /* 隐藏时不可点 */
 }
-
-/* 3. 气泡内的文字 */
+/* 气泡内的文字 */
 #update-toast span {
     letter-spacing: 0.5px;
     font-weight: 500;
 }
-
-/* 4. 刷新按钮美化 */
+/* 刷新按钮 */
 #update-toast button {
     background: var(--primary-color, #4285f4);
     color: white;
@@ -301,15 +294,15 @@ body.no-scroll { overflow: hidden; }
     font-weight: 600;
     transition: transform 0.2s, background 0.2s;
 }
-
+/* 按钮交互效果 */
 #update-toast button:hover {
-    background: #357abd;
     transform: scale(1.05);
+    filter: brightness(1.1);
 }
-
 #update-toast button:active {
     transform: scale(0.95);
 }
+
 /* 确保搜索框内的引擎图标不会暴力撑大容器 */
 #current-engine-icon {
     width: 24px;
