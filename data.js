@@ -4,6 +4,482 @@ window.bookmarkData = [
     "type": "folder",
     "children": [
       {
+        "name": "🎬视听阅读",
+        "type": "folder",
+        "children": [
+          {
+            "name": "▶️观看",
+            "type": "folder",
+            "children": [
+              {
+                "name": "低端影视",
+                "type": "bookmark",
+                "url": "https://ddys.vip/"
+              },
+              {
+                "name": "低端影视(发布页)",
+                "type": "bookmark",
+                "url": "https://www.ddys.diy/"
+              },
+              {
+                "name": "低端影视",
+                "type": "bookmark",
+                "url": "https://www.ddys.run/"
+              },
+              {
+                "name": "云影",
+                "type": "bookmark",
+                "url": "https://www.yuny.tv/"
+              },
+              {
+                "name": "网飞猫_最新Netflix新剧_韩国电影免费在线观看",
+                "type": "bookmark",
+                "url": "https://www.ncat22.com/"
+              },
+              {
+                "name": "星空影院",
+                "type": "bookmark",
+                "url": "https://ixkw.cc/"
+              },
+              {
+                "name": "韩剧网",
+                "type": "bookmark",
+                "url": "https://www.hanju7.com/"
+              },
+              {
+                "name": "IPTV、APTV 直播源 m3u（0921 大更新） - 轩源的网络日志 - Xuanyuan's Blog",
+                "type": "bookmark",
+                "url": "https://xuanyuan.me/blog/archives/1162"
+              },
+              {
+                "name": "GitHub - joevess/IPTV： IPTV直播源抓取 自动整合hao趣网直播源+TVBox直播源+其他网上直播源 择取分辨率、速度最佳视频流 定期更新",
+                "type": "bookmark",
+                "url": "https://github.com/joevess/IPTV"
+              },
+              {
+                "name": "搜片",
+                "type": "bookmark",
+                "url": "https://soupian.app/"
+              },
+              {
+                "name": "美剧迷",
+                "type": "bookmark",
+                "url": "https://www.meijumi.net/"
+              },
+              {
+                "name": "AfreecaTV",
+                "type": "bookmark",
+                "url": "https://www.afreecatv.com/"
+              },
+              {
+                "name": "哔嘀影视",
+                "type": "bookmark",
+                "url": "https://www.btbdys.com/"
+              },
+              {
+                "name": "虾米解析",
+                "type": "bookmark",
+                "url": "https://jx.xmflv.com/?url="
+              },
+              {
+                "name": "�",
+                "type": "bookmark",
+                "url": "https://www.8090g.cn/?url="
+              },
+              {
+                "name": "云解析",
+                "type": "bookmark",
+                "url": "https://yparse.ik9.cc/index.php?url="
+              },
+              {
+                "name": "盘古",
+                "type": "bookmark",
+                "url": "https://www.playm3u8.cn/jiexi.php?url="
+              },
+              {
+                "name": "m3u8",
+                "type": "bookmark",
+                "url": "https://jx.m3u8.tv/jiexi/?url="
+              },
+              {
+                "name": "ck",
+                "type": "bookmark",
+                "url": "https://www.ckplayer.vip/jiexi/?url="
+              },
+              {
+                "name": "七七",
+                "type": "bookmark",
+                "url": "https://jx.77flv.cc/?url="
+              },
+              {
+                "name": "AcFun弹幕视频网",
+                "type": "bookmark",
+                "url": "https://www.acfun.cn/"
+              },
+              {
+                "name": "SOOP",
+                "type": "bookmark",
+                "url": "https://www.sooplive.co.kr/"
+              },
+              {
+                "name": "视图影视",
+                "type": "bookmark",
+                "url": "https://6shitu.com/"
+              },
+              {
+                "name": "爱影剧网",
+                "type": "bookmark",
+                "url": "https://www.2yjw.com/"
+              }
+            ]
+          },
+          {
+            "name": "📚看书",
+            "type": "folder",
+            "children": [
+              {
+                "name": "麒麟书城",
+                "type": "bookmark",
+                "url": "http://www.qlsc7.com/"
+              },
+              {
+                "name": "Z-Library – 镜像站",
+                "type": "bookmark",
+                "url": "https://zh.chl101.ru/"
+              },
+              {
+                "name": "Z-Library – （应该是官网）",
+                "type": "bookmark",
+                "url": "https://zh.z-library.ec/"
+              },
+              {
+                "name": "TXT小说下载网手机版-小说下载|TXT电子书下载|手机小说下载|免费小说下载",
+                "type": "bookmark",
+                "url": "https://wap.xiaxs.la/"
+              },
+              {
+                "name": "盘文网-小说阅读网-言情总裁-都市穿越-仙侠武侠-应有尽有 _盘文小说网",
+                "type": "bookmark",
+                "url": "https://m.panwenxs.com/"
+              },
+              {
+                "name": "3K电子书",
+                "type": "bookmark",
+                "url": "http://www.3ktxt.com/"
+              },
+              {
+                "name": "兰文网-最新章节-全文阅读-小说免费阅读",
+                "type": "bookmark",
+                "url": "https://m.lanwen.org/"
+              },
+              {
+                "name": "Z-Library(官网，有墙）",
+                "type": "bookmark",
+                "url": "https://zh.z-lib.gd/"
+              },
+              {
+                "name": "盘文网-小说阅读网",
+                "type": "bookmark",
+                "url": "https://panwenxs.com/"
+              }
+            ]
+          },
+          {
+            "name": "🎵音乐",
+            "type": "folder",
+            "children": [
+              {
+                "name": "音乐客",
+                "type": "bookmark",
+                "url": "https://www.yinyueke.net/"
+              },
+              {
+                "name": "Spotify",
+                "type": "bookmark",
+                "url": "https://www.spotify.com/sg-zh/account/overview/"
+              },
+              {
+                "name": "MV下载王",
+                "type": "bookmark",
+                "url": "http://mvxz.com/?home"
+              }
+            ]
+          },
+          {
+            "name": "🧩图片",
+            "type": "folder",
+            "children": [
+              {
+                "name": "wallhaven.cc",
+                "type": "bookmark",
+                "url": "https://wallhaven.cc/"
+              },
+              {
+                "name": "CGWallpapers.com",
+                "type": "bookmark",
+                "url": "https://www.cgwallpapers.com/"
+              },
+              {
+                "name": "爱死美女图片站",
+                "type": "bookmark",
+                "url": "https://www.24tupian.org/"
+              },
+              {
+                "name": "必应壁纸 | Bing Wallpaper",
+                "type": "bookmark",
+                "url": "https://bing.wdbyte.com/zh-cn/"
+              },
+              {
+                "name": "「哲风壁纸」",
+                "type": "bookmark",
+                "url": "https://haowallpaper.com/"
+              },
+              {
+                "name": "彼岸壁纸",
+                "type": "bookmark",
+                "url": "http://www.netbian.com/"
+              }
+            ]
+          },
+          {
+            "name": "▶️字幕",
+            "type": "folder",
+            "children": [
+              {
+                "name": "射手网-字幕",
+                "type": "bookmark",
+                "url": "http://assrt.net/"
+              },
+              {
+                "name": "字幕库-字幕",
+                "type": "bookmark",
+                "url": "http://zmk.pw/"
+              },
+              {
+                "name": "字幕Sub",
+                "type": "bookmark",
+                "url": "https://subhd.tv/"
+              },
+              {
+                "name": "字幕库",
+                "type": "bookmark",
+                "url": "https://srtku.com/"
+              },
+              {
+                "name": "SubHD字幕",
+                "type": "bookmark",
+                "url": "https://subhdtw.com/"
+              }
+            ]
+          },
+          {
+            "name": "▶️直播",
+            "type": "folder",
+            "children": [
+              {
+                "name": "YY",
+                "type": "bookmark",
+                "url": "https://www.yy.com/"
+              },
+              {
+                "name": "AfreecaTV",
+                "type": "bookmark",
+                "url": "https://www.afreecatv.com/"
+              }
+            ]
+          },
+          {
+            "name": "▶️下载",
+            "type": "folder",
+            "children": [
+              {
+                "name": "Grab4K(需要vip)",
+                "type": "bookmark",
+                "url": "https://www.grab4k.com/"
+              },
+              {
+                "name": "音范丝 ",
+                "type": "bookmark",
+                "url": "https://www.yinfans.net/"
+              },
+              {
+                "name": "银河发烧碟屋(登录)",
+                "type": "bookmark",
+                "url": "https://www.yinhebd.com/"
+              },
+              {
+                "name": "磁力熊",
+                "type": "bookmark",
+                "url": "https://www.cilixiong.cc/"
+              }
+            ]
+          },
+          {
+            "name": "🎮游戏",
+            "type": "folder",
+            "children": [
+              {
+                "name": "在线国际象棋",
+                "type": "bookmark",
+                "url": "https://lichess.org/zh"
+              },
+              {
+                "name": "爱玩Coc",
+                "type": "bookmark",
+                "url": "http://aiwan.yicp.fun:88/"
+              },
+              {
+                "name": "Supercell",
+                "type": "bookmark",
+                "url": "https://supercell.com/en/"
+              },
+              {
+                "name": "部落冲突指导",
+                "type": "bookmark",
+                "url": "https://www.cocservice.top/update/0487-Pet-House"
+              },
+              {
+                "name": "部落冲突升级数据 - 部落冲突指导",
+                "type": "bookmark",
+                "url": "https://www.cocservice.top/update"
+              },
+              {
+                "name": "爱玩Coc免费辅助脚本-部落冲突辅助脚本-爱玩辅助官网",
+                "type": "bookmark",
+                "url": "http://aiwan.zicp.fun:88/"
+              },
+              {
+                "name": "在浏览器中玩游戏 | Microsoft Start 中的游戏",
+                "type": "bookmark",
+                "url": "https://www.msn.cn/zh-cn/play/card"
+              },
+              {
+                "name": "小霸王",
+                "type": "bookmark",
+                "url": "https://www.yikm.net/"
+              },
+              {
+                "name": "免费在线游戏 - 玩最好玩的免费游戏 就在 Poki",
+                "type": "bookmark",
+                "url": "https://poki.cn/"
+              },
+              {
+                "name": "TETR.IO",
+                "type": "bookmark",
+                "url": "https://tetr.io/"
+              },
+              {
+                "name": "《三国志・战略版》游戏官网",
+                "type": "bookmark",
+                "url": "https://sgzzlb.lingxigames.com/website/m/"
+              },
+              {
+                "name": "超级玛丽音效下载_超级玛丽音效大全_站长素材",
+                "type": "bookmark",
+                "url": "https://m.sc.chinaz.com/tag_yinxiao/chaojimali.html"
+              },
+              {
+                "name": "小鸡模拟器",
+                "type": "bookmark",
+                "url": "https://www.xiaoji001.com/download.html"
+              },
+              {
+                "name": "微软小游戏",
+                "type": "bookmark",
+                "url": "https://go.microsoft.com/fwlink/?linkid=2189761&gamepath=msjewelnew&msstart_sdk_init=eyJwYXJlbnRPcmlnaW4iOiJodHRwczovL3d3dy5tc24uY24iLCJjbGllbnRJZCI6IjA3NDE0QTQ3OUU4MjYwMTYxODE4NUI5QTlGNTA2MUJGIiwibG9jYWxlIjoiemgtY24iLCJlbnRyeVBvaW50SWQiOiJjZ2h1YmwxIn0"
+              },
+              {
+                "name": "井字棋",
+                "type": "bookmark",
+                "url": "https://edui123.com/jingziqi/"
+              },
+              {
+                "name": "贪吃蛇",
+                "type": "bookmark",
+                "url": "https://playsnake.org/"
+              },
+              {
+                "name": "FC 游戏在线玩",
+                "type": "bookmark",
+                "url": "https://lab.ur1.fun/FCGames/#/"
+              },
+              {
+                "name": "魔方还原",
+                "type": "bookmark",
+                "url": "https://edui123.com/cube/"
+              },
+              {
+                "name": "部落冲突升级数据 | 部落驿站",
+                "type": "bookmark",
+                "url": "https://clashpost.com/upgrade"
+              },
+              {
+                "name": "三国杀Online",
+                "type": "bookmark",
+                "url": "https://sanguosha.com/"
+              }
+            ]
+          },
+          {
+            "name": "🎭素材",
+            "type": "folder",
+            "children": [
+              {
+                "name": "免费素材图片",
+                "type": "bookmark",
+                "url": "https://www.pexels.com/zh-cn/"
+              },
+              {
+                "name": "Mixkit (免费素材)",
+                "type": "bookmark",
+                "url": "https://mixkit.co/"
+              },
+              {
+                "name": "picjumb(免费可商用)",
+                "type": "bookmark",
+                "url": "https://picjumbo.com/"
+              },
+              {
+                "name": "SplitShire(免费可商用)",
+                "type": "bookmark",
+                "url": "https://www.splitshire.com/"
+              },
+              {
+                "name": "Pixabay(免)",
+                "type": "bookmark",
+                "url": "https://pixabay.com/"
+              },
+              {
+                "name": "StockSnap.io(免)",
+                "type": "bookmark",
+                "url": "https://stocksnap.io/"
+              },
+              {
+                "name": "免费商用字体",
+                "type": "bookmark",
+                "url": "https://www.100font.com/"
+              },
+              {
+                "name": "🎼音效",
+                "type": "folder",
+                "children": [
+                  {
+                    "name": "爱给网(音效)",
+                    "type": "bookmark",
+                    "url": "https://www.aigei.com/"
+                  },
+                  {
+                    "name": "耳聆网(音效素材)",
+                    "type": "bookmark",
+                    "url": "https://www.ear0.com/"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
         "name": "♻️能人义士",
         "type": "folder",
         "children": [
@@ -11,6 +487,11 @@ window.bookmarkData = [
             "name": "社区分享",
             "type": "folder",
             "children": [
+              {
+                "name": "远景论坛",
+                "type": "bookmark",
+                "url": "https://bbs.pcbeta.com/"
+              },
               {
                 "name": "1ove论坛",
                 "type": "bookmark",
@@ -169,6 +650,16 @@ window.bookmarkData = [
                 "url": "https://mkblog.cn/"
               },
               {
+                "name": "孟坤 Web 实验室",
+                "type": "bookmark",
+                "url": "https://lab.ur1.fun/"
+              },
+              {
+                "name": "友人C",
+                "type": "bookmark",
+                "url": "https://www.ihewro.com/"
+              },
+              {
                 "name": "CF workers blog",
                 "type": "bookmark",
                 "url": "https://blog.gezhong.vip/"
@@ -199,376 +690,11 @@ window.bookmarkData = [
                 "url": "https://akilar.top/"
               }
             ]
-          },
-          {
-            "name": "乱七八糟",
-            "type": "folder",
-            "children": [
-              {
-                "name": "随机无用网址",
-                "type": "bookmark",
-                "url": "https://theuselessweb.com/"
-              },
-              {
-                "name": "绝命毒师老白捐赠网址",
-                "type": "bookmark",
-                "url": "http://www.savewalterwhite.com/"
-              }
-            ]
           }
         ]
       },
       {
-        "name": "🎬视听阅读",
-        "type": "folder",
-        "children": [
-          {
-            "name": "▶️观看",
-            "type": "folder",
-            "children": [
-              {
-                "name": "低端影视",
-                "type": "bookmark",
-                "url": "https://ddys.vip/"
-              },
-              {
-                "name": "低端影视(发布页)",
-                "type": "bookmark",
-                "url": "https://www.ddys.diy/"
-              },
-              {
-                "name": "低端影视",
-                "type": "bookmark",
-                "url": "https://www.ddys.run/"
-              },
-              {
-                "name": "云影",
-                "type": "bookmark",
-                "url": "https://www.yuny.tv/"
-              },
-              {
-                "name": "网飞猫_最新Netflix新剧_韩国电影免费在线观看",
-                "type": "bookmark",
-                "url": "https://www.ncat22.com/"
-              },
-              {
-                "name": "星空影院",
-                "type": "bookmark",
-                "url": "https://ixkw.cc/"
-              },
-              {
-                "name": "韩剧网",
-                "type": "bookmark",
-                "url": "https://www.hanju7.com/"
-              },
-              {
-                "name": "IPTV、APTV 直播源 m3u（0921 大更新） - 轩源的网络日志 - Xuanyuan's Blog",
-                "type": "bookmark",
-                "url": "https://xuanyuan.me/blog/archives/1162"
-              },
-              {
-                "name": "GitHub - joevess/IPTV： IPTV直播源抓取 自动整合hao趣网直播源+TVBox直播源+其他网上直播源 择取分辨率、速度最佳视频流 定期更新",
-                "type": "bookmark",
-                "url": "https://github.com/joevess/IPTV"
-              },
-              {
-                "name": "搜片",
-                "type": "bookmark",
-                "url": "https://soupian.app/"
-              },
-              {
-                "name": "美剧迷",
-                "type": "bookmark",
-                "url": "https://www.meijumi.net/"
-              },
-              {
-                "name": "AfreecaTV",
-                "type": "bookmark",
-                "url": "https://www.afreecatv.com/"
-              },
-              {
-                "name": "哔嘀影视",
-                "type": "bookmark",
-                "url": "https://www.btbdys.com/"
-              },
-              {
-                "name": "虾米解析",
-                "type": "bookmark",
-                "url": "https://jx.xmflv.com/?url="
-              },
-              {
-                "name": "�",
-                "type": "bookmark",
-                "url": "https://www.8090g.cn/?url="
-              },
-              {
-                "name": "云解析",
-                "type": "bookmark",
-                "url": "https://yparse.ik9.cc/index.php?url="
-              },
-              {
-                "name": "盘古",
-                "type": "bookmark",
-                "url": "https://www.playm3u8.cn/jiexi.php?url="
-              },
-              {
-                "name": "m3u8",
-                "type": "bookmark",
-                "url": "https://jx.m3u8.tv/jiexi/?url="
-              },
-              {
-                "name": "ck",
-                "type": "bookmark",
-                "url": "https://www.ckplayer.vip/jiexi/?url="
-              },
-              {
-                "name": "七七",
-                "type": "bookmark",
-                "url": "https://jx.77flv.cc/?url="
-              }
-            ]
-          },
-          {
-            "name": "📕看书",
-            "type": "folder",
-            "children": [
-              {
-                "name": "麒麟书城",
-                "type": "bookmark",
-                "url": "http://www.qlsc7.com/"
-              },
-              {
-                "name": "Z-Library – 镜像站",
-                "type": "bookmark",
-                "url": "https://zh.chl101.ru/"
-              },
-              {
-                "name": "Z-Library – （应该是官网）",
-                "type": "bookmark",
-                "url": "https://zh.z-library.ec/"
-              },
-              {
-                "name": "TXT小说下载网手机版-小说下载|TXT电子书下载|手机小说下载|免费小说下载",
-                "type": "bookmark",
-                "url": "https://wap.xiaxs.la/"
-              },
-              {
-                "name": "盘文网-小说阅读网-言情总裁-都市穿越-仙侠武侠-应有尽有 _盘文小说网",
-                "type": "bookmark",
-                "url": "https://m.panwenxs.com/"
-              },
-              {
-                "name": "3K电子书",
-                "type": "bookmark",
-                "url": "http://www.3ktxt.com/"
-              },
-              {
-                "name": "兰文网-最新章节-全文阅读-小说免费阅读",
-                "type": "bookmark",
-                "url": "https://m.lanwen.org/"
-              },
-              {
-                "name": "Z-Library(官网，有墙）",
-                "type": "bookmark",
-                "url": "https://zh.z-lib.gd/"
-              },
-              {
-                "name": "盘文网-小说阅读网",
-                "type": "bookmark",
-                "url": "https://panwenxs.com/"
-              }
-            ]
-          },
-          {
-            "name": "🎵音乐",
-            "type": "folder",
-            "children": [
-              {
-                "name": "音乐客",
-                "type": "bookmark",
-                "url": "https://www.yinyueke.net/"
-              },
-              {
-                "name": "Spotify",
-                "type": "bookmark",
-                "url": "https://www.spotify.com/sg-zh/account/overview/"
-              }
-            ]
-          },
-          {
-            "name": "🧩图片",
-            "type": "folder",
-            "children": [
-              {
-                "name": "Awesome Wallpapers - wallhaven.cc",
-                "type": "bookmark",
-                "url": "https://wallhaven.cc/"
-              },
-              {
-                "name": "爱死美女图片站",
-                "type": "bookmark",
-                "url": "https://www.24tupian.org/"
-              },
-              {
-                "name": "必应壁纸 | Bing Wallpaper",
-                "type": "bookmark",
-                "url": "https://bing.wdbyte.com/zh-cn/"
-              },
-              {
-                "name": "「哲风壁纸」",
-                "type": "bookmark",
-                "url": "https://haowallpaper.com/"
-              },
-              {
-                "name": "彼岸壁纸",
-                "type": "bookmark",
-                "url": "http://www.netbian.com/"
-              }
-            ]
-          },
-          {
-            "name": "▶️字幕",
-            "type": "folder",
-            "children": [
-              {
-                "name": "射手网-字幕",
-                "type": "bookmark",
-                "url": "http://assrt.net/"
-              },
-              {
-                "name": "字幕库-字幕",
-                "type": "bookmark",
-                "url": "http://zmk.pw/"
-              },
-              {
-                "name": "字幕Sub",
-                "type": "bookmark",
-                "url": "https://subhd.tv/"
-              },
-              {
-                "name": "字幕库",
-                "type": "bookmark",
-                "url": "https://srtku.com/"
-              },
-              {
-                "name": "SubHD字幕",
-                "type": "bookmark",
-                "url": "https://subhdtw.com/"
-              }
-            ]
-          },
-          {
-            "name": "▶️直播",
-            "type": "folder",
-            "children": [
-              {
-                "name": "YY",
-                "type": "bookmark",
-                "url": "https://www.yy.com/"
-              },
-              {
-                "name": "AfreecaTV",
-                "type": "bookmark",
-                "url": "https://www.afreecatv.com/"
-              }
-            ]
-          },
-          {
-            "name": "▶️下载",
-            "type": "folder",
-            "children": [
-              {
-                "name": "Grab4K(需要vip)",
-                "type": "bookmark",
-                "url": "https://www.grab4k.com/"
-              },
-              {
-                "name": "音范丝 ",
-                "type": "bookmark",
-                "url": "https://www.yinfans.net/"
-              },
-              {
-                "name": "银河发烧碟屋(登录)",
-                "type": "bookmark",
-                "url": "https://www.yinhebd.com/"
-              },
-              {
-                "name": "磁力熊",
-                "type": "bookmark",
-                "url": "https://www.cilixiong.cc/"
-              }
-            ]
-          },
-          {
-            "name": "🎮游戏",
-            "type": "folder",
-            "children": [
-              {
-                "name": "爱玩Coc",
-                "type": "bookmark",
-                "url": "http://aiwan.yicp.fun:88/"
-              },
-              {
-                "name": "部落冲突指导",
-                "type": "bookmark",
-                "url": "https://www.cocservice.top/update/0487-Pet-House"
-              },
-              {
-                "name": "部落冲突升级数据 - 部落冲突指导",
-                "type": "bookmark",
-                "url": "https://www.cocservice.top/update"
-              },
-              {
-                "name": "爱玩Coc免费辅助脚本-部落冲突辅助脚本-爱玩辅助官网",
-                "type": "bookmark",
-                "url": "http://aiwan.zicp.fun:88/"
-              },
-              {
-                "name": "在浏览器中玩游戏 | Microsoft Start 中的游戏",
-                "type": "bookmark",
-                "url": "https://www.msn.cn/zh-cn/play/card"
-              },
-              {
-                "name": "小霸王",
-                "type": "bookmark",
-                "url": "https://www.yikm.net/"
-              },
-              {
-                "name": "免费在线游戏 - 玩最好玩的免费游戏 就在 Poki",
-                "type": "bookmark",
-                "url": "https://poki.cn/"
-              },
-              {
-                "name": "TETR.IO",
-                "type": "bookmark",
-                "url": "https://tetr.io/"
-              },
-              {
-                "name": "《三国志・战略版》游戏官网",
-                "type": "bookmark",
-                "url": "https://sgzzlb.lingxigames.com/website/m/"
-              },
-              {
-                "name": "超级玛丽音效下载_超级玛丽音效大全_站长素材",
-                "type": "bookmark",
-                "url": "https://m.sc.chinaz.com/tag_yinxiao/chaojimali.html"
-              },
-              {
-                "name": "小鸡模拟器",
-                "type": "bookmark",
-                "url": "https://www.xiaoji001.com/download.html"
-              },
-              {
-                "name": "微软小游戏",
-                "type": "bookmark",
-                "url": "https://go.microsoft.com/fwlink/?linkid=2189761&gamepath=msjewelnew&msstart_sdk_init=eyJwYXJlbnRPcmlnaW4iOiJodHRwczovL3d3dy5tc24uY24iLCJjbGllbnRJZCI6IjA3NDE0QTQ3OUU4MjYwMTYxODE4NUI5QTlGNTA2MUJGIiwibG9jYWxlIjoiemgtY24iLCJlbnRyeVBvaW50SWQiOiJjZ2h1YmwxIn0"
-              }
-            ]
-          }
-        ]
-      },
-      {
-        "name": "电脑相关",
+        "name": "🖥️设备相关",
         "type": "folder",
         "children": [
           {
@@ -704,6 +830,11 @@ window.bookmarkData = [
             "name": "软件官网",
             "type": "folder",
             "children": [
+              {
+                "name": "DCloud",
+                "type": "bookmark",
+                "url": "https://www.dcloud.io/"
+              },
               {
                 "name": "星愿浏览器",
                 "type": "bookmark",
@@ -907,9 +1038,46 @@ window.bookmarkData = [
         "type": "folder",
         "children": [
           {
-            "name": "UU工具",
-            "type": "bookmark",
-            "url": "https://uutool.cn/"
+            "name": "🧰工具箱",
+            "type": "folder",
+            "children": [
+              {
+                "name": "UU工具",
+                "type": "bookmark",
+                "url": "https://uutool.cn/"
+              },
+              {
+                "name": "在线工具",
+                "type": "bookmark",
+                "url": "https://tool.lu/"
+              },
+              {
+                "name": "Be JSON",
+                "type": "bookmark",
+                "url": "https://www.bejson.com/"
+              }
+            ]
+          },
+          {
+            "name": "📬临时邮箱",
+            "type": "folder",
+            "children": [
+              {
+                "name": "✉ Guerrilla Mail",
+                "type": "bookmark",
+                "url": "https://www.guerrillamail.com/"
+              },
+              {
+                "name": "临时邮箱",
+                "type": "bookmark",
+                "url": "https://www.linshi-email.com/"
+              },
+              {
+                "name": "Temp Mail",
+                "type": "bookmark",
+                "url": "https://temp-mail.org/zh/"
+              }
+            ]
           },
           {
             "name": "视图音编辑",
@@ -919,6 +1087,11 @@ window.bookmarkData = [
                 "name": "图片压缩",
                 "type": "bookmark",
                 "url": "https://tinypng.com/"
+              },
+              {
+                "name": "压缩图像",
+                "type": "bookmark",
+                "url": "https://zh.recompressor.com/"
               },
               {
                 "name": "Online（在线剪音频）",
@@ -936,9 +1109,9 @@ window.bookmarkData = [
                 "url": "https://www.tuyitu.com/ps/sources/"
               },
               {
-                "name": "图标转换器",
+                "name": "Vocal(分离音乐)",
                 "type": "bookmark",
-                "url": "https://favicon.io/favicon-converter/"
+                "url": "https://vocalremover.org/"
               }
             ]
           },
@@ -947,9 +1120,29 @@ window.bookmarkData = [
             "type": "folder",
             "children": [
               {
-                "name": "Emoji大全 | Emoji表情符号词典 📓 | EmojiAll中文官方网站",
+                "name": "emoji大全",
+                "type": "bookmark",
+                "url": "https://emojicopy.com/"
+              },
+              {
+                "name": "GetEmoj",
+                "type": "bookmark",
+                "url": "https://getemoji.com/"
+              },
+              {
+                "name": "Emoji大全",
                 "type": "bookmark",
                 "url": "https://www.emojiall.com/zh-hans"
+              },
+              {
+                "name": "📙 emoji百科",
+                "type": "bookmark",
+                "url": "https://emojipedia.org/zh"
+              },
+              {
+                "name": "🎁 Emoji(开发者使用)",
+                "type": "bookmark",
+                "url": "https://www.webfx.com/tools/emoji-cheat-sheet/"
               },
               {
                 "name": "表情速查",
@@ -959,43 +1152,7 @@ window.bookmarkData = [
             ]
           },
           {
-            "name": "文本操作",
-            "type": "folder",
-            "children": [
-              {
-                "name": "链接提取",
-                "type": "bookmark",
-                "url": "https://uutool.cn/extract-link/"
-              },
-              {
-                "name": "在线文本去空行工具 - UU在线工具",
-                "type": "bookmark",
-                "url": "https://uutool.cn/nl-trim/"
-              },
-              {
-                "name": "制作页脚图标",
-                "type": "bookmark",
-                "url": "https://substats.swo.moe/"
-              },
-              {
-                "name": "页脚图标制作",
-                "type": "bookmark",
-                "url": "https://hendrasob.github.io/badges/"
-              },
-              {
-                "name": "文档转换",
-                "type": "bookmark",
-                "url": "https://www.aconvert.com/cn/"
-              },
-              {
-                "name": "TXT合并工具",
-                "type": "bookmark",
-                "url": "https://uutool.cn/txt-mix/"
-              }
-            ]
-          },
-          {
-            "name": "编辑器",
+            "name": "文本-编辑",
             "type": "folder",
             "children": [
               {
@@ -1022,48 +1179,42 @@ window.bookmarkData = [
                 "name": "Editor.md",
                 "type": "bookmark",
                 "url": "https://pandao.github.io/editor.md/"
+              },
+              {
+                "name": "链接提取",
+                "type": "bookmark",
+                "url": "https://uutool.cn/extract-link/"
+              },
+              {
+                "name": "文本去空行",
+                "type": "bookmark",
+                "url": "https://uutool.cn/nl-trim/"
+              },
+              {
+                "name": "文档转换",
+                "type": "bookmark",
+                "url": "https://www.aconvert.com/cn/"
+              },
+              {
+                "name": "TXT合并工具",
+                "type": "bookmark",
+                "url": "https://uutool.cn/txt-mix/"
               }
             ]
           },
           {
-            "name": "格式转换",
-            "type": "folder",
-            "children": [
-              {
-                "name": "Favicon(图标转换)",
-                "type": "bookmark",
-                "url": "https://realfavicongenerator.net/your-favicon-is-ready"
-              },
-              {
-                "name": "在线免费将 TGZ 转换为 ZIP",
-                "type": "bookmark",
-                "url": "https://onlineconvertfree.com/zh/convert-format/tgz-to-zip/"
-              },
-              {
-                "name": "在线将TGZ转换为ZIP文件",
-                "type": "bookmark",
-                "url": "https://www.ezyzip.com/%E8%BD%AC%E6%8D%A2tar-gz%E5%88%B0zip.html"
-              },
-              {
-                "name": "电子书格式转换",
-                "type": "bookmark",
-                "url": "https://www.ebook2edit.com/zh"
-              },
-              {
-                "name": "在线订阅转换工具",
-                "type": "bookmark",
-                "url": "https://suburl.v1.mk/"
-              }
-            ]
-          },
-          {
-            "name": "下载",
+            "name": "下载-解析",
             "type": "folder",
             "children": [
               {
                 "name": "视频解析下载",
                 "type": "bookmark",
                 "url": "https://snapany.com/zh"
+              },
+              {
+                "name": "解析下载",
+                "type": "bookmark",
+                "url": "https://vtool.pro/"
               },
               {
                 "name": "贝贝BiliBili - B站视频下载",
@@ -1089,13 +1240,7 @@ window.bookmarkData = [
                 "name": "下载 Instagram",
                 "type": "bookmark",
                 "url": "https://sssinstagram.com/zh"
-              }
-            ]
-          },
-          {
-            "name": "磁力种子",
-            "type": "folder",
-            "children": [
+              },
               {
                 "name": "Webtor.io",
                 "type": "bookmark",
@@ -1114,9 +1259,19 @@ window.bookmarkData = [
             ]
           },
           {
-            "name": "生成",
+            "name": "生成-转换",
             "type": "folder",
             "children": [
+              {
+                "name": "表情包在线制作器",
+                "type": "bookmark",
+                "url": "https://www.doutub.com/picEdit"
+              },
+              {
+                "name": "网盘外链地址生成工具",
+                "type": "bookmark",
+                "url": "https://link.gimhoy.com/"
+              },
               {
                 "name": "真实地址生成器",
                 "type": "bookmark",
@@ -1131,11 +1286,6 @@ window.bookmarkData = [
                 "name": "UUID生成器",
                 "type": "bookmark",
                 "url": "https://uuid.bmcx.com/"
-              },
-              {
-                "name": "Favicon.ico图标生成器 ",
-                "type": "bookmark",
-                "url": "https://www.logosc.cn/logo/favicon"
               },
               {
                 "name": "链接生成器",
@@ -1161,11 +1311,31 @@ window.bookmarkData = [
                 "name": "提取豆瓣信息",
                 "type": "bookmark",
                 "url": "https://restless-glitter-1b9a.alixiaozhan.workers.dev/"
+              },
+              {
+                "name": "在线免费将 TGZ 转换为 ZIP",
+                "type": "bookmark",
+                "url": "https://onlineconvertfree.com/zh/convert-format/tgz-to-zip/"
+              },
+              {
+                "name": "在线将TGZ转换为ZIP文件",
+                "type": "bookmark",
+                "url": "https://www.ezyzip.com/%E8%BD%AC%E6%8D%A2tar-gz%E5%88%B0zip.html"
+              },
+              {
+                "name": "电子书格式转换",
+                "type": "bookmark",
+                "url": "https://www.ebook2edit.com/zh"
+              },
+              {
+                "name": "在线订阅转换工具",
+                "type": "bookmark",
+                "url": "https://suburl.v1.mk/"
               }
             ]
           },
           {
-            "name": "ip相关",
+            "name": "ip-测速",
             "type": "folder",
             "children": [
               {
@@ -1177,13 +1347,7 @@ window.bookmarkData = [
                 "name": "IPv6 测试",
                 "type": "bookmark",
                 "url": "https://test-ipv6.com/"
-              }
-            ]
-          },
-          {
-            "name": "测速",
-            "type": "folder",
-            "children": [
+              },
               {
                 "name": "宽带测试",
                 "type": "bookmark",
@@ -1202,19 +1366,40 @@ window.bookmarkData = [
             ]
           },
           {
-            "name": "LITERA(读书器)",
-            "type": "bookmark",
-            "url": "https://litera-reader.com/"
-          },
-          {
-            "name": "在线图片翻译",
-            "type": "bookmark",
-            "url": "https://ocr.wdku.net/index_pictranslation"
+            "name": "🗂️未分类",
+            "type": "folder",
+            "children": [
+              {
+                "name": "LITERA(读书器)",
+                "type": "bookmark",
+                "url": "https://litera-reader.com/"
+              },
+              {
+                "name": "域名批量查",
+                "type": "bookmark",
+                "url": "https://www.west.cn/web/mi"
+              },
+              {
+                "name": "在线图片翻译",
+                "type": "bookmark",
+                "url": "https://ocr.wdku.net/index_pictranslation"
+              },
+              {
+                "name": "Gofile(临时储存分享)",
+                "type": "bookmark",
+                "url": "https://gofile.io/"
+              },
+              {
+                "name": "钛盘(临时储存需登录)",
+                "type": "bookmark",
+                "url": "https://www.ttttt.link/"
+              }
+            ]
           }
         ]
       },
       {
-        "name": "云盘相关",
+        "name": "🥏云盘相关",
         "type": "folder",
         "children": [
           {
@@ -1346,6 +1531,11 @@ window.bookmarkData = [
                 "name": "e5订阅",
                 "type": "bookmark",
                 "url": "https://developer.microsoft.com/zh-cn/microsoft-365/profile"
+              },
+              {
+                "name": "阿里云盘",
+                "type": "bookmark",
+                "url": "https://www.aliyundrive.com/drive"
               }
             ]
           },
@@ -1364,17 +1554,27 @@ window.bookmarkData = [
                 "url": "https://www.upyunso.com/"
               }
             ]
+          },
+          {
+            "name": "有道云笔记",
+            "type": "bookmark",
+            "url": "https://note.youdao.com/old-web/#/file/recent/note/ED08CA1293514FF08D8F9CDF096B9035/"
           }
         ]
       },
       {
-        "name": "®️我注册的",
+        "name": "☸️网站相关",
         "type": "folder",
         "children": [
           {
-            "name": "🦄代码类",
+            "name": "🦄托管-部署",
             "type": "folder",
             "children": [
+              {
+                "name": "Cloudflare(域名与cdn)",
+                "type": "bookmark",
+                "url": "https://dash.cloudflare.com/56d2eae64975328ca874a9def1b136e2"
+              },
               {
                 "name": "GitHub",
                 "type": "bookmark",
@@ -1391,6 +1591,11 @@ window.bookmarkData = [
                 "url": "https://replit.com/~"
               },
               {
+                "name": "Heroku",
+                "type": "bookmark",
+                "url": "https://dashboard.heroku.com/apps"
+              },
+              {
                 "name": "glitch（代码托管）",
                 "type": "bookmark",
                 "url": "https://glitch.com/dashboard?group=owned&sortColumn=boost&sortDirection=DESC&page=1&showAll=false&filterDomain="
@@ -1404,127 +1609,18 @@ window.bookmarkData = [
                 "name": "doprax(部署)",
                 "type": "bookmark",
                 "url": "https://www.doprax.com/u/n726817119/"
-              },
-              {
-                "name": "Heroku",
-                "type": "bookmark",
-                "url": "https://dashboard.heroku.com/apps"
               }
             ]
           },
-          {
-            "name": "⚕️数据类",
-            "type": "folder",
-            "children": [
-              {
-                "name": "Cloudflare(域名与cdn)",
-                "type": "bookmark",
-                "url": "https://dash.cloudflare.com/56d2eae64975328ca874a9def1b136e2"
-              },
-              {
-                "name": "Zeabur(在线数据库)",
-                "type": "bookmark",
-                "url": "https://zeabur.com/zh-CN/"
-              },
-              {
-                "name": "MongoDB(数据库)",
-                "type": "bookmark",
-                "url": "https://cloud.mongodb.com/v2#/org/652166f26aadd55577f298d6/projects"
-              },
-              {
-                "name": "EU.org：自 1996 年起提供免费域名",
-                "type": "bookmark",
-                "url": "https://nic.eu.org/"
-              },
-              {
-                "name": "Stackryze(免费二级域名)",
-                "type": "bookmark",
-                "url": "https://domain.stackryze.com/"
-              },
-              {
-                "name": "客户区域(免费一年二级域名)",
-                "type": "bookmark",
-                "url": "https://nic.gv.uy/"
-              },
-              {
-                "name": "LeanCloud-静态评论",
-                "type": "bookmark",
-                "url": "https://console.leancloud.app/apps"
-              },
-              {
-                "name": "Upstash(数据服务)",
-                "type": "bookmark",
-                "url": "https://console.upstash.com/"
-              },
-              {
-                "name": "uniCloud",
-                "type": "bookmark",
-                "url": "https://unicloud.dcloud.net.cn/home"
-              }
-            ]
-          },
-          {
-            "name": "✍️编辑类",
-            "type": "folder",
-            "children": [
-              {
-                "name": "有道云笔记",
-                "type": "bookmark",
-                "url": "https://note.youdao.com/old-web/#/file/recent/note/ED08CA1293514FF08D8F9CDF096B9035/"
-              }
-            ]
-          },
-          {
-            "name": "🩴🧣杂项",
-            "type": "folder",
-            "children": [
-              {
-                "name": "WxPusher微信消息推送服务",
-                "type": "bookmark",
-                "url": "https://wxpusher.zjiecode.com/admin/main"
-              },
-              {
-                "name": "豆瓣🐜",
-                "type": "bookmark",
-                "url": "https://www.douban.com/people/n726817119/"
-              },
-              {
-                "name": "阿里云盘",
-                "type": "bookmark",
-                "url": "https://www.aliyundrive.com/drive"
-              },
-              {
-                "name": "管理您的 Apple ID",
-                "type": "bookmark",
-                "url": "https://appleid.apple.com/account/manage"
-              },
-              {
-                "name": "三国杀Online",
-                "type": "bookmark",
-                "url": "https://sanguosha.com/"
-              },
-              {
-                "name": "hd授权中心",
-                "type": "bookmark",
-                "url": "https://auth.ihewro.com/user/docs/#/"
-              },
-              {
-                "name": "江大爷 - Loforo",
-                "type": "bookmark",
-                "url": "https://niubi.loforo.com/"
-              }
-            ]
-          }
-        ]
-      },
-      {
-        "name": "网站相关",
-        "type": "folder",
-        "children": [
           {
             "name": "导航",
             "type": "folder",
             "children": [
+              {
+                "name": "小白学术",
+                "type": "bookmark",
+                "url": "https://www.sssam.com/"
+              },
               {
                 "name": "刘明野",
                 "type": "bookmark",
@@ -1533,17 +1629,7 @@ window.bookmarkData = [
               {
                 "name": "硬核指南 - 够高清才是真硬核！",
                 "type": "bookmark",
-                "url": "https://yingheapp.com/"
-              },
-              {
-                "name": "硬核指南 - 够高清才是真硬核！",
-                "type": "bookmark",
                 "url": "https://yinghezhinan.com/"
-              },
-              {
-                "name": "MYFREEMP3",
-                "type": "bookmark",
-                "url": "http://tools.liumingye.cn/music/?page=searchPage"
               },
               {
                 "name": "Testflight应用收集分享，IOS应用，安卓应用，优秀网站推荐ios共享账号，ios付费账号，ios各区ID",
@@ -1675,30 +1761,14 @@ window.bookmarkData = [
             ]
           },
           {
-            "name": "图标",
-            "type": "folder",
-            "children": [
-              {
-                "name": "Feather ",
-                "type": "bookmark",
-                "url": "https://feathericons.com/"
-              },
-              {
-                "name": "Font Awesome",
-                "type": "bookmark",
-                "url": "http://www.fontawesome.com.cn/faicons/"
-              },
-              {
-                "name": "阿里图标",
-                "type": "bookmark",
-                "url": "https://www.iconfont.cn/manage/index?spm=a313x.7781069.1998910419.13&manage_type=myprojects&projectId=2461393&keyword=&project_type=&page="
-              }
-            ]
-          },
-          {
             "name": "框架",
             "type": "folder",
             "children": [
+              {
+                "name": "astro",
+                "type": "bookmark",
+                "url": "https://astro.new/latest/"
+              },
               {
                 "name": "Typecho主题",
                 "type": "bookmark",
@@ -1755,6 +1825,11 @@ window.bookmarkData = [
             "name": "api",
             "type": "folder",
             "children": [
+              {
+                "name": "天气预报",
+                "type": "bookmark",
+                "url": "https://wttr.in/"
+              },
               {
                 "name": "和风天气",
                 "type": "bookmark",
@@ -1813,6 +1888,52 @@ window.bookmarkData = [
             ]
           },
           {
+            "name": "图标-ico",
+            "type": "folder",
+            "children": [
+              {
+                "name": "Feather ",
+                "type": "bookmark",
+                "url": "https://feathericons.com/"
+              },
+              {
+                "name": "Font Awesome",
+                "type": "bookmark",
+                "url": "http://www.fontawesome.com.cn/faicons/"
+              },
+              {
+                "name": "阿里图标",
+                "type": "bookmark",
+                "url": "https://www.iconfont.cn/"
+              },
+              {
+                "name": "Favicon.ico图标生成器 ",
+                "type": "bookmark",
+                "url": "https://www.logosc.cn/logo/favicon"
+              },
+              {
+                "name": "制作页脚图标",
+                "type": "bookmark",
+                "url": "https://substats.swo.moe/"
+              },
+              {
+                "name": "页脚图标制作",
+                "type": "bookmark",
+                "url": "https://hendrasob.github.io/badges/"
+              },
+              {
+                "name": "Favicon(图标转换)",
+                "type": "bookmark",
+                "url": "https://realfavicongenerator.net/your-favicon-is-ready"
+              },
+              {
+                "name": "图标转换器",
+                "type": "bookmark",
+                "url": "https://favicon.io/favicon-converter/"
+              }
+            ]
+          },
+          {
             "name": "图床",
             "type": "folder",
             "children": [
@@ -1852,6 +1973,11 @@ window.bookmarkData = [
             "name": "程序",
             "type": "folder",
             "children": [
+              {
+                "name": "VitePress",
+                "type": "bookmark",
+                "url": "https://vitepress.dev/zh/"
+              },
               {
                 "name": "cf创建动态博客",
                 "type": "bookmark",
@@ -1988,6 +2114,11 @@ window.bookmarkData = [
                 "url": "https://blog.anheyu.com/docs/"
               },
               {
+                "name": "Stack(Hugo 主题)",
+                "type": "bookmark",
+                "url": "https://stack.jimmycai.com/zh/"
+              },
+              {
                 "name": "Butterfly(hexo主题)",
                 "type": "bookmark",
                 "url": "https://butterfly.js.org/"
@@ -1996,11 +2127,26 @@ window.bookmarkData = [
                 "name": "Fluid(hexo主题)",
                 "type": "bookmark",
                 "url": "https://hexo.fluid-dev.com/"
+              },
+              {
+                "name": "Hexo",
+                "type": "bookmark",
+                "url": "https://hexo.io/zh-cn/"
+              },
+              {
+                "name": "LeanCloud-静态评论",
+                "type": "bookmark",
+                "url": "https://console.leancloud.app/apps"
+              },
+              {
+                "name": "WxPusher微信消息推送服务",
+                "type": "bookmark",
+                "url": "https://wxpusher.zjiecode.com/admin/main"
               }
             ]
           },
           {
-            "name": "免费数据库",
+            "name": "📊数据库",
             "type": "folder",
             "children": [
               {
@@ -2017,50 +2163,136 @@ window.bookmarkData = [
                 "name": "PlanetScale(免费数据库)",
                 "type": "bookmark",
                 "url": "https://planetscale.com/"
+              },
+              {
+                "name": "Zeabur(在线数据库)",
+                "type": "bookmark",
+                "url": "https://zeabur.com/zh-CN/"
+              },
+              {
+                "name": "MongoDB(数据库)",
+                "type": "bookmark",
+                "url": "https://cloud.mongodb.com/v2#/org/652166f26aadd55577f298d6/projects"
+              },
+              {
+                "name": "Upstash(数据服务)",
+                "type": "bookmark",
+                "url": "https://console.upstash.com/"
               }
             ]
           },
           {
-            "name": "Shields.io(徽章)",
-            "type": "bookmark",
-            "url": "https://www.shields.io/"
+            "name": "🌐域名",
+            "type": "folder",
+            "children": [
+              {
+                "name": "Stackryze(免费二级域名)",
+                "type": "bookmark",
+                "url": "https://domain.stackryze.com/"
+              },
+              {
+                "name": "EU.org：自 1996 年起提供免费域名",
+                "type": "bookmark",
+                "url": "https://nic.eu.org/"
+              },
+              {
+                "name": "客户区域(免费一年二级域名)",
+                "type": "bookmark",
+                "url": "https://nic.gv.uy/"
+              }
+            ]
           },
           {
-            "name": "源代码 CDN | raw.githack.com",
-            "type": "bookmark",
-            "url": "https://raw.githack.com/"
+            "name": "🪧未分类",
+            "type": "folder",
+            "children": [
+              {
+                "name": "宝塔面板(bt.cn)",
+                "type": "bookmark",
+                "url": "https://www.bt.cn/new/index.html?invite_code=MV9mYWN4dm8="
+              },
+              {
+                "name": "源代码 CDN | raw.githack.com",
+                "type": "bookmark",
+                "url": "https://raw.githack.com/"
+              },
+              {
+                "name": "Shields.io(徽章)",
+                "type": "bookmark",
+                "url": "https://www.shields.io/"
+              },
+              {
+                "name": "uniCloud",
+                "type": "bookmark",
+                "url": "https://unicloud.dcloud.net.cn/home"
+              }
+            ]
           }
         ]
       },
       {
-        "name": "🔔资源分享",
+        "name": "♨️GitHub",
         "type": "folder",
         "children": [
           {
-            "name": "mv合集",
+            "name": "GitHub",
             "type": "bookmark",
-            "url": "https://www.aliyundrive.com/s/jsNeewKA9yM"
+            "url": "https://github.com/baidu8"
           },
           {
-            "name": "阿里云盘资源分享",
+            "name": "hexo-douban(豆瓣插件)",
             "type": "bookmark",
-            "url": "https://docs.qq.com/sheet/DUllHUnhoanpCZlRD?tab=BB08J2&_t=1676717052164"
+            "url": "https://github.com/mythsman/hexo-douban"
           },
           {
-            "name": "学习资料(密码ksx8)",
+            "name": "FeHelper",
             "type": "bookmark",
-            "url": "https://cloud.189.cn/web/share?code=jmA7rmRVFr22"
-          }
-        ]
-      },
-      {
-        "name": "教程文档",
-        "type": "folder",
-        "children": [
+            "url": "https://github.com/zxlie/FeHelper"
+          },
           {
-            "name": "IDM 6.42.58 绿色安装版 - 下载工具 - OSSSR.COM",
+            "name": "alist-heroku",
             "type": "bookmark",
-            "url": "https://www.osssr.com/657.html"
+            "url": "https://github.com/sbwml/alist-heroku"
+          },
+          {
+            "name": "sharelist(网盘挂载程序)",
+            "type": "bookmark",
+            "url": "https://github.com/reruin/sharelist"
+          },
+          {
+            "name": "WebStack",
+            "type": "bookmark",
+            "url": "https://github.com/WebStackPage/WebStackPage.github.io"
+          },
+          {
+            "name": "PDFSigner",
+            "type": "bookmark",
+            "url": "https://github.com/hibem/PDFSigner"
+          },
+          {
+            "name": "秘笈搜索",
+            "type": "bookmark",
+            "url": "https://github.com/entropage/mijisou"
+          },
+          {
+            "name": "onedrive-vercel-index",
+            "type": "bookmark",
+            "url": "https://github.com/spencerwooo/onedrive-vercel-index"
+          },
+          {
+            "name": "twikoo(评论系统)",
+            "type": "bookmark",
+            "url": "https://github.com/imaegoo/twikoo"
+          },
+          {
+            "name": "typecho相册单页主题",
+            "type": "bookmark",
+            "url": "https://github.com/zzd/photo-page-for-typecho"
+          },
+          {
+            "name": "ansoncloud8 ((已换amclubs库)) · GitHub",
+            "type": "bookmark",
+            "url": "https://github.com/ansoncloud8"
           }
         ]
       },
@@ -2127,6 +2359,11 @@ window.bookmarkData = [
                 "name": "百度搜索榜",
                 "type": "bookmark",
                 "url": "http://top.baidu.com/?vit=1&fr=topboards"
+              },
+              {
+                "name": "开发者搜索",
+                "type": "bookmark",
+                "url": "https://kaifa.baidu.com/"
               }
             ]
           },
@@ -2158,6 +2395,11 @@ window.bookmarkData = [
                 "name": "Microsoft 365 开发人员中心",
                 "type": "bookmark",
                 "url": "https://developer.microsoft.com/zh-cn/microsoft-365/profile"
+              },
+              {
+                "name": "Copilot",
+                "type": "bookmark",
+                "url": "https://copilot.microsoft.com/?itrid=65b7b3f1546d4a308b4fb9d46bb5524b"
               }
             ]
           },
@@ -2174,6 +2416,16 @@ window.bookmarkData = [
                 "name": "iCloud",
                 "type": "bookmark",
                 "url": "https://www.icloud.com/"
+              },
+              {
+                "name": "管理您的 Apple ID",
+                "type": "bookmark",
+                "url": "https://appleid.apple.com/account/manage"
+              },
+              {
+                "name": "快捷指令库",
+                "type": "bookmark",
+                "url": "https://www.rcuts.com/?u_atoken=69860d5a-5a9f-a7e0-8780-6c55b86f3723&u_asig=654bf60717703929223587184e"
               }
             ]
           },
@@ -2240,67 +2492,11 @@ window.bookmarkData = [
                 "name": "Google",
                 "type": "bookmark",
                 "url": "https://www.google.com/"
-              }
-            ]
-          },
-          {
-            "name": "GitHub项目",
-            "type": "folder",
-            "children": [
-              {
-                "name": "hexo-douban(豆瓣插件)",
-                "type": "bookmark",
-                "url": "https://github.com/mythsman/hexo-douban"
               },
               {
-                "name": "FeHelper",
+                "name": "已保存的信息",
                 "type": "bookmark",
-                "url": "https://github.com/zxlie/FeHelper"
-              },
-              {
-                "name": "alist-heroku",
-                "type": "bookmark",
-                "url": "https://github.com/sbwml/alist-heroku"
-              },
-              {
-                "name": "sharelist(网盘挂载程序)",
-                "type": "bookmark",
-                "url": "https://github.com/reruin/sharelist"
-              },
-              {
-                "name": "WebStack",
-                "type": "bookmark",
-                "url": "https://github.com/WebStackPage/WebStackPage.github.io"
-              },
-              {
-                "name": "PDFSigner",
-                "type": "bookmark",
-                "url": "https://github.com/hibem/PDFSigner"
-              },
-              {
-                "name": "秘笈搜索",
-                "type": "bookmark",
-                "url": "https://github.com/entropage/mijisou"
-              },
-              {
-                "name": "onedrive-vercel-index",
-                "type": "bookmark",
-                "url": "https://github.com/spencerwooo/onedrive-vercel-index"
-              },
-              {
-                "name": "twikoo(评论系统)",
-                "type": "bookmark",
-                "url": "https://github.com/imaegoo/twikoo"
-              },
-              {
-                "name": "typecho相册单页主题",
-                "type": "bookmark",
-                "url": "https://github.com/zzd/photo-page-for-typecho"
-              },
-              {
-                "name": "ansoncloud8 ((已换amclubs库)) · GitHub",
-                "type": "bookmark",
-                "url": "https://github.com/ansoncloud8"
+                "url": "https://gemini.google.com/saved-info"
               }
             ]
           }
@@ -2311,14 +2507,9 @@ window.bookmarkData = [
         "type": "folder",
         "children": [
           {
-            "name": "豆包",
+            "name": "Gemini",
             "type": "bookmark",
-            "url": "https://www.doubao.com/chat/"
-          },
-          {
-            "name": "Copilot",
-            "type": "bookmark",
-            "url": "https://copilot.microsoft.com/?itrid=65b7b3f1546d4a308b4fb9d46bb5524b"
+            "url": "https://gemini.google.com/app"
           },
           {
             "name": "ChatGPT",
@@ -2326,9 +2517,39 @@ window.bookmarkData = [
             "url": "https://chatgpt.com/"
           },
           {
+            "name": "豆包",
+            "type": "bookmark",
+            "url": "https://www.doubao.com/chat/"
+          },
+          {
             "name": "Grok",
             "type": "bookmark",
             "url": "https://grok.com/"
+          },
+          {
+            "name": "Copilot",
+            "type": "bookmark",
+            "url": "https://copilot.microsoft.com/?itrid=65b7b3f1546d4a308b4fb9d46bb5524b"
+          },
+          {
+            "name": "千问-Qwen",
+            "type": "bookmark",
+            "url": "https://www.qianwen.com/"
+          },
+          {
+            "name": "元宝",
+            "type": "bookmark",
+            "url": "https://yuanbao.tencent.com/chat/naQivTmsDa"
+          },
+          {
+            "name": "文心一言",
+            "type": "bookmark",
+            "url": "https://yiyan.baidu.com/"
+          },
+          {
+            "name": "小艺",
+            "type": "bookmark",
+            "url": "https://xiaoyi.huawei.com/chat/"
           },
           {
             "name": "必应ai画图",
@@ -2356,9 +2577,118 @@ window.bookmarkData = [
             "url": "https://walles.ai/chat"
           },
           {
-            "name": "即梦AI - 一站式AI创作平台",
+            "name": "即梦AI",
             "type": "bookmark",
             "url": "https://jimeng.jianying.com/ai-tool/home"
+          },
+          {
+            "name": "DeepSeek",
+            "type": "bookmark",
+            "url": "https://chat.deepseek.com/sign_in"
+          }
+        ]
+      },
+      {
+        "name": "⚙️未分类",
+        "type": "folder",
+        "children": [
+          {
+            "name": "教程文档",
+            "type": "folder",
+            "children": [
+              {
+                "name": "IDM 6.42.58 绿色安装版 - 下载工具 - OSSSR.COM",
+                "type": "bookmark",
+                "url": "https://www.osssr.com/657.html"
+              }
+            ]
+          },
+          {
+            "name": "🔔资源分享",
+            "type": "folder",
+            "children": [
+              {
+                "name": "mv合集",
+                "type": "bookmark",
+                "url": "https://www.aliyundrive.com/s/jsNeewKA9yM"
+              },
+              {
+                "name": "阿里云盘资源分享",
+                "type": "bookmark",
+                "url": "https://docs.qq.com/sheet/DUllHUnhoanpCZlRD?tab=BB08J2&_t=1676717052164"
+              },
+              {
+                "name": "学习资料(密码ksx8)",
+                "type": "bookmark",
+                "url": "https://cloud.189.cn/web/share?code=jmA7rmRVFr22"
+              }
+            ]
+          },
+          {
+            "name": "乱七八糟",
+            "type": "folder",
+            "children": [
+              {
+                "name": "随机无用网址",
+                "type": "bookmark",
+                "url": "https://theuselessweb.com/"
+              },
+              {
+                "name": "绝命毒师老白捐赠网址",
+                "type": "bookmark",
+                "url": "http://www.savewalterwhite.com/"
+              },
+              {
+                "name": "鼠标指哪他指哪",
+                "type": "bookmark",
+                "url": "https://pointerpointer.com/"
+              },
+              {
+                "name": "生成不存在的人",
+                "type": "bookmark",
+                "url": "https://thispersondoesnotexist.com/"
+              }
+            ]
+          },
+          {
+            "name": "有道翻译",
+            "type": "bookmark",
+            "url": "https://fanyi.youdao.com/index.html#/"
+          },
+          {
+            "name": "豆瓣🐜",
+            "type": "bookmark",
+            "url": "https://www.douban.com/people/n726817119/"
+          },
+          {
+            "name": "handsome正版用户中心",
+            "type": "bookmark",
+            "url": "https://auth.ihewro.com/"
+          },
+          {
+            "name": "全景故宫",
+            "type": "bookmark",
+            "url": "https://pano.dpm.org.cn/#/"
+          },
+          {
+            "name": "全历史",
+            "type": "bookmark",
+            "url": "https://www.allhistory.com/"
+          },
+          {
+            "name": "漫威迷",
+            "type": "bookmark",
+            "url": "https://www.manweimi.cn/"
+          },
+          {
+            "name": "指尖上 | 全球全景360VR",
+            "type": "bookmark",
+            "url": "https://www.zhijianshang.com/"
+          },
+          {
+            "name": "千亿像素看世界",
+            "type": "bookmark",
+            "url": "https://www.bigpixel.cn/gigapixelAPP/web/index.html"
           }
         ]
       }
