@@ -94,20 +94,27 @@ document.addEventListener('DOMContentLoaded', () => {
     let folderCounter = 0;
 
     function createTreeMenu(items, container, level = 0) {
-        items.forEach((item) => {
+        items.forEach((item, index) => {
             if (item.type === 'folder') {
                 const folderId = `folder-sec-${folderCounter++}`;
                 const wrapper = document.createElement('div');
                 wrapper.className = 'folder-wrapper';
-                if (level === 0) wrapper.classList.add('open');
-
+                
+                // 入场动画逻辑
+                if (level === 0) {
+                    wrapper.style.animationDelay = (index * 0.08) + 's';
+                    wrapper.classList.add('open'); // 默认展开第一层
+                } else {
+                    wrapper.style.opacity = "1";
+                    wrapper.style.animation = "none";
+                }
+    
+                // 创建标题栏
                 const header = document.createElement('div');
                 header.className = 'nav-item folder-header';
-                
                 const hasSubFolders = item.children && item.children.some(child => child.type === 'folder');
                 const hasDirectBookmarks = item.children && item.children.some(child => child.type === 'bookmark' || child.url);
                 const arrowHtml = hasSubFolders ? `<span class="arrow">▶</span>` : `<span></span>`;
-                
                 header.innerHTML = `<span>${item.name}</span>${arrowHtml}`;
                 
                 header.onclick = (e) => {
@@ -121,15 +128,26 @@ document.addEventListener('DOMContentLoaded', () => {
                         }
                     }
                 };
-
+    
+                // --- 结构重建：关键区 ---
                 const subMenu = document.createElement('div');
                 subMenu.className = 'sub-menu';
+                
+                const subMenuInner = document.createElement('div'); 
+                subMenuInner.className = 'sub-menu-inner'; // 这里是真正装东西的地方
+                
                 wrapper.appendChild(header);
-                wrapper.appendChild(subMenu);
+                wrapper.appendChild(subMenu);    // 外层进 wrapper
+                subMenu.appendChild(subMenuInner); // 内层进外层
                 container.appendChild(wrapper);
-
+    
+                // 渲染右侧内容
                 renderSection(item, folderId);
-                if (item.children) createTreeMenu(item.children, subMenu, level + 1);
+                
+                // 递归：必须把 subMenuInner 传下去，子文件夹才会显示在里面
+                if (item.children) {
+                    createTreeMenu(item.children, subMenuInner, level + 1);
+                }
             }
         });
     }
@@ -142,28 +160,31 @@ document.addEventListener('DOMContentLoaded', () => {
         section.id = id;
         section.className = 'section';
 
-        const cardsHtml = bookmarks.map(item => {
-            let domain = "";
-            try { domain = new URL(item.url).hostname; } catch(e) { domain = "link"; }
-
-            const iconUrl = `https://icons.duckduckgo.com/ip3/${domain}.ico`;
-            const firstLetter = item.name ? item.name.charAt(0).toUpperCase() : '?';
-            const imgId = `img-${Math.random().toString(36).substr(2, 9)}`;
-
-            setTimeout(() => {
-                const img = document.getElementById(imgId);
-                if (img && !img.complete) window.handleIconError(img);
-            }, 2000);
-
-            return `
-                <a href="${item.url}" class="card" target="_blank" title="${item.name}">
-                    <div class="icon-container">
-                        <img id="${imgId}" src="${iconUrl}" class="favicon" onload="this.style.opacity=1" onerror="handleIconError(this)">
-                        <div class="letter-icon">${firstLetter}</div>
-                    </div>
-                    <span>${item.name}</span>
-                </a>`;
-        }).join('');
+        const cardsHtml = bookmarks.map((item, index) => { // 注意这里新增了 index 参数
+                let domain = "";
+                try { domain = new URL(item.url).hostname; } catch(e) { domain = "link"; }
+        
+                const iconUrl = `https://icons.duckduckgo.com/ip3/${domain}.ico`;
+                const firstLetter = item.name ? item.name.charAt(0).toUpperCase() : '?';
+                const imgId = `img-${Math.random().toString(36).substr(2, 9)}`;
+        
+                setTimeout(() => {
+                    const img = document.getElementById(imgId);
+                    if (img && !img.complete) window.handleIconError(img);
+                }, 2000);
+        
+                // --- 核心修改：添加 animation-delay ---
+                const delay = (index * 0.05) + 's'; // 每个卡片延迟 0.05 秒
+        
+                return `
+                    <a href="${item.url}" class="card" target="_blank" title="${item.name}" style="animation-delay: ${delay};">
+                        <div class="icon-container">
+                            <img id="${imgId}" src="${iconUrl}" class="favicon" onload="this.style.opacity=1" onerror="handleIconError(this)">
+                            <div class="letter-icon">${firstLetter}</div>
+                        </div>
+                        <span>${item.name}</span>
+                    </a>`;
+            }).join('');
 
         section.innerHTML = `<h3 class="section-title">${folder.name}</h3><div class="grid">${cardsHtml}</div>`;
         navDisplay.appendChild(section);

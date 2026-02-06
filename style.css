@@ -6,10 +6,39 @@
     --header-height: 60px;
     --transition-speed: 0.3s; /* 统一过渡时间 */
 }
+/* --- 全站滚动条美化 (Chrome, Edge, Safari) --- */
+::-webkit-scrollbar {
+    width: 8px;  /* 纵向滚动条宽度 */
+    height: 8px; /* 横向滚动条高度 */
+}
 
+/* 滚动条轨道 */
+::-webkit-scrollbar-track {
+    background: transparent; 
+}
+
+/* 滚动条滑块 (Thumb) */
+::-webkit-scrollbar-thumb {
+    background: rgba(0, 0, 0, 0.1); /* 默认非常淡 */
+    border-radius: 10px;
+    border: 2px solid transparent; /* 技巧：用透明边框实现滑块与边缘的间隙 */
+    background-clip: content-box;
+}
+
+/* 鼠标悬停在滚动条上时加深颜色 */
+::-webkit-scrollbar-thumb:hover {
+    background: rgba(0, 0, 0, 0.3);
+    background-clip: content-box;
+}
+
+/* --- 针对 Firefox 的兼容性设置 --- */
+* {
+    scrollbar-width: thin;           /* 变细 */
+    scrollbar-color: rgba(0, 0, 0, 0.1) transparent; /* 滑块颜色 轨道颜色 */
+}
 /* 1. 基础重置与全局设置 */
 * { box-sizing: border-box; margin: 0; padding: 0; }
-html { scroll-behavior: smooth; overflow-x: hidden; height: 100%; }
+html { scroll-behavior: smooth; overflow-x: hidden; height: 100%; scrollbar-gutter: stable;}
 body { 
     font-family: system-ui, -apple-system, sans-serif; 
     background: var(--bg-color); 
@@ -33,8 +62,10 @@ body.no-scroll { overflow: hidden; }
     width: var(--sidebar-width); height: 100vh; background: #fff; 
     border-right: 1px solid #eee; position: fixed; left: 0; top: 0; 
     overflow-y: auto; transition: transform var(--transition-speed) ease; z-index: 1000;
+				/* --- 解决挤压核心代码 --- */
+				overflow-y: auto;
+				scrollbar-gutter: stable; /* 预留滚动条空间，防止内容跳动 */
 }
-
 .logo-container {
     display: flex; flex-direction: row; align-items: center; justify-content: center;
     padding: 30px 10px; gap: 12px; border-bottom: 1px solid #f5f5f5; margin-bottom: 10px;
@@ -46,13 +77,45 @@ body.no-scroll { overflow: hidden; }
 /* 4. 菜单样式 */
 .nav-item { padding: 12px 20px; cursor: pointer; display: flex; align-items: center; justify-content: space-between; font-size: 14px; color: #555; text-decoration: none; transition: background 0.2s; }
 .nav-item:hover { background: #f0f7ff; color: var(--primary-color); }
-.folder-header { font-weight: 600; background: #fcfcfc; }
+.folder-header { font-weight: 600; background: #ffffff; }
 .arrow { font-size: 10px; transition: transform var(--transition-speed); color: #ccc; }
-.sub-menu { max-height: 0; overflow: hidden; transition: max-height var(--transition-speed) ease-out; background: #fafafa; padding-left: 12px; }
+/* 1. 重新定义子菜单容器，使用 Grid 实现平滑高度过渡 */
+/* 外层容器：控制 Grid 轨道高度 */
+.sub-menu {
+    display: grid;
+    grid-template-rows: 0fr; /* 默认闭合状态，高度占比为 0 */
+    transition: grid-template-rows 0.3s ease-out; /* 针对网格行做动画 */
+    overflow: hidden;
+}
 
-.folder-wrapper.open > .sub-menu { max-height: 3000px; } /* 确保大型导航也能展开 */
-.folder-wrapper.open > .folder-header .arrow { transform: rotate(90deg); }
+/* 当父级开启时，轨道高度变为 1 份比例 (即自动撑开) */
+.folder-wrapper.open > .sub-menu {
+    grid-template-rows: 1fr;
+}
 
+/* 内层容器：确保内容有最小高度，动画才不会“跳” */
+.sub-menu-inner {
+    min-height: 0;
+    padding-left: 15px;
+    /* 极浅的蓝色背景 */
+    background-color: #f0f7ff; 
+    /* 配合主色调的左边框 */
+    border-left: 3px solid var(--primary-color); 
+    border-radius: 0 8px 8px 0;
+}
+/* 当分类展开时，文字颜色加深，或者加粗 */
+.folder-wrapper.open > .folder-header {
+    color: var(--primary-color);
+    font-weight: bold;
+    background-color: #fff; /* 保持标题背景纯白，与子菜单的灰色形成对比 */
+}
+/* 顺便优化一下箭头旋转，让它和卷轴同步 */
+.folder-header .arrow {
+    transition: transform 0.3s ease;
+}
+.folder-wrapper.open > .folder-header .arrow {
+    transform: rotate(90deg);
+}
 /* 5. 主内容区 - 布局核心 */
 #main-content { 
     margin-left: var(--sidebar-width); 
@@ -76,7 +139,14 @@ body.no-scroll { overflow: hidden; }
 }
 .search-container:focus-within { border-color: var(--primary-color); box-shadow: 0 8px 25px rgba(66,133,244,0.12); }
 
-.engine-selector { position: relative; cursor: pointer; display: flex; align-items: center; padding-right: 12px; border-right: 1px solid #eee; flex-shrink: 0; }
+/* 顺便优化一下 selector 的间距，让它更精致 */
+.engine-selector {
+    display: flex;
+    align-items: center;
+    padding-right: 10px;
+    margin-right: 5px;
+    border-right: 1px solid #eee;
+}
 .engine-list { 
     position: absolute; top: 45px; left: -10px; background: #fff; 
     border: 1px solid #eee; border-radius: 12px; list-style: none; 
@@ -98,9 +168,31 @@ body.no-scroll { overflow: hidden; }
     background: var(--card-bg); padding: 12px; border-radius: 10px; 
     text-decoration: none; color: #444; display: flex; align-items: center; gap: 12px; 
     border: 1px solid #eee; transition: all 0.2s;
+				opacity: 0; /* 初始隐藏 */
+				animation: fadeInUp 0.5s ease-out forwards; /* 应用动画 */
+				/* animation-delay 会在 JS 中动态设置 */
+}
+/* 瀑布流入场动画的关键帧 */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px); /* 从底部稍微向上滑入 */
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 .card:hover { transform: translateY(-3px); box-shadow: 0 5px 15px rgba(0,0,0,0.05); border-color: var(--primary-color); }
-.card span { font-size: 13px; flex: 1; min-width: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.card span {
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2; /* 允许显示两行 */
+    overflow: hidden;
+    font-size: 13px;
+    line-height: 1.4;
+    white-space: normal; /* 允许换行 */
+}
 
 /* 图标容器修复 */
 .icon-container { 
@@ -228,11 +320,6 @@ body.no-scroll { overflow: hidden; }
     flex-shrink: 0; /* 防止在窄屏下被挤压变扁 */
 }
 
-/* 顺便优化一下 selector 的间距，让它更精致 */
-.engine-selector {
-    display: flex;
-    align-items: center;
-    padding-right: 10px;
-    margin-right: 5px;
-    border-right: 1px solid #eee;
+.logo-container {
+    animation: fadeInUp 0.6s ease-out;
 }
