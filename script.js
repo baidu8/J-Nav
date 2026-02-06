@@ -1,4 +1,22 @@
+/**
+ * J-Nav 核心逻辑
+ * 修复了返回顶部、气泡通知以及初始化渲染逻辑
+ */
+
+// 1. 全局辅助函数 (放在最外面，确保任何时候都能被调用)
+window.handleIconError = function(imgElement) {
+    if (!imgElement) return;
+    const container = imgElement.parentElement;
+    if (container && !container.classList.contains('no-icon')) {
+        container.classList.add('no-icon');
+        imgElement.style.display = 'none';
+        const colors = ['#4A90E2', '#50E3C2', '#F5A623', '#D0021B', '#9013FE', '#7ED321', '#FB7299'];
+        container.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+    }
+};
+
 document.addEventListener('DOMContentLoaded', () => {
+    // --- 元素获取 ---
     const sidebar = document.getElementById('sidebar');
     const menuToggle = document.getElementById('menu-toggle');
     const overlay = document.getElementById('sidebar-overlay');
@@ -6,20 +24,21 @@ document.addEventListener('DOMContentLoaded', () => {
     const navDisplay = document.getElementById('nav-display');
     const btnPcTop = document.getElementById('back-to-top-pc');
     const btnMobileTop = document.getElementById('back-to-top-mobile');
-
-    // --- 搜索功能逻辑 ---
     const engineSelector = document.getElementById('engine-selector');
     const engineList = document.getElementById('engine-list');
     const currentEngineIcon = document.getElementById('current-engine-icon');
     const searchInput = document.getElementById('search-input');
     const searchBtn = document.getElementById('search-btn');
 
+    // --- 搜索功能 ---
     let currentSearchUrl = "https://www.google.com/search?q=";
 
-    engineSelector.addEventListener('click', (e) => {
-        e.stopPropagation();
-        engineList.classList.toggle('show');
-    });
+    if (engineSelector) {
+        engineSelector.addEventListener('click', (e) => {
+            e.stopPropagation();
+            engineList.classList.toggle('show');
+        });
+    }
 
     engineList.querySelectorAll('li').forEach(li => {
         li.addEventListener('click', (e) => {
@@ -33,22 +52,25 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function doSearch() {
         const query = searchInput.value.trim();
-        if (query) {
-            window.open(currentSearchUrl + encodeURIComponent(query), '_blank');
-        }
+        if (query) window.open(currentSearchUrl + encodeURIComponent(query), '_blank');
     }
 
     searchBtn.addEventListener('click', doSearch);
     searchInput.addEventListener('keypress', (e) => { if (e.key === 'Enter') doSearch(); });
     document.addEventListener('click', () => engineList.classList.remove('show'));
 
-    // --- 导航逻辑 ---
-    function scrollToTop() { window.scrollTo({ top: 0, behavior: 'smooth' }); }
-    btnPcTop.addEventListener('click', scrollToTop);
-    btnMobileTop.addEventListener('click', scrollToTop);
+    // --- 导航与侧边栏逻辑 ---
+    function scrollToTop() { 
+        window.scrollTo({ top: 0, behavior: 'smooth' }); 
+    }
+    
+    if (btnPcTop) btnPcTop.onclick = scrollToTop;
+    if (btnMobileTop) btnMobileTop.onclick = scrollToTop;
 
     window.addEventListener('scroll', () => {
-        btnPcTop.style.display = window.scrollY > 300 ? 'flex' : 'none';
+        if (btnPcTop) {
+            btnPcTop.style.display = window.scrollY > 300 ? 'flex' : 'none';
+        }
     });
 
     function toggleSidebar(show) {
@@ -68,22 +90,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
     overlay.addEventListener('click', () => toggleSidebar(false));
 
-    // --- 核心：图标加载失败或超时处理函数 ---
-    window.handleIconError = function(imgElement) {
-        if (!imgElement) return;
-        const container = imgElement.parentElement;
-        // 如果已经处理过（有了 no-icon 类），就跳过
-        if (container && !container.classList.contains('no-icon')) {
-            container.classList.add('no-icon');
-            imgElement.style.display = 'none';
-            // 随机一个好看的背景色
-            const colors = ['#4A90E2', '#50E3C2', '#F5A623', '#D0021B', '#9013FE', '#7ED321', '#FB7299'];
-            const randomColor = colors[Math.floor(Math.random() * colors.length)];
-            container.style.backgroundColor = randomColor;
-        }
-    };
-
+    // --- 渲染逻辑 ---
     let folderCounter = 0;
+
     function createTreeMenu(items, container, level = 0) {
         items.forEach((item) => {
             if (item.type === 'folder') {
@@ -99,7 +108,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 const hasDirectBookmarks = item.children && item.children.some(child => child.type === 'bookmark' || child.url);
                 const arrowHtml = hasSubFolders ? `<span class="arrow">▶</span>` : `<span></span>`;
                 
-                header.innerHTML = `<span>📂 ${item.name}</span>${arrowHtml}`;
+                header.innerHTML = `<span>${item.name}</span>${arrowHtml}`;
                 
                 header.onclick = (e) => {
                     e.stopPropagation();
@@ -141,55 +150,49 @@ document.addEventListener('DOMContentLoaded', () => {
             const firstLetter = item.name ? item.name.charAt(0).toUpperCase() : '?';
             const imgId = `img-${Math.random().toString(36).substr(2, 9)}`;
 
-            // 设置 2 秒超时：如果 2 秒没加载完，强制切换到文字头像
             setTimeout(() => {
                 const img = document.getElementById(imgId);
-                if (img && !img.complete) {
-                    handleIconError(img);
-                }
+                if (img && !img.complete) window.handleIconError(img);
             }, 2000);
 
             return `
                 <a href="${item.url}" class="card" target="_blank" title="${item.name}">
                     <div class="icon-container">
-                        <img id="${imgId}" 
-                             src="${iconUrl}" 
-                             class="favicon"
-                             onload="this.style.opacity=1"
-                             onerror="handleIconError(this)">
+                        <img id="${imgId}" src="${iconUrl}" class="favicon" onload="this.style.opacity=1" onerror="handleIconError(this)">
                         <div class="letter-icon">${firstLetter}</div>
                     </div>
                     <span>${item.name}</span>
                 </a>`;
         }).join('');
 
-        section.innerHTML = `<h3 class="section-title">📂 ${folder.name}</h3><div class="grid">${cardsHtml}</div>`;
+        section.innerHTML = `<h3 class="section-title">${folder.name}</h3><div class="grid">${cardsHtml}</div>`;
         navDisplay.appendChild(section);
     }
 
+    // 初始化渲染
     if (window.bookmarkData) {
         navList.innerHTML = '';
         navDisplay.innerHTML = '';
         createTreeMenu(window.bookmarkData, navList, 0);
     }
 });
-// --- Service Worker 统一管理 ---
+
+// --- Service Worker 独立逻辑 ---
 if ('serviceWorker' in navigator) {
-    // 1. 先设置监听器：确保 SW 一旦发出“更新”信号，页面能立刻接到
     navigator.serviceWorker.addEventListener('message', event => {
         if (event.data && event.data.type === 'UPDATE_AVAILABLE') {
-            console.log('检测到新数据，正在同步...');
-            // 弹出提示，点击确定后刷新页面展示新书签
-            if (confirm('书签数据已更新，是否立即刷新查看新内容？')) {
+            const toast = document.getElementById('update-toast');
+            if (toast) {
+                toast.classList.remove('toast-hidden');
+            } else if (confirm('书签数据已更新，是否刷新查看？')) {
                 location.reload();
             }
         }
     });
 
-    // 2. 再注册 SW：让它开始在后台干活
     window.addEventListener('load', () => {
         navigator.serviceWorker.register('sw.js')
-            .then(reg => console.log('SW 注册成功，范围:', reg.scope))
-            .catch(err => console.error('SW 注册失败:', err));
+            .then(reg => console.log('SW Registered'))
+            .catch(err => console.log('SW Failed', err));
     });
 }

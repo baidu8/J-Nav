@@ -1,20 +1,22 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>J-Nav</title>
     <link rel="preload" href="data.js" as="script">
     
-    <link rel="icon" type="image/svg+xml" href="/icons/logo.svg" />
-    <link rel="apple-touch-icon" sizes="180x180" href="/icons/apple-touch-icon.png" />
+    <link rel="icon" type="image/svg+xml" href="icons/logo.svg" />
+    <link rel="apple-touch-icon" sizes="180x180" href="icons/apple-touch-icon.png" />
     <link rel="manifest" href="site.webmanifest" />
-    <link rel="shortcut icon" href="/icons/favicon.ico" />
+    <link rel="shortcut icon" href="icons/favicon.ico" />
     <meta name="theme-color" content="#ffffff">
     
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <div class="mobile-header">
-        <button id="menu-toggle">☰</button>
+        <button id="menu-toggle" aria-label="切换菜单">☰</button>
         <div class="mobile-logo-box" id="back-to-top-mobile">
             <img src="icons/logo.svg" alt="Logo">
             <span>J-Nav</span>
@@ -46,12 +48,21 @@
                 <button id="search-btn">搜索</button>
             </div>
         </div>
+
         <div id="nav-display"></div>
-    <footer style="text-align: center; padding: 20px; color: #999; font-size: 12px;">
-    © 2026 J-Nav · <a href="https://github.com/baidu8/J-Nav" target="_blank" style="color: #999;">GitHub</a>
-</footer>
+
+        <footer style="text-align: center; padding: 20px; color: #999; font-size: 12px;">
+            © 2026 J-Nav · <a href="https://github.com/baidu8/J-Nav" target="_blank" style="color: #999; text-decoration: none;">GitHub</a>
+        </footer>
     </main>
-    <div id="back-to-top-pc">▲</div>
+
+    <div id="back-to-top-pc" title="返回顶部">▲</div>
+
+    <div id="update-toast" class="toast-hidden">
+        <span>发现新内容</span>
+        <button onclick="location.reload()">刷新</button>
+    </div>
+
     <script src="data.js"></script>
     <script src="script.js"></script>
 </body>
