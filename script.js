@@ -173,10 +173,23 @@ document.addEventListener('DOMContentLoaded', () => {
         createTreeMenu(window.bookmarkData, navList, 0);
     }
 });
+// --- Service Worker 统一管理 ---
 if ('serviceWorker' in navigator) {
-  window.addEventListener('load', () => {
-    navigator.serviceWorker.register('/sw.js') // 确保 sw.js 放在根目录
-      .then(reg => console.log('SW 注册成功', reg.scope))
-      .catch(err => console.error('SW 注册失败', err));
-  });
+    // 1. 先设置监听器：确保 SW 一旦发出“更新”信号，页面能立刻接到
+    navigator.serviceWorker.addEventListener('message', event => {
+        if (event.data && event.data.type === 'UPDATE_AVAILABLE') {
+            console.log('检测到新数据，正在同步...');
+            // 弹出提示，点击确定后刷新页面展示新书签
+            if (confirm('书签数据已更新，是否立即刷新查看新内容？')) {
+                location.reload();
+            }
+        }
+    });
+
+    // 2. 再注册 SW：让它开始在后台干活
+    window.addEventListener('load', () => {
+        navigator.serviceWorker.register('sw.js')
+            .then(reg => console.log('SW 注册成功，范围:', reg.scope))
+            .catch(err => console.error('SW 注册失败:', err));
+    });
 }
