@@ -148,8 +148,24 @@ body.no-scroll { overflow: hidden; }
 }
 
 .logo-img { width: 32px; height: 32px; object-fit: contain; }
-.logo-text { font-size: 20px; font-weight: 700; color: var(--text-main); letter-spacing: 1px; white-space: nowrap; }
-
+.logo-text {
+    font-size: 18px; /* 稍微缩小一点，更显精致 */
+    font-weight: 800; /* 加粗，提升分量感 */
+    letter-spacing: 3px; /* 关键：拉开字间距，瞬间有高级感 */
+    text-transform: uppercase; /* 强制大写 */
+    color: var(--text-main);
+    
+    /* 渐变文字效果（可选，非常吸睛） */
+    background: linear-gradient(135deg, var(--primary-color), #88b1ff);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    
+    /* 加上平滑过渡，切换主题时颜色跟着走 */
+    transition: all var(--transition-speed) ease;
+    
+    /* 消除视觉偏移：稍微向左修正 1.5px 以抵消最后一位字母的字间距 */
+    margin-left: 1.5px; 
+}
 /* 4. 菜单样式 */
 .nav-item { padding: 12px 20px; cursor: pointer; display: flex; align-items: center; justify-content: space-between; font-size: 14px; color: var(--text-sub); text-decoration: none; }
 .nav-item:hover { background-color: var(--hover-color); color: var(--primary-color); }
@@ -424,10 +440,18 @@ body.no-scroll { overflow: hidden; }
     }
     
     .theme-toggle {
-        width: 36px;  /* 手机端稍微缩小一点点 */
-        height: 36px;
-        background: transparent; /* 手机端可以去掉背景边框，显得更简洁 */
-        border: none;
-        box-shadow: none;
+    background: var(--primary-color); /* 统一使用主色调背景 */
+    color: white; /* 图标颜色 */
+    border: none;
+    width: 36px; /* 统一尺寸 */
+    height: 36px;
+    border-radius: 6px; /* 统一圆角，和 #menu-toggle 一致 */
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+    transition: all 0.3s ease;
+    box-shadow: none; /* 去掉多余阴影 */
     }
 }

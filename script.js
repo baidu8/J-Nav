@@ -240,30 +240,29 @@ function toggleTheme() {
     const currentTheme = html.getAttribute('data-theme');
     const targetTheme = currentTheme === 'dark' ? 'light' : 'dark';
     
-    // 这里的颜色务必和 CSS 变量中的 --bg-color 保持一致
+    // 颜色配置
     const themeColor = targetTheme === 'dark' ? '#121212' : '#f8f9fa';
-				const themeStartColor = targetTheme === 'dark' ? '#1a1a1a' : '#f0f2f5'; 
-				const themeEndColor = targetTheme === 'dark' ? '#2a2a2a' : '#e0e2e5';
+    const themeStartColor = targetTheme === 'dark' ? '#1a1a1a' : '#f0f2f5'; 
+    const themeEndColor = targetTheme === 'dark' ? '#2a2a2a' : '#e0e2e5';
 
     // 2. 遮罩层准备：设置颜色并亮起
-				mask.style.background = `linear-gradient(to bottom right, ${themeStartColor}, ${themeEndColor})`;
-				mask.classList.add('active');
+    mask.style.background = `linear-gradient(to bottom right, ${themeStartColor}, ${themeEndColor})`;
+    mask.classList.add('active');
 
-    // 3. 在遮罩完全挡住时（0.5s后），执行“偷梁换柱”
+    // --- 优化：立即同步修改地址栏颜色，消除 500ms 延迟 ---
+    if (metaThemeColor) {
+        metaThemeColor.setAttribute('content', themeColor);
+    }
+
+    // 3. 在遮罩完全挡住时执行切换
     setTimeout(() => {
-        // 修改 HTML 属性触发 CSS 变量切换
         html.setAttribute('data-theme', targetTheme);
         localStorage.setItem('theme', targetTheme);
         
-        // --- 核心新增：同步修改手机地址栏颜色 ---
-        if (metaThemeColor) {
-            metaThemeColor.setAttribute('content', themeColor);
-        }
-        
-        // 更新图标（太阳/月亮）
+        // 更新图标
         updateThemeIcon(targetTheme);
-
-        // 4. 切换完成，撤走遮罩
+        
+        // 4. 撤走遮罩
         mask.classList.remove('active');
     }, 500); 
 }
