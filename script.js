@@ -3,6 +3,15 @@
  * 修复了返回顶部、气泡通知以及初始化渲染逻辑
  */
 
+/* --- 1. 初始化设置 (放在顶部，防止闪烁) --- */
+(function initTheme() {
+    const savedTheme = localStorage.getItem('theme');
+    const theme = savedTheme || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+    document.documentElement.setAttribute('data-theme', theme);
+    // 注意：updateThemeIcon 需要等 DOM 加载完再执行，我们可以加个监听
+    document.addEventListener('DOMContentLoaded', () => updateThemeIcon(theme));
+})();
+
 // 1. 全局辅助函数 (放在最外面，确保任何时候都能被调用)
 window.handleIconError = function(imgElement) {
     if (!imgElement) return;
@@ -179,7 +188,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 return `
                     <a href="${item.url}" class="card" target="_blank" title="${item.name}" style="animation-delay: ${delay};">
                         <div class="icon-container">
-                            <img id="${imgId}" src="${iconUrl}" class="favicon" onload="this.style.opacity=1" onerror="handleIconError(this)">
+                            <img loading="lazy" id="${imgId}" src="${iconUrl}" class="favicon" onload="this.style.opacity=1" onerror="handleIconError(this)">
                             <div class="letter-icon">${firstLetter}</div>
                         </div>
                         <span>${item.name}</span>
@@ -216,4 +225,46 @@ if ('serviceWorker' in navigator) {
             .then(reg => console.log('SW Registered'))
             .catch(err => console.log('SW Failed', err));
     });
+}
+/* --- 3. 交互函数 (放在最下面) --- */
+/**
+ * 主题切换：遮罩层平滑过渡版
+ */
+function toggleTheme() {
+    const mask = document.getElementById('theme-mask');
+    const html = document.documentElement;
+    if (!mask) return; // 安全检查
+
+    // 1. 准备遮罩颜色：我们要变向什么颜色，遮罩就用什么颜色
+    const currentTheme = html.getAttribute('data-theme');
+    const targetTheme = currentTheme === 'dark' ? 'light' : 'dark';
+    
+    // 这里的颜色建议直接写死，或者引用你 CSS 里的变量值
+    mask.style.backgroundColor = targetTheme === 'dark' ? '#121212' : '#f8f9fa';
+
+    // 2. 激活遮罩（淡入）
+    mask.classList.add('active');
+
+    // 3. 在遮罩完全盖住视图的一瞬间（0.5秒后），偷偷完成底层的切换
+    setTimeout(() => {
+        // 执行核心切换逻辑
+        html.setAttribute('data-theme', targetTheme);
+        localStorage.setItem('theme', targetTheme);
+        
+        // 更新图标（太阳/月亮）
+        updateThemeIcon(targetTheme);
+
+        // 4. 切换完成后，让遮罩淡出
+        mask.classList.remove('active');
+    }, 500); // 这里的 500 毫秒必须和 CSS 里的 transition 时间对齐
+}
+
+/**
+ * 更新图标函数（确保你代码里有这个，没有就加上）
+ */
+function updateThemeIcon(theme) {
+    const icon = document.getElementById('theme-icon');
+    if (icon) {
+        icon.innerText = theme === 'dark' ? '☀️' : '🌙';
+    }
 }

@@ -13,8 +13,16 @@
     <meta name="theme-color" content="#ffffff">
     
     <link rel="stylesheet" href="style.css">
+				<script>
+				    (function() {
+				        const savedTheme = localStorage.getItem('theme');
+				        const theme = savedTheme || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+				        document.documentElement.setAttribute('data-theme', theme);
+				    })();
+				</script>
 </head>
 <body>
+	<div id="theme-mask"></div>
     <div class="mobile-header">
         <button id="menu-toggle" aria-label="切换菜单">☰</button>
         <div class="mobile-logo-box" id="back-to-top-mobile">
@@ -34,6 +42,11 @@
     <div id="sidebar-overlay"></div>
 
     <main id="main-content">
+					<div class="top-actions">
+					        <button id="theme-toggle" class="theme-toggle" onclick="toggleTheme(event)">
+					            <span id="theme-icon">🌙</span>
+					        </button>
+					    </div>
         <div class="search-wrapper">
             <div class="search-container">
                 <div class="engine-selector" id="engine-selector">

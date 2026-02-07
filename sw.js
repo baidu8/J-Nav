@@ -1,79 +1,88 @@
-const CACHE_NAME = 'j-nav-pro-v1';
-const ICON_HOST = 'icons.duckduckgo.com';
-
+const CACHE_NAME = 'j-nav-pro-v2'; // 升级版本号以触发更新
 const PRE_CACHE_ASSETS = [
-  '/',           // 这个保留，代表首页
-  'index.html',  // 去掉斜杠
-  'style.css',   // 去掉斜杠
-  'script.js',   // 去掉斜杠
-  'data.js',     // 去掉斜杠
-  'icons/logo.svg' // 去掉斜杠
+    '/',
+    'index.html',
+    'style.css',
+    'script.js',
+    'data.js',
+    'icons/logo.svg'
 ];
 
-/* 安装阶段：强制缓存核心资源 */
+// 透明 1x1 像素占位图，用于替换加载失败的图标
+const EMPTY_IMAGE_BASE64 = 'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7';
+
+/* 安装阶段 */
 self.addEventListener('install', event => {
-  self.skipWaiting();
-  event.waitUntil(
-    caches.open(CACHE_NAME).then(cache => cache.addAll(PRE_CACHE_ASSETS))
-  );
+    self.skipWaiting();
+    event.waitUntil(
+        caches.open(CACHE_NAME).then(cache => cache.addAll(PRE_CACHE_ASSETS))
+    );
 });
 
-/* 激活阶段：清理旧版本 */
+/* 激活阶段 */
 self.addEventListener('activate', event => {
-  event.waitUntil(
-    caches.keys().then(keys => Promise.all(
-      keys.map(key => {
-        if (key !== CACHE_NAME) return caches.delete(key);
-      })
-    ))
-  );
-  self.clients.claim();
+    event.waitUntil(
+        caches.keys().then(keys => Promise.all(
+            keys.map(key => {
+                if (key !== CACHE_NAME) return caches.delete(key);
+            })
+        ))
+    );
+    self.clients.claim();
 });
 
-/* 拦截请求：Stale-While-Revalidate 策略 */
+/* 拦截请求 */
 self.addEventListener('fetch', event => {
-  if (event.request.method !== 'GET') return;
+    if (event.request.method !== 'GET') return;
 
-  const url = new URL(event.request.url);
+    const request = event.request;
+    const isImage = request.destination === 'image';
 
-  // 策略：过时即重新验证 (Stale-While-Revalidate)
-  // 适用于：HTML, JS, CSS 和 图标
-  event.respondWith(
-    caches.match(event.request).then(cachedResponse => {
-      // 无论是否有缓存，都发起网络请求进行更新
-      const fetchPromise = fetch(event.request).then(networkResponse => {
-        if (networkResponse.status === 200) {
-          updateCache(event.request, networkResponse);
-        }
-        return networkResponse;
-      }).catch(() => {
-        // 网络失败时的兜底逻辑
-      });
+    event.respondWith(
+        caches.match(request).then(cachedResponse => {
+            // 发起网络请求作为更新逻辑
+            const fetchPromise = fetch(request).then(networkResponse => {
+                // 如果请求成功，更新缓存
+                if (networkResponse.ok || networkResponse.type === 'opaque') {
+                    updateCache(request, networkResponse.clone());
+                }
+                return networkResponse;
+            }).catch(error => {
+                // --- 核心修复：网络失败时的逻辑 ---
+                
+                // 如果是图片请求失败，返回 404 状态
+                        // 既能消灭浏览器重试导致的红字报错，又能触发页面的 onerror 显示首字
+                        if (isImage) {
+                            return new Response('Icon not found', {
+                                status: 404,
+                                statusText: 'Not Found'
+                            });
+                        }
+                // 如果是其他资源，且没有缓存，这里可以抛出错误或返回默认响应
+                console.log('Fetch failed:', request.url);
+            });
 
-      // 优先返回缓存，实现秒开；没缓存则返回网络请求
-      return cachedResponse || fetchPromise;
-    })
-  );
+            // 优先返回缓存实现秒开，没缓存则返回 fetch 任务
+            return cachedResponse || fetchPromise;
+        })
+    );
 });
 
 /**
- * 辅助函数：更新缓存并通知页面
+ * 辅助函数：更新缓存并处理 data.js 通知
  */
 async function updateCache(request, response) {
-  const cache = await caches.open(CACHE_NAME);
-  const copy = response.clone();
-  
-  // 检查内容是否真的发生了变化（简单对比校验，可选）
-  await cache.put(request, copy);
+    const cache = await caches.open(CACHE_NAME);
+    await cache.put(request, response);
 
-  // 如果 data.js 更新了，向所有页面客户端发送通知
-  if (request.url.includes('data.js')) {
-    const allClients = await self.clients.matchAll();
-    allClients.forEach(client => {
-      client.postMessage({
-        type: 'UPDATE_AVAILABLE',
-        file: 'data.js'
-      });
-    });
-  }
+    // 如果 data.js 更新了，通知页面弹出“发现新内容”气泡
+    if (request.url.includes('data.js')) {
+        const allClients = await self.clients.matchAll();
+        allClients.forEach(client => {
+            client.postMessage({
+                type: 'UPDATE_AVAILABLE',
+                file: 'data.js'
+            });
+        });
+    }
 }

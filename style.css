@@ -1,10 +1,56 @@
+/* 1. 变量定义层 - 全站色彩总控 */
 :root {
-    --sidebar-width: 260px;
-    --primary-color: #4285f4;
+    /* 亮色模式 */
     --bg-color: #f8f9fa;
     --card-bg: #ffffff;
+    --text-main: #333333;
+    --text-sub: #666666;
+    --sidebar-bg: #ffffff;
+    --sub-menu-bg: #fafafa;
+    --border-color: rgba(0, 0, 0, 0.05);
+    --hover-color: #f0f0f0;
+    --input-bg: #ffffff;
+    --sidebar-width: 260px;
+    --primary-color: #4285f4;
     --header-height: 60px;
-    --transition-speed: 0.3s; /* 统一过渡时间 */
+    --transition-speed: 0.3s;
+    color-scheme: light;
+}
+
+[data-theme="dark"] {
+    /* 暗黑模式适配 */
+    --bg-color: #121212;
+    --card-bg: #1e1e1e;
+    --text-main: #e0e0e0;
+    --text-sub: #aaaaaa;
+    --sidebar-bg: #181818;
+    --sub-menu-bg: #222222;
+    --border-color: rgba(255, 255, 255, 0.1);
+    --hover-color: #2c2c2c;
+    --input-bg: #2a2a2a;
+    color-scheme: dark;
+}
+/* 建议放在 [data-theme="dark"] 样式块的附近 */
+[data-theme="dark"] img {
+    filter: brightness(0.8) contrast(1.2);
+    transition: filter 0.4s ease;
+}
+#theme-mask {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: 99999; /* 确保在最最顶层 */
+    pointer-events: none; /* 穿透点击，不影响操作 */
+    background: var(--bg-color); /* 初始透明 */
+    opacity: 0;
+    transition: opacity 0.5s ease; /* 关键：控制遮罩渐显的速度 */
+}
+
+/* 激活状态 */
+#theme-mask.active {
+    opacity: 1;
 }
 /* --- 全站滚动条美化 (Chrome, Edge, Safari) --- */
 ::-webkit-scrollbar {
@@ -19,7 +65,7 @@
 
 /* 滚动条滑块 (Thumb) */
 ::-webkit-scrollbar-thumb {
-    background: rgba(0, 0, 0, 0.1); /* 默认非常淡 */
+    background: var(--border-color); /* 默认非常淡 */
     border-radius: 10px;
     border: 2px solid transparent; /* 技巧：用透明边框实现滑块与边缘的间隙 */
     background-clip: content-box;
@@ -27,7 +73,7 @@
 
 /* 鼠标悬停在滚动条上时加深颜色 */
 ::-webkit-scrollbar-thumb:hover {
-    background: rgba(0, 0, 0, 0.3);
+    background: var(--text-sub);
     background-clip: content-box;
 }
 
@@ -40,15 +86,29 @@
 * { box-sizing: border-box; margin: 0; padding: 0; }
 html { scroll-behavior: smooth; overflow-x: hidden; height: 100%; scrollbar-gutter: stable;}
 body { 
-    font-family: system-ui, -apple-system, sans-serif; 
+				font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
     background: var(--bg-color); 
     display: flex; 
-    color: #333;
+    color: var(--text-main);
+				transition: background var(--transition-speed), color var(--transition-speed);
     width: 100%;
     min-height: 100%;
     overflow-x: hidden;
 }
 
+.theme-toggle {
+    transition: transform 0.5s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+}
+
+.theme-toggle:active {
+    transform: scale(0.8) rotate(180deg);
+}
+
+#theme-icon {
+    font-size: 20px;
+    display: inline-block;
+    transition: all 0.5s;
+}
 body.no-scroll { overflow: hidden; }
 
 /* 2. 遮罩层 - 只有手机端激活 */
@@ -59,25 +119,25 @@ body.no-scroll { overflow: hidden; }
 
 /* 3. 侧边栏整体 */
 #sidebar { 
-    width: var(--sidebar-width); height: 100vh; background: #fff; 
-    border-right: 1px solid #eee; position: fixed; left: 0; top: 0; 
-    overflow-y: auto; transition: transform var(--transition-speed) ease; z-index: 1000;
+    width: var(--sidebar-width); height: 100vh; background: var(--sidebar-bg); 
+    border-right: 1px solid var(--border-color); position: fixed; left: 0; top: 0; 
+    overflow-y: auto; transition: transform var(--transition-speed) ease, background var(--transition-speed); z-index: 1000;
 				/* --- 解决挤压核心代码 --- */
 				overflow-y: auto;
 				scrollbar-gutter: stable; /* 预留滚动条空间，防止内容跳动 */
 }
 .logo-container {
     display: flex; flex-direction: row; align-items: center; justify-content: center;
-    padding: 30px 10px; gap: 12px; border-bottom: 1px solid #f5f5f5; margin-bottom: 10px;
+    padding: 30px 10px; gap: 12px; border-bottom: 1px solid var(--border-color); margin-bottom: 10px; background: var(--sidebar-bg);
 }
 
 .logo-img { width: 32px; height: 32px; object-fit: contain; }
-.logo-text { font-size: 20px; font-weight: 700; color: #1a1a1a; letter-spacing: 1px; white-space: nowrap; }
+.logo-text { font-size: 20px; font-weight: 700; color: var(--text-main); letter-spacing: 1px; white-space: nowrap; }
 
 /* 4. 菜单样式 */
-.nav-item { padding: 12px 20px; cursor: pointer; display: flex; align-items: center; justify-content: space-between; font-size: 14px; color: #555; text-decoration: none; transition: background 0.2s; }
-.nav-item:hover { background: #f0f7ff; color: var(--primary-color); }
-.folder-header { font-weight: 600; background: #ffffff; }
+.nav-item { padding: 12px 20px; cursor: pointer; display: flex; align-items: center; justify-content: space-between; font-size: 14px; color: var(--text-sub); text-decoration: none; }
+.nav-item:hover { background-color: var(--hover-color); color: var(--primary-color); }
+.folder-header { font-weight: 600; background: var(--sidebar-bg); color: var(--text-main); }
 .arrow { font-size: 10px; transition: transform var(--transition-speed); color: #ccc; }
 /* 1. 重新定义子菜单容器，使用 Grid 实现平滑高度过渡 */
 /* 外层容器：控制 Grid 轨道高度 */
@@ -98,7 +158,7 @@ body.no-scroll { overflow: hidden; }
     min-height: 0;
     padding-left: 15px;
     /* 极浅的蓝色背景 */
-    background-color: #f0f7ff; 
+    background-color: var(--sub-menu-bg); 
     /* 配合主色调的左边框 */
     border-left: 3px solid var(--primary-color); 
     border-radius: 0 8px 8px 0;
@@ -107,7 +167,7 @@ body.no-scroll { overflow: hidden; }
 .folder-wrapper.open > .folder-header {
     color: var(--primary-color);
     font-weight: bold;
-    background-color: #fff; /* 保持标题背景纯白，与子菜单的灰色形成对比 */
+    background-color: var(--sidebar-bg); /* 保持标题背景纯白，与子菜单的灰色形成对比 */
 }
 /* 顺便优化一下箭头旋转，让它和卷轴同步 */
 .folder-header .arrow {
@@ -132,42 +192,50 @@ body.no-scroll { overflow: hidden; }
 /* 6. 搜索组件 */
 .search-wrapper { display: flex; justify-content: center; margin-bottom: 50px; width: 100%; }
 .search-container { 
-    display: flex; align-items: center; background: #fff; 
-    border: 2px solid #eee; border-radius: 35px; 
+    display: flex; align-items: center; background: var(--input-bg); 
+    border: 2px solid var(--border-color); border-radius: 35px; 
     padding: 8px 18px; width: 100%; max-width: 600px;
-    transition: all 0.3s;
+}
+#current-engine-icon {
+    width: 24px;
+    height: 24px;
+    object-fit: contain;
+    image-rendering: -webkit-optimize-contrast;
+    flex-shrink: 0;
 }
 .search-container:focus-within { border-color: var(--primary-color); box-shadow: 0 8px 25px rgba(66,133,244,0.12); }
 
 /* 顺便优化一下 selector 的间距，让它更精致 */
 .engine-selector {
     display: flex;
+				position: relative;
+				z-index: 1102; /* 确保高于搜索框和遮罩 */
     align-items: center;
     padding-right: 10px;
     margin-right: 5px;
     border-right: 1px solid #eee;
 }
 .engine-list { 
-    position: absolute; top: 45px; left: -10px; background: #fff; 
-    border: 1px solid #eee; border-radius: 12px; list-style: none; 
-    display: none; width: 110px; box-shadow: 0 10px 25px rgba(0,0,0,0.1); z-index: 101;
+    position: absolute; top: 45px; left: -10px; background: var(--card-bg); 
+    border: 1px solid var(--border-color); color: var(--text-main); border-radius: 12px; list-style: none; 
+    display: none; width: 110px; box-shadow: 0 10px 25px rgba(0,0,0,0.3); z-index: 101;
 }
 .engine-list.show { display: block; animation: fadeIn 0.2s ease; }
 .engine-list li { padding: 12px; font-size: 14px; display: flex; align-items: center; gap: 8px; cursor: pointer; }
 .engine-list li:hover { background: #f8f9fa; border-radius: 10px; }
 
-#search-input { border: none; outline: none; padding: 10px; flex: 1; font-size: 16px; background: transparent; min-width: 0; }
+#search-input { color: var(--text-main); border: none; outline: none; padding: 10px; flex: 1; font-size: 16px; background: transparent; min-width: 0; }
 #search-btn { background: none; border: none; color: var(--primary-color); font-weight: bold; cursor: pointer; padding: 0 10px; }
 
 /* 7. 书签卡片 Grid */
 .section { margin-bottom: 40px; scroll-margin-top: 20px; width: 100%; }
-.section-title { font-size: 16px; margin-bottom: 15px; font-weight: 600; color: #666; display: flex; align-items: center; gap: 8px; }
+.section-title { font-size: 16px; margin-bottom: 15px; font-weight: 600; color: var(--text-sub); display: flex; align-items: center; gap: 8px; }
 .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 15px; width: 100%; }
 
 .card { 
     background: var(--card-bg); padding: 12px; border-radius: 10px; 
-    text-decoration: none; color: #444; display: flex; align-items: center; gap: 12px; 
-    border: 1px solid #eee; transition: all 0.2s;
+    text-decoration: none; color: var(--text-main); display: flex; align-items: center; gap: 12px; 
+    border: 1px solid var(--border-color);
 				opacity: 0; /* 初始隐藏 */
 				animation: fadeInUp 0.5s ease-out forwards; /* 应用动画 */
 				/* animation-delay 会在 JS 中动态设置 */
@@ -197,7 +265,7 @@ body.no-scroll { overflow: hidden; }
 /* 图标容器修复 */
 .icon-container { 
     width: 28px; height: 28px; display: flex; align-items: center; justify-content: center; 
-    border-radius: 6px; background: #f5f5f5; flex-shrink: 0; position: relative;
+    border-radius: 6px; background: var(--hover-color); flex-shrink: 0; position: relative;
 }
 .favicon { width: 18px; height: 18px; opacity: 0; transition: opacity 0.3s; z-index: 2; }
 .letter-icon { 
@@ -210,7 +278,7 @@ body.no-scroll { overflow: hidden; }
 /* 8. 交互组件 (返回顶部 & 更新提示) */
 #back-to-top-pc { 
     position: fixed; bottom: 30px; right: 20px; width: 45px; height: 45px; 
-    background: #fff; border: 1px solid #eee; border-radius: 50%; 
+    background: var(--card-bg); border: 1px solid var(--border-color); color: var(--text-main); border-radius: 50%; 
     display: none; align-items: center; justify-content: center; 
     cursor: pointer; box-shadow: 0 4px 10px rgba(0,0,0,0.1); z-index: 9999; /* 提高层级 */
     transition: all 0.2s;
@@ -222,8 +290,8 @@ body.no-scroll { overflow: hidden; }
 @media (max-width: 768px) {
     .mobile-header { 
         display: flex; position: fixed; top: 0; left: 0; right: 0;
-        height: var(--header-height); background: #fff; border-bottom: 1px solid #eee;
-        align-items: center; justify-content: center; padding: 0 15px; z-index: 999;
+        height: var(--header-height); background: var(--sidebar-bg); border-bottom: 1px solid var(--border-color);
+        align-items: center; justify-content: center; padding: 0 15px; z-index: 1103;
     }
     #menu-toggle {
         position: absolute; left: 15px; background: var(--primary-color); color: white; border: none;
@@ -258,7 +326,7 @@ body.no-scroll { overflow: hidden; }
     gap: 15px;
     padding: 10px 20px;
     border-radius: 50px;
-    background: rgba(40, 40, 40, 0.95);
+    background: rgba(30, 30, 30, 0.95);
     backdrop-filter: blur(8px);
     -webkit-backdrop-filter: blur(8px); /* 兼容 Safari */
     color: white;
@@ -302,17 +370,48 @@ body.no-scroll { overflow: hidden; }
 #update-toast button:active {
     transform: scale(0.95);
 }
-
-/* 确保搜索框内的引擎图标不会暴力撑大容器 */
-#current-engine-icon {
-    width: 24px;
-    height: 24px;
-    object-fit: contain;
-    /* 让小图标在拉伸或缩放时保持锐利，不模糊 */
-    image-rendering: -webkit-optimize-contrast; 
-    flex-shrink: 0; /* 防止在窄屏下被挤压变扁 */
+/* --- 顶部功能区通用样式 --- */
+.top-actions {
+    position: absolute; /* 相对于 main-content 定位 */
+    z-index: 1001;
 }
 
-.logo-container {
-    animation: fadeInUp 0.6s ease-out;
+.theme-toggle {
+    background: var(--card-bg);
+    border: 1px solid var(--border-color);
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    transition: all 0.3s ease;
+}
+
+/* 电脑端定位：放在搜索框右侧水平线上 */
+@media (min-width: 769px) {
+    .top-actions {
+        top: 48px;  /* 调整这个值，让它和搜索框对齐 */
+        right: 40px; /* 距离右边距 */
+    }
+}
+
+/* 手机端定位：放在顶部白条右侧 (对应 image_0e1245.png) */
+@media (max-width: 768px) {
+    .top-actions {
+        position: fixed; /* 手机端需要固定在顶部条上 */
+        top: 10px;      /* 对应顶部白条的高度中间 */
+        right: 15px;    /* 靠右显示 */
+        z-index: 10001;  /* 确保在所有元素最上方 */
+    }
+    
+    .theme-toggle {
+        width: 36px;  /* 手机端稍微缩小一点点 */
+        height: 36px;
+        background: transparent; /* 手机端可以去掉背景边框，显得更简洁 */
+        border: none;
+        box-shadow: none;
+    }
 }
