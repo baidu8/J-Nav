@@ -15,6 +15,8 @@
     --header-height: 60px;
     --transition-speed: 0.3s;
     color-scheme: light;
+				--bg-start-color: #f0f2f5;
+				--bg-end-color: #e0e2e5;
 }
 
 [data-theme="dark"] {
@@ -28,6 +30,8 @@
     --border-color: rgba(255, 255, 255, 0.1);
     --hover-color: #2c2c2c;
     --input-bg: #2a2a2a;
+				--bg-start-color: #1a1a1a;
+				--bg-end-color: #2a2a2a;
     color-scheme: dark;
 }
 /* 建议放在 [data-theme="dark"] 样式块的附近 */
@@ -35,17 +39,20 @@
     filter: brightness(0.8) contrast(1.2);
     transition: filter 0.4s ease;
 }
+/* 修改 style.css 中的 #theme-mask */
 #theme-mask {
     position: fixed;
     top: 0;
     left: 0;
     width: 100vw;
     height: 100vh;
-    z-index: 99999; /* 确保在最最顶层 */
-    pointer-events: none; /* 穿透点击，不影响操作 */
-    background: var(--bg-color); /* 初始透明 */
+    z-index: 99999;
+    pointer-events: none;
     opacity: 0;
-    transition: opacity 0.5s ease; /* 关键：控制遮罩渐显的速度 */
+    transition: opacity 0.5s ease;
+    background: linear-gradient(to bottom right, var(--mask-start), var(--mask-end));
+				backdrop-filter: blur(8px); /* 新增：毛玻璃效果 */
+				-webkit-backdrop-filter: blur(8px); /* 兼容 Safari */
 }
 
 /* 激活状态 */

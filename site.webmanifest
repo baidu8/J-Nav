@@ -1,36 +1,37 @@
 {
-  "name": "J-Nav 极简导航",
+  "name": "J-Nav | 极简导航",
   "short_name": "J-Nav",
-  "description": "极简高清的个人书签导航站",
+  "description": "极简个人书签导航站",
   "icons": [
     {
-      "src": "web-app-manifest-192x192.png",
+      "src": "icons/web-app-manifest-192x192.png",
       "sizes": "192x192",
       "type": "image/png",
       "purpose": "any"
     },
     {
-      "src": "web-app-manifest-192x192.png",
+      "src": "icons/web-app-manifest-192x192.png",
       "sizes": "192x192",
       "type": "image/png",
       "purpose": "maskable"
     },
     {
-      "src": "web-app-manifest-512x512.png",
+      "src": "icons/web-app-manifest-512x512.png",
       "sizes": "512x512",
       "type": "image/png",
       "purpose": "any"
     },
     {
-      "src": "web-app-manifest-512x512.png",
+      "src": "icons/web-app-manifest-512x512.png",
       "sizes": "512x512",
       "type": "image/png",
       "purpose": "maskable"
     }
   ],
   "start_url": "index.html",
-  "theme_color": "#4285f4",
+		"id": "/index.html",
+  "theme_color": "#f8f9fa",
   "background_color": "#f8f9fa",
   "display": "standalone",
-  "orientation": "portrait-any"
+  "orientation": "portrait"
 }

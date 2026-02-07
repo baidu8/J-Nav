@@ -226,41 +226,50 @@ if ('serviceWorker' in navigator) {
             .catch(err => console.log('SW Failed', err));
     });
 }
-/* --- 3. 交互函数 (放在最下面) --- */
 /**
- * 主题切换：遮罩层平滑过渡版
+ * 主题切换：遮罩层平滑过渡 + 手机地址栏同步变色
  */
 function toggleTheme() {
     const mask = document.getElementById('theme-mask');
     const html = document.documentElement;
-    if (!mask) return; // 安全检查
+    const metaThemeColor = document.getElementById('meta-theme-color');
+    
+    if (!mask) return; 
 
-    // 1. 准备遮罩颜色：我们要变向什么颜色，遮罩就用什么颜色
+    // 1. 确定目标主题和对应的颜色
     const currentTheme = html.getAttribute('data-theme');
     const targetTheme = currentTheme === 'dark' ? 'light' : 'dark';
     
-    // 这里的颜色建议直接写死，或者引用你 CSS 里的变量值
-    mask.style.backgroundColor = targetTheme === 'dark' ? '#121212' : '#f8f9fa';
+    // 这里的颜色务必和 CSS 变量中的 --bg-color 保持一致
+    const themeColor = targetTheme === 'dark' ? '#121212' : '#f8f9fa';
+				const themeStartColor = targetTheme === 'dark' ? '#1a1a1a' : '#f0f2f5'; 
+				const themeEndColor = targetTheme === 'dark' ? '#2a2a2a' : '#e0e2e5';
 
-    // 2. 激活遮罩（淡入）
-    mask.classList.add('active');
+    // 2. 遮罩层准备：设置颜色并亮起
+				mask.style.background = `linear-gradient(to bottom right, ${themeStartColor}, ${themeEndColor})`;
+				mask.classList.add('active');
 
-    // 3. 在遮罩完全盖住视图的一瞬间（0.5秒后），偷偷完成底层的切换
+    // 3. 在遮罩完全挡住时（0.5s后），执行“偷梁换柱”
     setTimeout(() => {
-        // 执行核心切换逻辑
+        // 修改 HTML 属性触发 CSS 变量切换
         html.setAttribute('data-theme', targetTheme);
         localStorage.setItem('theme', targetTheme);
+        
+        // --- 核心新增：同步修改手机地址栏颜色 ---
+        if (metaThemeColor) {
+            metaThemeColor.setAttribute('content', themeColor);
+        }
         
         // 更新图标（太阳/月亮）
         updateThemeIcon(targetTheme);
 
-        // 4. 切换完成后，让遮罩淡出
+        // 4. 切换完成，撤走遮罩
         mask.classList.remove('active');
-    }, 500); // 这里的 500 毫秒必须和 CSS 里的 transition 时间对齐
+    }, 500); 
 }
 
 /**
- * 更新图标函数（确保你代码里有这个，没有就加上）
+ * 更新图标函数
  */
 function updateThemeIcon(theme) {
     const icon = document.getElementById('theme-icon');
