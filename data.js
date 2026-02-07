@@ -82,7 +82,7 @@ window.bookmarkData = [
                 "url": "https://jx.xmflv.com/?url="
               },
               {
-                "name": "�",
+                "name": "8090",
                 "type": "bookmark",
                 "url": "https://www.8090g.cn/?url="
               },
@@ -781,6 +781,11 @@ window.bookmarkData = [
                 "name": "iTab新标签页",
                 "type": "bookmark",
                 "url": "https://www.itab.link/"
+              },
+              {
+                "name": "FeHelper(工具箱)",
+                "type": "bookmark",
+                "url": "https://fehelper.com/"
               }
             ]
           },
@@ -1116,7 +1121,7 @@ window.bookmarkData = [
             ]
           },
           {
-            "name": "🤨表情emoji",
+            "name": "🤨emoji",
             "type": "folder",
             "children": [
               {
@@ -2477,6 +2482,11 @@ window.bookmarkData = [
                 "name": "谷歌字体",
                 "type": "bookmark",
                 "url": "https://fonts.google.com/"
+              },
+              {
+                "name": "谷歌收录",
+                "type": "bookmark",
+                "url": "https://search.google.com/search-console"
               },
               {
                 "name": "AdSense",
