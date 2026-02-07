@@ -121,7 +121,7 @@ body.no-scroll { overflow: hidden; }
 #sidebar { 
     width: var(--sidebar-width); height: 100vh; background: var(--sidebar-bg); 
     border-right: 1px solid var(--border-color); position: fixed; left: 0; top: 0; 
-    overflow-y: auto; transition: transform var(--transition-speed) ease, background var(--transition-speed); z-index: 1000;
+    overflow-y: auto; transition: transform var(--transition-speed) ease, background var(--transition-speed); z-index: 1104;
 				/* --- 解决挤压核心代码 --- */
 				overflow-y: auto;
 				scrollbar-gutter: stable; /* 预留滚动条空间，防止内容跳动 */
