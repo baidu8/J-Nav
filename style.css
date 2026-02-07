@@ -14,9 +14,10 @@
     --primary-color: #4285f4;
     --header-height: 60px;
     --transition-speed: 0.3s;
-    color-scheme: light;
 				--bg-start-color: #f0f2f5;
 				--bg-end-color: #e0e2e5;
+    color-scheme: light;
+    padding-top: env(safe-area-inset-top);
 }
 
 [data-theme="dark"] {
@@ -122,6 +123,14 @@ body.no-scroll { overflow: hidden; }
 #sidebar-overlay { 
     display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; 
     background: rgba(0,0,0,0.4); z-index: 998; backdrop-filter: blur(2px);
+}
+/* 针对桌面安装版 PWA 的特殊处理 */
+@media (display-mode: standalone) {
+    body {
+        /* 确保背景填充整个窗口，不留白边 */
+        background-color: var(--bg-color);
+        transition: background-color 0.3s ease;
+    }
 }
 
 /* 3. 侧边栏整体 */

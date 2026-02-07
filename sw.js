@@ -1,4 +1,4 @@
-const CACHE_NAME = 'j-nav-pro-v2'; // 升级版本号以触发更新
+const CACHE_NAME = 'j-nav-pro-v3'; // 升级版本号以触发更新
 const PRE_CACHE_ASSETS = [
     '/',
     'index.html',
@@ -69,20 +69,51 @@ self.addEventListener('fetch', event => {
 });
 
 /**
- * 辅助函数：更新缓存并处理 data.js 通知
+ * 辅助函数：更新缓存并智能处理 data.js 通知
  */
 async function updateCache(request, response) {
     const cache = await caches.open(CACHE_NAME);
-    await cache.put(request, response);
-
-    // 如果 data.js 更新了，通知页面弹出“发现新内容”气泡
+    
+    // 针对 data.js 的特殊处理：对比内容，防止虚假更新
     if (request.url.includes('data.js')) {
-        const allClients = await self.clients.matchAll();
-        allClients.forEach(client => {
-            client.postMessage({
-                type: 'UPDATE_AVAILABLE',
-                file: 'data.js'
-            });
-        });
+        try {
+            const oldResponse = await cache.match(request);
+            // 克隆响应流，因为 response.text() 会消耗掉流，clone 后的用于存入缓存
+            const responseToStore = response.clone();
+            const newText = await response.text(); 
+
+            if (oldResponse) {
+                const oldText = await oldResponse.text();
+                // 只有当新旧文件内容（字符）完全不一致时，才更新缓存并通知
+                if (oldText !== newText) {
+                    await cache.put(request, responseToStore);
+                    notifyUpdate(request.url);
+                }
+            } else {
+                // 如果是第一次加载，直接存入
+                await cache.put(request, responseToStore);
+            }
+        } catch (e) {
+            console.error('对比 data.js 失败:', e);
+            // 降级处理：出错则直接存入，不发通知
+            await cache.put(request, response.clone());
+        }
+        return;
     }
+
+    // 其他普通资源直接存入缓存
+    await cache.put(request, response);
+}
+
+/**
+ * 提取出的通知函数：确认为真实更新后才调用
+ */
+async function notifyUpdate(url) {
+    const allClients = await self.clients.matchAll();
+    allClients.forEach(client => {
+        client.postMessage({
+            type: 'UPDATE_AVAILABLE',
+            file: url
+        });
+    });
 }
