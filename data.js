@@ -12,6 +12,11 @@ window.bookmarkData = [
             "type": "folder",
             "children": [
               {
+                "name": "哔哩哔哩 ",
+                "type": "bookmark",
+                "url": "https://www.bilibili.com/"
+              },
+              {
                 "name": "低端影视",
                 "type": "bookmark",
                 "url": "https://ddys.vip/"
@@ -52,7 +57,7 @@ window.bookmarkData = [
                 "url": "https://xuanyuan.me/blog/archives/1162"
               },
               {
-                "name": "GitHub - joevess/IPTV： IPTV直播源抓取 自动整合hao趣网直播源+TVBox直播源+其他网上直播源 择取分辨率、速度最佳视频流 定期更新",
+                "name": " joevess/IPTV(直播源)",
                 "type": "bookmark",
                 "url": "https://github.com/joevess/IPTV"
               },
@@ -196,12 +201,17 @@ window.bookmarkData = [
               {
                 "name": "Spotify",
                 "type": "bookmark",
-                "url": "https://www.spotify.com/sg-zh/account/overview/"
+                "url": "https://open.spotify.com/"
               },
               {
                 "name": "MV下载王",
                 "type": "bookmark",
                 "url": "http://mvxz.com/?home"
+              },
+              {
+                "name": "网易云音乐",
+                "type": "bookmark",
+                "url": "https://music.163.com/"
               }
             ]
           },
@@ -424,6 +434,11 @@ window.bookmarkData = [
             "name": "🎭素材",
             "type": "folder",
             "children": [
+              {
+                "name": "Unsplash(免)",
+                "type": "bookmark",
+                "url": "https://unsplash.com/"
+              },
               {
                 "name": "免费素材图片",
                 "type": "bookmark",
@@ -1094,6 +1109,11 @@ window.bookmarkData = [
                 "url": "https://tinypng.com/"
               },
               {
+                "name": "Squoosh",
+                "type": "bookmark",
+                "url": "https://squoosh.app/"
+              },
+              {
                 "name": "压缩图像",
                 "type": "bookmark",
                 "url": "https://zh.recompressor.com/"
@@ -1160,6 +1180,11 @@ window.bookmarkData = [
             "name": "文本-编辑",
             "type": "folder",
             "children": [
+              {
+                "name": "Online(流程图)",
+                "type": "bookmark",
+                "url": "https://mermaid.live/"
+              },
               {
                 "name": "Visual(支持链接远程代码库)",
                 "type": "bookmark",
@@ -1770,6 +1795,11 @@ window.bookmarkData = [
             "type": "folder",
             "children": [
               {
+                "name": "VitePress",
+                "type": "bookmark",
+                "url": "https://vitepress.dev/zh/"
+              },
+              {
                 "name": "astro",
                 "type": "bookmark",
                 "url": "https://astro.new/latest/"
@@ -1978,11 +2008,6 @@ window.bookmarkData = [
             "name": "程序",
             "type": "folder",
             "children": [
-              {
-                "name": "VitePress",
-                "type": "bookmark",
-                "url": "https://vitepress.dev/zh/"
-              },
               {
                 "name": "cf创建动态博客",
                 "type": "bookmark",
@@ -2295,9 +2320,9 @@ window.bookmarkData = [
             "url": "https://github.com/zzd/photo-page-for-typecho"
           },
           {
-            "name": "ansoncloud8 ((已换amclubs库)) · GitHub",
+            "name": "Kele(VitePress 主题)",
             "type": "bookmark",
-            "url": "https://github.com/ansoncloud8"
+            "url": "https://github.com/Kele-Bingtang/vitepress-theme-teek"
           }
         ]
       },
