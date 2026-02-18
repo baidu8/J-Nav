@@ -12,6 +12,7 @@
     --input-bg: #ffffff;
     --sidebar-width: 260px;
     --primary-color: #4285f4;
+    --accent-color: #88b1ff;
     --header-height: 60px;
     --transition-speed: 0.3s;
 				--bg-start-color: #f0f2f5;
@@ -20,6 +21,21 @@
     padding-top: env(safe-area-inset-top);
 }
 
+
+[data-skin="mint"] {
+    --primary-color: #1fa67a;
+    --accent-color: #7edcb5;
+}
+
+[data-skin="sunset"] {
+    --primary-color: #e06a2f;
+    --accent-color: #ffb26a;
+}
+
+[data-skin="lavender"] {
+    --primary-color: #7b61d1;
+    --accent-color: #b79cf3;
+}
 [data-theme="dark"] {
     /* 暗黑模式适配 */
     --bg-color: #121212;
@@ -112,6 +128,17 @@ body {
     transform: scale(0.8) rotate(180deg);
 }
 
+.skin-selector {
+    height: 40px;
+    border-radius: 12px;
+    border: 1px solid var(--border-color);
+    background: var(--card-bg);
+    color: var(--text-main);
+    padding: 0 10px;
+    font-size: 13px;
+    cursor: pointer;
+}
+
 #theme-icon {
     font-size: 20px;
     display: inline-block;
@@ -156,7 +183,7 @@ body.no-scroll { overflow: hidden; }
     color: var(--text-main);
     
     /* 渐变文字效果（可选，非常吸睛） */
-    background: linear-gradient(135deg, var(--primary-color), #88b1ff);
+    background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     
@@ -406,6 +433,9 @@ body.no-scroll { overflow: hidden; }
 .top-actions {
     position: absolute; /* 相对于 main-content 定位 */
     z-index: 1001;
+    display: flex;
+    align-items: center;
+    gap: 10px;
 }
 
 .theme-toggle {
@@ -454,4 +484,11 @@ body.no-scroll { overflow: hidden; }
     transition: all 0.3s ease;
     box-shadow: none; /* 去掉多余阴影 */
     }
+
+    .skin-selector {
+        height: 36px;
+        border-radius: 8px;
+        background: var(--card-bg);
+    }
+
 }

@@ -6,10 +6,15 @@
 /* --- 1. 初始化设置 (放在顶部，防止闪烁) --- */
 (function initTheme() {
     const savedTheme = localStorage.getItem('theme');
+    const savedSkin = localStorage.getItem('skin') || 'classic';
     const theme = savedTheme || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
     document.documentElement.setAttribute('data-theme', theme);
+    document.documentElement.setAttribute('data-skin', savedSkin);
     // 注意：updateThemeIcon 需要等 DOM 加载完再执行，我们可以加个监听
-    document.addEventListener('DOMContentLoaded', () => updateThemeIcon(theme));
+    document.addEventListener('DOMContentLoaded', () => {
+        updateThemeIcon(theme);
+        updateMetaThemeColor();
+    });
 })();
 
 // 1. 全局辅助函数 (放在最外面，确保任何时候都能被调用)
@@ -38,6 +43,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const currentEngineIcon = document.getElementById('current-engine-icon');
     const searchInput = document.getElementById('search-input');
     const searchBtn = document.getElementById('search-btn');
+    const skinSelector = document.getElementById('skin-selector');
 
     // --- 搜索功能 ---
     let currentSearchUrl = "https://www.google.com/search?q=";
@@ -67,6 +73,19 @@ document.addEventListener('DOMContentLoaded', () => {
     searchBtn.addEventListener('click', doSearch);
     searchInput.addEventListener('keypress', (e) => { if (e.key === 'Enter') doSearch(); });
     document.addEventListener('click', () => engineList.classList.remove('show'));
+
+
+    // --- 皮肤切换 ---
+    if (skinSelector) {
+        const currentSkin = document.documentElement.getAttribute('data-skin') || 'classic';
+        skinSelector.value = currentSkin;
+        skinSelector.addEventListener('change', (e) => {
+            const skin = e.target.value;
+            document.documentElement.setAttribute('data-skin', skin);
+            localStorage.setItem('skin', skin);
+            updateMetaThemeColor();
+        });
+    }
 
     // --- 导航与侧边栏逻辑 ---
     function scrollToTop() { 
@@ -226,13 +245,22 @@ if ('serviceWorker' in navigator) {
             .catch(err => console.log('SW Failed', err));
     });
 }
+function getThemeColorByState(theme) {
+    return theme === 'dark' ? '#121212' : '#f8f9fa';
+}
+
+function updateMetaThemeColor(theme = document.documentElement.getAttribute('data-theme')) {
+    const metaThemeColor = document.getElementById('meta-theme-color');
+    if (!metaThemeColor) return;
+    metaThemeColor.setAttribute('content', getThemeColorByState(theme));
+}
+
 /**
  * 主题切换：遮罩层平滑过渡 + 手机地址栏同步变色
  */
 function toggleTheme() {
     const mask = document.getElementById('theme-mask');
     const html = document.documentElement;
-    const metaThemeColor = document.getElementById('meta-theme-color');
     
     if (!mask) return; 
 
@@ -241,7 +269,6 @@ function toggleTheme() {
     const targetTheme = currentTheme === 'dark' ? 'light' : 'dark';
     
     // 颜色配置
-    const themeColor = targetTheme === 'dark' ? '#121212' : '#f8f9fa';
     const themeStartColor = targetTheme === 'dark' ? '#1a1a1a' : '#f0f2f5'; 
     const themeEndColor = targetTheme === 'dark' ? '#2a2a2a' : '#e0e2e5';
 
@@ -250,9 +277,7 @@ function toggleTheme() {
     mask.classList.add('active');
 
     // --- 优化：立即同步修改地址栏颜色，消除 500ms 延迟 ---
-    if (metaThemeColor) {
-        metaThemeColor.setAttribute('content', themeColor);
-    }
+    updateMetaThemeColor(targetTheme);
 
     // 3. 在遮罩完全挡住时执行切换
     setTimeout(() => {

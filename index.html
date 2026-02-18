@@ -19,8 +19,10 @@
 				<script>
 				    (function() {
 				        const savedTheme = localStorage.getItem('theme');
+				        const savedSkin = localStorage.getItem('skin') || 'classic';
 				        const theme = savedTheme || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
 				        document.documentElement.setAttribute('data-theme', theme);
+				        document.documentElement.setAttribute('data-skin', savedSkin);
 				    })();
 				</script>
 </head>
@@ -46,6 +48,12 @@
 
     <main id="main-content">
 					<div class="top-actions">
+					        <select id="skin-selector" class="skin-selector" aria-label="选择皮肤">
+					            <option value="classic">经典蓝</option>
+					            <option value="mint">薄荷绿</option>
+					            <option value="sunset">落日橙</option>
+					            <option value="lavender">薰衣草</option>
+					        </select>
 					        <button id="theme-toggle" class="theme-toggle" onclick="toggleTheme(event)">
 					            <span id="theme-icon">🌙</span>
 					        </button>
