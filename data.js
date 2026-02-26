@@ -17,11 +17,6 @@ window.bookmarkData = [
                 "url": "https://www.bilibili.com/"
               },
               {
-                "name": "低端影视",
-                "type": "bookmark",
-                "url": "https://ddys.vip/"
-              },
-              {
                 "name": "低端影视(发布页)",
                 "type": "bookmark",
                 "url": "https://www.ddys.diy/"
@@ -37,7 +32,7 @@ window.bookmarkData = [
                 "url": "https://www.yuny.tv/"
               },
               {
-                "name": "网飞猫_最新Netflix新剧_韩国电影免费在线观看",
+                "name": "网飞猫",
                 "type": "bookmark",
                 "url": "https://www.ncat22.com/"
               },
@@ -52,7 +47,7 @@ window.bookmarkData = [
                 "url": "https://www.hanju7.com/"
               },
               {
-                "name": "IPTV、APTV 直播源 m3u（0921 大更新） - 轩源的网络日志 - Xuanyuan's Blog",
+                "name": "直播源 m3u",
                 "type": "bookmark",
                 "url": "https://xuanyuan.me/blog/archives/1162"
               },
@@ -135,6 +130,42 @@ window.bookmarkData = [
                 "name": "爱影剧网",
                 "type": "bookmark",
                 "url": "https://www.2yjw.com/"
+              }
+            ]
+          },
+          {
+            "name": "🛒采集",
+            "type": "folder",
+            "children": [
+              {
+                "name": "茅台资源站",
+                "type": "bookmark",
+                "url": "https://mtzy.me/"
+              },
+              {
+                "name": "卧龙资源网",
+                "type": "bookmark",
+                "url": "https://wolongzyw.com/"
+              },
+              {
+                "name": "红牛资源",
+                "type": "bookmark",
+                "url": "https://hongniuziyuan.com/"
+              },
+              {
+                "name": "樱花资源",
+                "type": "bookmark",
+                "url": "https://yhzy.cc/"
+              },
+              {
+                "name": "森林资源",
+                "type": "bookmark",
+                "url": "https://senlinzy.com/"
+              },
+              {
+                "name": "虎牙资源",
+                "type": "bookmark",
+                "url": "https://huyazy.com/"
               }
             ]
           },
@@ -473,6 +504,11 @@ window.bookmarkData = [
                 "name": "免费商用字体",
                 "type": "bookmark",
                 "url": "https://www.100font.com/"
+              },
+              {
+                "name": "游戏素材",
+                "type": "bookmark",
+                "url": "https://kenney.nl/"
               },
               {
                 "name": "🎼音效",
@@ -1137,6 +1173,11 @@ window.bookmarkData = [
                 "name": "Vocal(分离音乐)",
                 "type": "bookmark",
                 "url": "https://vocalremover.org/"
+              },
+              {
+                "name": "音频剪辑器 ",
+                "type": "bookmark",
+                "url": "https://vocalremover.org/zh/cutter"
               }
             ]
           },
@@ -1445,11 +1486,6 @@ window.bookmarkData = [
                 "name": "惜染图库",
                 "type": "bookmark",
                 "url": "https://xiranimg.com/"
-              },
-              {
-                "name": "/ - xKx写真库",
-                "type": "bookmark",
-                "url": "https://sp.xkx.me/"
               }
             ]
           },
@@ -1471,11 +1507,6 @@ window.bookmarkData = [
                 "name": "123云盘",
                 "type": "bookmark",
                 "url": "https://www.123pan.com/login"
-              },
-              {
-                "name": "有道云笔记",
-                "type": "bookmark",
-                "url": "https://note.youdao.com/web/#/file/recent/note/WEB71e188cf8bc585f1e2434f7b0fbecbda/"
               },
               {
                 "name": "阿里云盘",
@@ -1528,11 +1559,6 @@ window.bookmarkData = [
                 "url": "https://yun.139.com/w/#/"
               },
               {
-                "name": "优梦_云盘",
-                "type": "bookmark",
-                "url": "https://pan.aoxix.com/user/index"
-              },
-              {
                 "name": "Teambition(已清空)",
                 "type": "bookmark",
                 "url": "https://www.teambition.com/"
@@ -1548,11 +1574,6 @@ window.bookmarkData = [
                 "url": "https://www.jianguoyun.com/#/"
               },
               {
-                "name": "All-in-one",
-                "type": "bookmark",
-                "url": "https://drive.imgod.me/login"
-              },
-              {
                 "name": "iCloud",
                 "type": "bookmark",
                 "url": "https://www.icloud.com/"
@@ -1566,6 +1587,11 @@ window.bookmarkData = [
                 "name": "阿里云盘",
                 "type": "bookmark",
                 "url": "https://www.aliyundrive.com/drive"
+              },
+              {
+                "name": "有道云笔记",
+                "type": "bookmark",
+                "url": "https://note.youdao.com/old-web/#/file/recent/note/ED08CA1293514FF08D8F9CDF096B9035/"
               }
             ]
           },
@@ -1584,11 +1610,6 @@ window.bookmarkData = [
                 "url": "https://www.upyunso.com/"
               }
             ]
-          },
-          {
-            "name": "有道云笔记",
-            "type": "bookmark",
-            "url": "https://note.youdao.com/old-web/#/file/recent/note/ED08CA1293514FF08D8F9CDF096B9035/"
           }
         ]
       },
@@ -1600,16 +1621,6 @@ window.bookmarkData = [
             "name": "🦄托管-部署",
             "type": "folder",
             "children": [
-              {
-                "name": "Cloudflare(域名与cdn)",
-                "type": "bookmark",
-                "url": "https://dash.cloudflare.com/56d2eae64975328ca874a9def1b136e2"
-              },
-              {
-                "name": "GitHub",
-                "type": "bookmark",
-                "url": "https://github.com/baidu8"
-              },
               {
                 "name": "Vercel(代码托管)",
                 "type": "bookmark",
@@ -2044,11 +2055,6 @@ window.bookmarkData = [
                 "url": "https://pushoo.js.org/"
               },
               {
-                "name": "小枫音乐",
-                "type": "bookmark",
-                "url": "https://music.xfyun.club/"
-              },
-              {
                 "name": "可道云",
                 "type": "bookmark",
                 "url": "https://kodcloud.com/"
@@ -2255,6 +2261,16 @@ window.bookmarkData = [
                 "name": "uniCloud",
                 "type": "bookmark",
                 "url": "https://unicloud.dcloud.net.cn/home"
+              },
+              {
+                "name": "VideoTogether | 一起看视频",
+                "type": "bookmark",
+                "url": "https://2gether.video/zh-cn/"
+              },
+              {
+                "name": "SRI(获取cdn哈希值)",
+                "type": "bookmark",
+                "url": "https://srihash.org/"
               }
             ]
           }
@@ -2323,6 +2339,11 @@ window.bookmarkData = [
             "name": "Kele(VitePress 主题)",
             "type": "bookmark",
             "url": "https://github.com/Kele-Bingtang/vitepress-theme-teek"
+          },
+          {
+            "name": "GitHub Star History",
+            "type": "bookmark",
+            "url": "https://www.star-history.com/"
           }
         ]
       },
@@ -2331,69 +2352,18 @@ window.bookmarkData = [
         "type": "folder",
         "children": [
           {
-            "name": "腾讯",
+            "name": "字节",
             "type": "folder",
             "children": [
               {
-                "name": "域名管理",
+                "name": "火山引擎",
                 "type": "bookmark",
-                "url": "https://console.dnspod.cn/"
+                "url": "https://www.volcengine.com/"
               },
               {
-                "name": "QQ推广",
+                "name": "扣子 Coze",
                 "type": "bookmark",
-                "url": "https://shang.qq.com/v3/widget.html"
-              },
-              {
-                "name": "QQ邮箱",
-                "type": "bookmark",
-                "url": "https://mail.qq.com/"
-              },
-              {
-                "name": "腾讯微云",
-                "type": "bookmark",
-                "url": "https://www.weiyun.com/disk"
-              },
-              {
-                "name": "腾讯文档",
-                "type": "bookmark",
-                "url": "https://docs.qq.com/desktop/?u=cbf8fc79db334ed9be02f3d5a3486e5b"
-              },
-              {
-                "name": "腾讯视频",
-                "type": "bookmark",
-                "url": "https://v.qq.com/"
-              }
-            ]
-          },
-          {
-            "name": "百度",
-            "type": "folder",
-            "children": [
-              {
-                "name": "百度翻译",
-                "type": "bookmark",
-                "url": "https://fanyi.baidu.com/"
-              },
-              {
-                "name": "百度统计",
-                "type": "bookmark",
-                "url": "https://tongji.baidu.com/main/homepage/10000306886/homepage/index"
-              },
-              {
-                "name": "百度CDN",
-                "type": "bookmark",
-                "url": "https://su.baidu.com/console/index.html#/accountconfig"
-              },
-              {
-                "name": "百度搜索榜",
-                "type": "bookmark",
-                "url": "http://top.baidu.com/?vit=1&fr=topboards"
-              },
-              {
-                "name": "开发者搜索",
-                "type": "bookmark",
-                "url": "https://kaifa.baidu.com/"
+                "url": "https://www.coze.cn/overview"
               }
             ]
           },
@@ -2402,9 +2372,9 @@ window.bookmarkData = [
             "type": "folder",
             "children": [
               {
-                "name": "翻译",
+                "name": "微软开发者",
                 "type": "bookmark",
-                "url": "https://www.bing.com/translator?setlang=zh-cn"
+                "url": "https://login.microsoftonline.com/common/oauth2/v2.0/authorize?client_id=fabfbdc4-5751-471c-ac43-3826fa1afc31&response_type=code%20id_token&scope=openid%20profile%20offline_access&state=OpenIdConnect.AuthenticationProperties%3DCfDJ8IgdOZ1CJ8hMm0QH6Tjy3WWK8cyjylVzveVDhEXby_UQP8SKA6X6yOlTNplaqXYqIXxoo5W9Yt7QIYhKQiEKrBWkZlLP8C4C1KITchkYC9gww8zkOAbombtKlhjovWdfFF2Z_UV7yS2QFcOdVlzQB728iJw8plJqFJbZs5eI2eKfrIboNGfFpUFOZPbNzmHyzP1w-kfO-3O0WFVJVUCwbiTw8WcuriLHIxHLmhkVAFVfS4zC2wOS-29AM--OYNUMHThsyGdxiP-fdOaPg1tkn2U&response_mode=form_post&nonce=639067664145482752.YjVlZTQxNWMtNzdlMy00M2E1LWI3ODEtYzczYmZkNTVjY2FjZDJmOWQ5NDktZWU0ZS00MTFmLTg2NTEtYjY2Y2E3ODM1NmEw&redirect_uri=https%3A%2F%2Fpartner.microsoft.com%2Faad%2FauthPostGateway&instance_aware=true&mkt=en-US&x-client-SKU=ID_NET472&x-client-ver=6.32.0.0&sso_reload=true"
               },
               {
                 "name": "saobi-OneDrive",
@@ -2469,19 +2439,9 @@ window.bookmarkData = [
                 "url": "https://gemini.google.com/app"
               },
               {
-                "name": "YouTube",
-                "type": "bookmark",
-                "url": "https://www.youtube.com/"
-              },
-              {
                 "name": "Gmail",
                 "type": "bookmark",
                 "url": "https://accounts.google.com/b/0/AddMailService"
-              },
-              {
-                "name": "翻译",
-                "type": "bookmark",
-                "url": "https://translate.google.com/?hl=zh-CN&tab=TT"
               },
               {
                 "name": "Chrome 应用商店",
@@ -2534,6 +2494,83 @@ window.bookmarkData = [
                 "url": "https://gemini.google.com/saved-info"
               }
             ]
+          },
+          {
+            "name": "腾讯",
+            "type": "folder",
+            "children": [
+              {
+                "name": "微信开发者平台",
+                "type": "bookmark",
+                "url": "https://developers.weixin.qq.com/platform"
+              },
+              {
+                "name": "域名管理",
+                "type": "bookmark",
+                "url": "https://console.dnspod.cn/"
+              },
+              {
+                "name": "QQ推广",
+                "type": "bookmark",
+                "url": "https://shang.qq.com/v3/widget.html"
+              },
+              {
+                "name": "QQ邮箱",
+                "type": "bookmark",
+                "url": "https://mail.qq.com/"
+              },
+              {
+                "name": "腾讯微云",
+                "type": "bookmark",
+                "url": "https://www.weiyun.com/disk"
+              },
+              {
+                "name": "腾讯文档",
+                "type": "bookmark",
+                "url": "https://docs.qq.com/desktop/?u=cbf8fc79db334ed9be02f3d5a3486e5b"
+              },
+              {
+                "name": "腾讯视频",
+                "type": "bookmark",
+                "url": "https://v.qq.com/"
+              }
+            ]
+          },
+          {
+            "name": "百度",
+            "type": "folder",
+            "children": [
+              {
+                "name": "百度翻译",
+                "type": "bookmark",
+                "url": "https://fanyi.baidu.com/"
+              },
+              {
+                "name": "百度统计",
+                "type": "bookmark",
+                "url": "https://tongji.baidu.com/main/homepage/10000306886/homepage/index"
+              },
+              {
+                "name": "资源平台",
+                "type": "bookmark",
+                "url": "https://ziyuan.baidu.com/?castk=LTE%3D"
+              },
+              {
+                "name": "百度CDN",
+                "type": "bookmark",
+                "url": "https://su.baidu.com/console/index.html#/accountconfig"
+              },
+              {
+                "name": "百度搜索榜",
+                "type": "bookmark",
+                "url": "http://top.baidu.com/?vit=1&fr=topboards"
+              },
+              {
+                "name": "开发者搜索",
+                "type": "bookmark",
+                "url": "https://kaifa.baidu.com/"
+              }
+            ]
           }
         ]
       },
@@ -2542,19 +2579,14 @@ window.bookmarkData = [
         "type": "folder",
         "children": [
           {
-            "name": "Gemini",
+            "name": "Hugging",
             "type": "bookmark",
-            "url": "https://gemini.google.com/app"
+            "url": "https://huggingface.co/"
           },
           {
             "name": "ChatGPT",
             "type": "bookmark",
             "url": "https://chatgpt.com/"
-          },
-          {
-            "name": "豆包",
-            "type": "bookmark",
-            "url": "https://www.doubao.com/chat/"
           },
           {
             "name": "Grok",
@@ -2686,6 +2718,11 @@ window.bookmarkData = [
             ]
           },
           {
+            "name": "radio(电台合集)",
+            "type": "bookmark",
+            "url": "https://www.radio-browser.info/"
+          },
+          {
             "name": "有道翻译",
             "type": "bookmark",
             "url": "https://fanyi.youdao.com/index.html#/"
@@ -2726,7 +2763,58 @@ window.bookmarkData = [
             "url": "https://www.bigpixel.cn/gigapixelAPP/web/index.html"
           }
         ]
+      },
+      {
+        "name": "✨常用",
+        "type": "folder",
+        "children": [
+          {
+            "name": "Gemini",
+            "type": "bookmark",
+            "url": "https://gemini.google.com/app"
+          },
+          {
+            "name": "豆包",
+            "type": "bookmark",
+            "url": "https://www.doubao.com/chat/"
+          },
+          {
+            "name": "翻译",
+            "type": "bookmark",
+            "url": "https://translate.google.com/?hl=zh-CN&tab=TT"
+          },
+          {
+            "name": "翻译",
+            "type": "bookmark",
+            "url": "https://www.bing.com/translator?setlang=zh-cn"
+          },
+          {
+            "name": "GitHub",
+            "type": "bookmark",
+            "url": "https://github.com/baidu8"
+          },
+          {
+            "name": "Cloudflare(域名与cdn)",
+            "type": "bookmark",
+            "url": "https://dash.cloudflare.com/56d2eae64975328ca874a9def1b136e2"
+          },
+          {
+            "name": "YouTube",
+            "type": "bookmark",
+            "url": "https://www.youtube.com/"
+          },
+          {
+            "name": "低端影视",
+            "type": "bookmark",
+            "url": "https://ddys.vip/"
+          }
+        ]
       }
     ]
+  },
+  {
+    "name": "其他书签",
+    "type": "folder",
+    "children": []
   }
 ];
