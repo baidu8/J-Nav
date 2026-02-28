@@ -1218,3 +1218,39 @@ body.sidebar-open #nt-scroll-area {
 .footer-poem-container {
     padding-bottom: calc(env(safe-area-inset-bottom) + 20px);
 }
+/* 切换按钮 */
+#nt-page-switcher {
+    position: fixed;
+    right: 20px;
+    bottom: 20px;
+    width: 44px;
+    height: 44px;
+    background: rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    text-decoration: none;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    transition: all 0.3s ease;
+    z-index: 1000; /* 确保在最顶层 */
+}
+
+#nt-page-switcher:hover {
+    background: rgba(255, 255, 255, 0.4);
+    transform: scale(1.1) rotate(180deg); /* 增加一个旋转动画，更有趣 */
+}
+
+/* 手机端适配：往上挪一点，避开某些手机的底部横条 */
+@media (max-width: 768px) {
+    #nt-page-switcher {
+        right: 15px;
+        bottom: 80px; /* 避开可能存在的底部 Dock 栏 */
+        width: 40px;
+        height: 40px;
+    }
+}

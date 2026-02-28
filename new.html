@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>J-Nav | 极简导航</title>
+    <link rel="preload" href="data.js" as="script">
+    
+    <link rel="icon" type="image/svg+xml" href="icons/logo.svg" />
+    <link rel="apple-touch-icon" sizes="180x180" href="icons/apple-touch-icon.png" />
+    <link rel="manifest" href="site.webmanifest" />
+    <link rel="shortcut icon" href="icons/favicon.ico" />
+    <meta name="theme-color" content="#f8f9fa" id="meta-theme-color">
+				<meta property="og:type" content="website">
+				<meta property="og:title" content="J-Nav 极简导航">
+				<meta property="og:description" content="你的私人书签。">
+				<meta property="og:image" content="https://8.828111.xyz/icons/logo.svg">
+    <link rel="stylesheet" href="style.css">
+				<script>
+				    (function() {
+				        const savedTheme = localStorage.getItem('theme');
+				        const savedSkin = localStorage.getItem('skin') || 'classic';
+				        const theme = savedTheme || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+				        document.documentElement.setAttribute('data-theme', theme);
+				        document.documentElement.setAttribute('data-skin', savedSkin);
+				    })();
+				</script>
+</head>
+<body>
+	<div id="theme-mask"></div>
+    <div class="mobile-header">
+        <button id="menu-toggle" aria-label="切换菜单">☰</button>
+        <div class="mobile-logo-box" id="back-to-top-mobile">
+            <!-- <img src="icons/logo.svg" alt="Logo"> -->
+            <span class="logo-text">J-Nav</span>
+        </div>
+    </div>
+
+    <aside id="sidebar">
+        <div class="logo-container">
+            <img src="icons/logo.svg" class="logo-img" alt="Logo">
+            <span class="logo-text">J-Nav</span>
+        </div>
+        <nav id="nav-list"></nav>
+    </aside>
+
+    <div id="sidebar-overlay"></div>
+
+    <main id="main-content">
+					<div class="top-actions">
+					        <select id="skin-selector" class="skin-selector" aria-label="选择皮肤">
+					            <option value="classic">经典蓝</option>
+					            <option value="mint">薄荷绿</option>
+					            <option value="sunset">落日橙</option>
+					            <option value="lavender">薰衣草</option>
+					        </select>
+					        <button id="theme-toggle" class="theme-toggle" onclick="toggleTheme(event)">
+					            <span id="theme-icon">🌙</span>
+					        </button>
+					    </div>
+        <div class="search-wrapper">
+            <div class="search-container">
+                <div class="engine-selector" id="engine-selector">
+                    <img src="icons/Google.svg" id="current-engine-icon" alt="engine">
+                    <ul class="engine-list" id="engine-list">
+                        <li data-url="https://www.google.com/search?q=" data-icon="icons/Google.svg">Google</li>
+                        <li data-url="https://www.bing.com/search?q=" data-icon="icons/bing.svg">必应</li>
+                        <li data-url="https://www.baidu.com/s?wd=" data-icon="icons/baidu.svg">百度</li>
+                    </ul>
+                </div>
+                <input type="text" id="search-input" placeholder="输入搜索内容..." autocomplete="off">
+                <button id="search-btn">搜索</button>
+            </div>
+        </div>
+
+        <div id="nav-display"></div>
+
+        <footer style="text-align: center; padding: 20px; color: #999; font-size: 12px;">
+            © 2026 J-Nav · <a href="https://github.com/baidu8/J-Nav" target="_blank" style="color: #999; text-decoration: none;">GitHub</a>
+        </footer>
+    </main>
+
+
+    <div id="back-to-top-pc" title="返回顶部">▲</div>
+				<a href="index.html" id="nt-page-switcher" title="切换视图">
+				    <svg viewBox="0 0 24 24" width="22" height="22">
+				        <path fill="currentColor" d="M15 13H11V17M11 7V11M11 11H7M11 11H15M16.6211 2.52115C16.1422 2.15582 15.4609 2.12727 14.9534 2.4514L5.95342 8.19694C5.37121 8.56891 5 9.21326 5 9.90446V18.0955C5 18.7867 5.37121 19.4311 5.95342 19.8031L14.9534 25.5486C15.4609 25.8727 16.1422 25.8442 16.6211 25.4788C17.0999 25.1135 17.3789 24.5441 17.3789 24.0303V16.9045L20.0466 18.6041C20.6288 18.9761 21 19.6204 21 20.3116V22.5C21 23.3284 20.3284 24 19.5 24H18V26H19.5C21.433 26 23 24.433 23 22.5V20.3116C23 18.4556 22.0007 16.7118 20.3789 15.683L17.3789 13.7645V10.2355L20.3789 8.31698C22.0007 7.28822 23 5.5444 23 3.68838V1.5C23 0.671573 21.433 -1 19.5 -1H18V1H19.5C20.3284 1 21 1.67157 21 2.5V3.68838C21 4.37958 20.6288 5.02393 20.0466 5.3959L17.3789 7.09548V3.96967C17.3789 3.45588 17.0999 2.88648 16.6211 2.52115Z" />
+				    </svg>
+				</a>
+
+    <div id="update-toast" class="toast-hidden">
+        <span>发现新内容</span>
+        <button onclick="location.reload()">刷新</button>
+    </div>
+
+    <script src="data.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>

@@ -1,93 +1,131 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html lang="zh-CN" data-theme="light">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>J-Nav | 极简导航</title>
-    <link rel="preload" href="data.js" as="script">
-    
-    <link rel="icon" type="image/svg+xml" href="icons/logo.svg" />
-    <link rel="apple-touch-icon" sizes="180x180" href="icons/apple-touch-icon.png" />
-    <link rel="manifest" href="site.webmanifest" />
-    <link rel="shortcut icon" href="icons/favicon.ico" />
-    <meta name="theme-color" content="#f8f9fa" id="meta-theme-color">
+				<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>♥ 新标签 ♥</title>
+    <link rel="stylesheet" href="newtab.css">
+				<link rel="icon" type="image/svg+xml" href="icons/logo.svg" />
+				<link rel="apple-touch-icon" sizes="180x180" href="icons/apple-touch-icon.png" />
+				<link rel="manifest" href="site.webmanifest" />
 				<meta property="og:type" content="website">
 				<meta property="og:title" content="J-Nav 极简导航">
 				<meta property="og:description" content="你的私人书签。">
 				<meta property="og:image" content="https://8.828111.xyz/icons/logo.svg">
-    <link rel="stylesheet" href="style.css">
-				<script>
-				    (function() {
-				        const savedTheme = localStorage.getItem('theme');
-				        const savedSkin = localStorage.getItem('skin') || 'classic';
-				        const theme = savedTheme || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
-				        document.documentElement.setAttribute('data-theme', theme);
-				        document.documentElement.setAttribute('data-skin', savedSkin);
-				    })();
-				</script>
+				<meta name="theme-color" content="#121212">
+				<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+				<script src="https://gcore.jsdelivr.net/npm/fullcalendar@6.1.8/index.global.min.js"></script>
+				<script src="https://gcore.jsdelivr.net/npm/lunar-javascript/lunar.js"></script>
 </head>
 <body>
-	<div id="theme-mask"></div>
-    <div class="mobile-header">
-        <button id="menu-toggle" aria-label="切换菜单">☰</button>
-        <div class="mobile-logo-box" id="back-to-top-mobile">
-            <!-- <img src="icons/logo.svg" alt="Logo"> -->
-            <span class="logo-text">J-Nav</span>
-        </div>
+    <div id="nt-bg"></div>
+    <div id="nt-edge-trigger"></div>
+    <div id="nt-sidebar" class="nt-sidebar">
+        <div class="sidebar-header">更多分类</div>
+        <div id="nt-sidebar-content"></div>
     </div>
+    <div id="nt-overlay"></div>
+    <button id="nt-menu-btn">☰</button> 
 
-    <aside id="sidebar">
-        <div class="logo-container">
-            <img src="icons/logo.svg" class="logo-img" alt="Logo">
-            <span class="logo-text">J-Nav</span>
-        </div>
-        <nav id="nav-list"></nav>
-    </aside>
+<div id="calendar-modal" class="modal-overlay">
+    <div class="calendar-card">
+        <div id="calendar-left"></div>
 
-    <div id="sidebar-overlay"></div>
-
-    <main id="main-content">
-					<div class="top-actions">
-					        <select id="skin-selector" class="skin-selector" aria-label="选择皮肤">
-					            <option value="classic">经典蓝</option>
-					            <option value="mint">薄荷绿</option>
-					            <option value="sunset">落日橙</option>
-					            <option value="lavender">薰衣草</option>
-					        </select>
-					        <button id="theme-toggle" class="theme-toggle" onclick="toggleTheme(event)">
-					            <span id="theme-icon">🌙</span>
-					        </button>
-					    </div>
-        <div class="search-wrapper">
-            <div class="search-container">
-                <div class="engine-selector" id="engine-selector">
-                    <img src="icons/Google.svg" id="current-engine-icon" alt="engine">
-                    <ul class="engine-list" id="engine-list">
-                        <li data-url="https://www.google.com/search?q=" data-icon="icons/Google.svg">Google</li>
-                        <li data-url="https://www.bing.com/search?q=" data-icon="icons/bing.svg">必应</li>
-                        <li data-url="https://www.baidu.com/s?wd=" data-icon="icons/baidu.svg">百度</li>
-                    </ul>
-                </div>
-                <input type="text" id="search-input" placeholder="输入搜索内容..." autocomplete="off">
-                <button id="search-btn">搜索</button>
+        <div class="calendar-right">
+            <div class="right-header">
+                <span id="res-year-month">2026年2月</span>
+                <span id="res-date">27</span>
+                <span id="res-day">星期五</span>
             </div>
+            <div class="lunar-details">
+                <div class="lunar-item">
+                    <span class="label">农历</span>
+                    <span id="res-lunar">正月十一</span>
+                </div>
+                <div class="lunar-item">
+                    <span class="label">干支</span>
+                    <span id="res-gz">丙午年 庚寅月</span>
+                </div>
+                <div class="lunar-item">
+                    <span class="label">宜</span>
+                    <span id="res-yi" class="yi">祭祀 沐浴</span>
+                </div>
+                <div class="lunar-item">
+                    <span class="label">忌</span>
+                    <span id="res-ji" class="ji">嫁娶 安葬</span>
+                </div>
+            </div>
+            <button class="close-cal" onclick="closeCalendar()">关闭</button>
         </div>
-
-        <div id="nav-display"></div>
-
-        <footer style="text-align: center; padding: 20px; color: #999; font-size: 12px;">
-            © 2026 J-Nav · <a href="https://github.com/baidu8/J-Nav" target="_blank" style="color: #999; text-decoration: none;">GitHub</a>
-        </footer>
-    </main>
-
-    <div id="back-to-top-pc" title="返回顶部">▲</div>
-
-    <div id="update-toast" class="toast-hidden">
-        <span>发现新内容</span>
-        <button onclick="location.reload()">刷新</button>
     </div>
+</div>
 
+    <main class="nt-main">
+					<div id="weather-container" class="nt-weather">
+					        <div id="tp-weather-widget"></div> <div class="weather-text">
+					            <span id="weather-city">城市</span>
+					            <span id="weather-temp">--°C</span>
+					            <span id="weather-desc">加载中</span>
+					        </div>
+					    </div>
+        <header class="nt-header-sticky">
+            <div class="header-section">
+                <div id="clock" class="nt-clock">00:00</div>
+																<div id="date" onclick="openCalendar()" style="cursor: pointer;">2月27日 星期五</div>
+                <!-- <div id="date" class="nt-date">载入中...</div> -->
+            </div>
+            
+            <div class="nt-search">
+                <div id="nt-search-engine-current" class="nt-engine-trigger">
+                    <img id="current-engine-icon" src="icons/baidu.svg">
+                    <span class="nt-search-arrow"></span>
+                </div>
+            
+                <input type="text" id="nt-search-input" placeholder="输入搜索内容..." autofocus>
+            
+                <div class="nt-search-icon-right">🔍</div>
+                <ul id="nt-search-suggestions" class="suggestion-list"></ul>
+                <div id="nt-search-menu" class="nt-search-menu">
+                    <div class="nt-engine-item" data-url="https://www.baidu.com/s?wd=" data-icon="icons/baidu.svg">
+                        <img src="icons/baidu.svg"><span>百度</span>
+                    </div>
+                    <div class="nt-engine-item" data-url="https://www.google.com/search?q=" data-icon="icons/Google.svg">
+                        <img src="icons/Google.svg"><span>Google</span>
+                    </div>
+                    <div class="nt-engine-item" data-url="https://cn.bing.com/search?q=" data-icon="icons/bing.svg">
+                        <img src="icons/bing.svg"><span>必应</span>
+                    </div>
+                </div>
+            </div>
+												<div id="nt-category-tabs" class="nt-tabs"></div>
+        </header>
+
+        <section id="nt-scroll-area" class="nt-scroll-area">
+            <div id="nt-featured-content">
+                </div>
+        </section>
+        <div id="poem-container" class="nt-poem">
+            <span id="poem-content">正在撷取山河诗意...</span>
+            <div id="poem-info">—— <span id="poem-author">加载中</span>《<span id="poem-title">加载中</span>》</div>
+        </div>
+    </main>
+  <a href="new.html" id="nt-page-switcher" title="切换页面">
+      <svg viewBox="0 0 24 24" width="24" height="24">
+          <path fill="currentColor" d="M16 17V14H9V10H16V7L21 12L16 17ZM14 2H4C2.9 2 2 2.9 2 4V20C2 21.1 2.9 22 4 22H14C15.1 22 16 21.1 16 20V16H14V20H4V4H14V8H16V4C16 2.9 15.1 2 14 2Z" />
+      </svg>
+  </a>
+<script src="https://sdk.jinrishici.com/v2/browser/jinrishici.js" charset="utf-8"></script>
     <script src="data.js"></script>
-    <script src="script.js"></script>
+    <script src="newtab.js"></script>
+				<script>
+				    if ('serviceWorker' in navigator) {
+				        window.addEventListener('load', () => {
+				            // 注意这里的路径，确保 sw.js 在同级目录
+				            navigator.serviceWorker.register('sw.js')
+				                .then(reg => console.log('NewTab SW Registered'))
+				                .catch(err => console.log('NewTab SW Failed', err));
+				        });
+				    }
+				</script>
 </body>
 </html>

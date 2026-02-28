@@ -115,28 +115,50 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     };
 
-    // 递归生成树状 HTML
+    // 1. 在 DOMContentLoaded 内部最上方定义你的 Worker 基础地址
+    const WORKER_BASE = "https://9.828111.xyz/icon?domain=";
+    
+    // 2. 修改后的生成函数
     function createTreeHTML(items) {
-            let html = '<ul class="nt-tree">';
-            items.forEach(item => {
-                if (item.type === 'folder') {
-                    html += `
-                        <li class="nt-tree-folder">
-                            <div class="folder-label" onclick="event.stopPropagation(); this.parentElement.classList.toggle('active'); loadFolderIcons(this.parentElement)">
-                                <span class="arrow">▶</span>
-                                <span class="folder-icon"></span>
-                                ${item.name}
-                            </div>
-                            <div class="folder-children">
-                                ${createTreeHTML(item.children)}
-                            </div>
-                        </li>`;
-                } else {
-                    // ... 剩下的链接部分逻辑正确 ...
+        let html = '<ul class="nt-tree">';
+        items.forEach(item => {
+            if (item.type === 'folder') {
+                html += `
+                    <li class="nt-tree-folder">
+                        <div class="folder-label" onclick="event.stopPropagation(); this.parentElement.classList.toggle('active'); loadFolderIcons(this.parentElement)">
+                            <span class="arrow">▶</span>
+                            <span class="folder-icon"></span>
+                            ${item.name}
+                        </div>
+                        <div class="folder-children">
+                            ${createTreeHTML(item.children)}
+                        </div>
+                    </li>`;
+            } else {
+                let domain = ""; 
+                try { 
+                    domain = new URL(item.url).hostname; 
+                } catch(e) {
+                    domain = "";
                 }
-            });
-            return html + '</ul>';
-        }
+                
+                // ✨ 核心修改：将图标地址指向你的 Cloudflare Worker
+                // 如果解析不到域名，则不传参数，让 handleIconError 处理
+                const iconUrl = domain ? `${WORKER_BASE}${domain}` : '';
+                
+                html += `
+                    <li class="nt-tree-item">
+                        <a href="${item.url}" target="_blank" title="${item.name}" onclick="event.stopPropagation()">
+                            <img data-src="${iconUrl}" 
+                                 data-name="${item.name}" 
+                                 src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7">
+                            ${item.name}
+                        </a>
+                    </li>`;
+            }
+        });
+        return html + '</ul>';
+    }
 
     // --- 1. 核心逻辑：获取初始聚焦索引 ---
         const getSavedIndex = (folders) => {
@@ -191,7 +213,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     const allLinks = getAllBookmarks(targetFolder.children || [targetFolder]);
                     const newHTML = allLinks.map(link => {
                         let d = ""; try { d = new URL(link.url).hostname; } catch(e) {}
-                        const iconUrl = d ? `https://icons.duckduckgo.com/ip3/${d}.ico` : '';
+                        const iconUrl = d ? `${WORKER_BASE}${d}` : '';
                         return `
                             <a href="${link.url}" class="nt-card" target="_blank" title="${link.name}">
                                 <img data-src="${iconUrl}" data-name="${link.name}" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7">

@@ -347,12 +347,71 @@ body.no-scroll { overflow: hidden; }
 .icon-container.no-icon .letter-icon { display: flex; } /* 修正为 flex 配合内容居中 */
 
 /* 8. 交互组件 (返回顶部 & 更新提示) */
+/* 修改原有的返回顶部，腾出位置 */
 #back-to-top-pc { 
-    position: fixed; bottom: 30px; right: 20px; width: 45px; height: 45px; 
-    background: var(--card-bg); border: 1px solid var(--border-color); color: var(--text-main); border-radius: 50%; 
-    display: none; align-items: center; justify-content: center; 
-    cursor: pointer; box-shadow: 0 4px 10px rgba(0,0,0,0.1); z-index: 9999; /* 提高层级 */
+    /* 保持你原来的样式不变，只需改动 bottom */
+    bottom: 85px !important; /* 上移，给切换按钮留出空间 */
+    position: fixed; 
+    right: 20px; 
+    width: 45px; 
+    height: 45px; 
+    background: var(--card-bg); 
+    border: 1px solid var(--border-color); 
+    color: var(--text-main); 
+    border-radius: 50%; 
+    display: none; 
+    align-items: center; 
+    justify-content: center; 
+    cursor: pointer; 
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1); 
+    z-index: 9999; 
     transition: all 0.2s;
+    backdrop-filter: blur(10px); /* 建议加上，风格更统一 */
+}
+
+/* 新增切换按钮样式 */
+#nt-page-switcher {
+    position: fixed;
+    bottom: 30px; /* 占据原来返回顶部的底部位置 */
+    right: 20px;
+    width: 45px;
+    height: 45px;
+    background: var(--card-bg);
+    border: 1px solid var(--border-color);
+    color: var(--text-main);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    z-index: 9999;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    backdrop-filter: blur(10px);
+    text-decoration: none;
+}
+
+#nt-page-switcher:hover {
+    transform: translateY(-3px);
+    background: var(--text-main);
+    color: var(--card-bg);
+    box-shadow: 0 6px 15px rgba(0,0,0,0.15);
+}
+
+/* 移动端适配 */
+@media (max-width: 768px) {
+    #back-to-top-pc {
+        bottom: 130px !important; /* 手机端两个按钮都往上挪，避开系统条 */
+        right: 15px;
+        width: 40px;
+        height: 40px;
+    }
+    #nt-page-switcher {
+        bottom: 80px; 
+        right: 15px;
+        width: 40px;
+        height: 40px;
+    }
 }
 #back-to-top-pc:hover { transform: scale(1.1); background: #f0f0f0; }
 
