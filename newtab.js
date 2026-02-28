@@ -55,21 +55,21 @@ document.addEventListener('DOMContentLoaded', () => {
      const handleEdgeEnter = (e) => {
          if (e.pointerType === 'touch' || isSidebarTransitioning) return;
          clearTimeout(hoverTimer);
-         hoverTimer = setTimeout(() => toggleSidebar(true), 50);
+         hoverTimer = setTimeout(() => toggleSidebar(true), 10);
      };
  
      // 2. 鼠标进入逻辑 (按钮和侧边栏)
      const handleEnter = (e) => {
          if (isSidebarTransitioning || e.pointerType === 'touch') return;
          clearTimeout(hoverTimer);
-         hoverTimer = setTimeout(() => toggleSidebar(true), 50);
+         hoverTimer = setTimeout(() => toggleSidebar(true), 10);
      };
  
      // 3. 鼠标离开逻辑 (统一负责关闭)
      const handleLeave = (e) => {
          if ((e && e.pointerType === 'touch') || isSidebarTransitioning || !sidebar.classList.contains('open')) return;
          clearTimeout(hoverTimer);
-         hoverTimer = setTimeout(() => toggleSidebar(false), 300); 
+         hoverTimer = setTimeout(() => toggleSidebar(false), 200); 
      };
  
      // 4. 统一绑定所有事件
@@ -110,10 +110,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // --- 核心优化：懒加载图标 ---
     window.loadFolderIcons = function(container) {
-        const imgs = container.querySelectorAll('img[data-src]');
+					   const imgs = container.querySelectorAll('img[data-src]:not([data-loaded])');
         imgs.forEach(img => {
             const src = img.getAttribute('data-src');
             const name = img.getAttribute('data-name');
+												img.setAttribute('data-loaded', 'true');
             if (!src) { handleIconError(img, name); return; }
 
             const timer = setTimeout(() => {
@@ -236,6 +237,11 @@ document.addEventListener('DOMContentLoaded', () => {
     
                     const cacheKey = 'nt_cache_folder_' + folderIndex;
                     const oldHTML = localStorage.getItem(cacheKey);
+																				
+																				// ✨ 核心优化：如果不是强制更新，且内容没变，直接跳过 DOM 操作
+																		  if (!forceUpdate && featuredContainer.innerHTML === newHTML) {
+																		      return; 
+																		  }
     
                     if (forceUpdate || newHTML !== oldHTML) {
                         featuredContainer.className = 'nt-grid'; 
