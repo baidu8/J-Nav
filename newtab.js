@@ -9,23 +9,37 @@ document.addEventListener('DOMContentLoaded', () => {
 
     let hoverTimer;
 
-    // --- 统一开关函数 ---
+    // 在外部声明一个变量，用来标记是否正在执行切换动画
+    let isSidebarTransitioning = false;
+    
+    // --- 统一开关函数（优化整合版） ---
     function toggleSidebar(isOpen) {
+        // 1. 如果正在动画中，或者目标状态与当前状态一致，则直接拦截，防止卡顿
+        if (isSidebarTransitioning) return;
+        const currentOpen = sidebar.classList.contains('open');
+        if (isOpen === currentOpen) return;
+    
         if (isOpen) {
+            // --- 打开逻辑 ---
             sidebar.classList.add('open');
             overlay.classList.add('show');
             body.classList.add('sidebar-open');
             menuBtn.innerText = '✕';
         } else {
+            // --- 关闭逻辑 ---
             sidebar.classList.remove('open');
             overlay.classList.remove('show');
             menuBtn.innerText = '☰';
+    
+            // 2. 开启冷却锁：防止苹果端 300ms 点击延迟导致的“关闭后瞬间重开”
+            isSidebarTransitioning = true;
+            menuBtn.style.pointerEvents = 'none'; // 禁用按钮点击，但不禁用 body，保证列表丝滑
             
-												menuBtn.style.pointerEvents = 'none';
-												   setTimeout(() => {
-												       body.classList.remove('sidebar-open');
-												       menuBtn.style.pointerEvents = 'auto'; // 只恢复按钮自己
-												   }, 350);
+            setTimeout(() => {
+                body.classList.remove('sidebar-open');
+                menuBtn.style.pointerEvents = 'auto'; // 动画结束后恢复按钮
+                isSidebarTransitioning = false;      // 释放状态锁
+            }, 350); 
         }
     }
 
@@ -38,17 +52,25 @@ document.addEventListener('DOMContentLoaded', () => {
         toggleSidebar(!isOpen);
     };
     
-    // 2. 鼠标进入事件 (增加触屏判断)
+    // --- 鼠标进入事件（优化整合版） ---
     const handleEnter = (e) => {
-        // ✨ 核心优化：如果是手机触屏触发的 enter，直接拦截，不执行悬停打开
-        // pointerType 为 'touch' 表示手指点击，只有 'mouse' 才允许悬停
+        // 1. 核心防御：如果是手动点击切换动画中，直接无视悬停（防止关闭时鼠标还在按钮上导致重开）
+        if (typeof isSidebarTransitioning !== 'undefined' && isSidebarTransitioning) return;
+    
+        // 2. 触屏优化：pointerType 为 'touch' 表示手指点击，只有 'mouse' 才允许悬停打开
         if (e instanceof PointerEvent && e.pointerType === 'touch') return;
         
-        // 如果你之前的环境不支持 PointerEvent，可以用下面的简单判断：
-        // if (window.matchMedia("(max-width: 768px)").matches) return;
+        // 3. 屏幕尺寸辅助判断：如果是小屏幕（移动端），通常不需要悬停功能
+        if (window.matchMedia("(max-width: 768px)").matches) return;
     
+        // 4. 执行逻辑：清除之前的计时器，并在 150ms 后打开（稍微加长一点判定，防误触）
         clearTimeout(hoverTimer);
-        hoverTimer = setTimeout(() => toggleSidebar(true), 100);
+        hoverTimer = setTimeout(() => {
+            // 再次确认：如果此时用户已经手动关闭了，或者正在动画中，则不自动打开
+            if (!isSidebarTransitioning) {
+                toggleSidebar(true);
+            }
+        }, 150); 
     };
     
     // 修改绑定方式，建议改用 addEventListener 能获取更多事件信息
