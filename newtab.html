@@ -2,9 +2,18 @@
 <html lang="zh-CN" data-theme="light">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>New Tab</title>
+				<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>♥ 新标签 ♥</title>
     <link rel="stylesheet" href="newtab.css">
+				<link rel="icon" type="image/svg+xml" href="icons/logo.svg" />
+				<link rel="apple-touch-icon" sizes="180x180" href="icons/apple-touch-icon.png" />
+				<link rel="manifest" href="site.webmanifest" />
+				<meta property="og:type" content="website">
+				<meta property="og:title" content="J-Nav 极简导航">
+				<meta property="og:description" content="你的私人书签。">
+				<meta property="og:image" content="https://8.828111.xyz/icons/logo.svg">
+				<meta name="theme-color" content="#121212">
+				<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 				<script src="https://gcore.jsdelivr.net/npm/fullcalendar@6.1.8/index.global.min.js"></script>
 				<script src="https://gcore.jsdelivr.net/npm/lunar-javascript/lunar.js"></script>
 </head>
@@ -102,5 +111,15 @@
 <script src="https://sdk.jinrishici.com/v2/browser/jinrishici.js" charset="utf-8"></script>
     <script src="data.js"></script>
     <script src="newtab.js"></script>
+				<script>
+				    if ('serviceWorker' in navigator) {
+				        window.addEventListener('load', () => {
+				            // 注意这里的路径，确保 sw.js 在同级目录
+				            navigator.serviceWorker.register('sw.js')
+				                .then(reg => console.log('NewTab SW Registered'))
+				                .catch(err => console.log('NewTab SW Failed', err));
+				        });
+				    }
+				</script>
 </body>
 </html>

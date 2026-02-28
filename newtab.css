@@ -54,6 +54,9 @@ body {
     overflow: hidden; /* 强制切断外部滚动 */
 				user-select: none; /* 禁止选中文字 */
 				-webkit-tap-highlight-color: transparent; /* 去除手机端点击高亮 */
+				/* 确保整个 body 填充到安全区 */
+				padding-top: env(safe-area-inset-top);
+				padding-bottom: env(safe-area-inset-bottom);
 }
 /* ==========================================================================
    2. 主内容容器 (毛玻璃面板)
@@ -165,6 +168,10 @@ body {
 .nt-card:hover {
     transform: translateY(-8px) scale(1.05);
     box-shadow: 0 15px 30px rgba(0,0,0,0.2);
+				background: rgba(255, 255, 255, 0.2);
+				/* 给边框一个微弱的渐变或者特定的亮色 */
+				border-color: rgba(255, 255, 255, 0.5); 
+				box-shadow: 0 0 15px rgba(255, 255, 255, 0.2);
 }
 
 /* 图标大尺寸 */
@@ -190,7 +197,6 @@ body {
     text-shadow: 0 2px 4px rgba(0,0,0,0.5);
 }
 .nt-card:hover span {
-    color: #333; /* 悬停卡片变白时，字变黑 */
     text-shadow: none;
 }
 
@@ -199,35 +205,39 @@ body {
    ========================================================================== */
 /* 菜单按钮 (独立定位) */
 #nt-menu-btn {
+    /* 1. 基础定位：固定在左上角 */
     position: fixed;
-    top: 25px;         /* 稍微往上挪一点，更精致 */
-    left: 25px;
+    z-index: 1001;
+    cursor: pointer;
     
-    /* 1. 缩小尺寸：从之前的 46px 缩小到 34px */
-    width: 34px;
-    height: 34px;
+    /* 2. 核心调整：避开刘海屏并保持呼吸感 */
+    /* 在安全区基础上向下挪 25px，向右挪 20px */
+    top: calc(env(safe-area-inset-top) + 25px);
+    left: 20px;
+
+    /* 3. 尺寸与形状：采用 32px 的圆形，显得更灵动 */
+    width: 32px;
+    height: 32px;
+    border-radius: 50%; /* 圆形按钮，完美契合侧栏圆角 */
     
-    /* 2. 背景与毛玻璃保持不变，但增加透明度 */
-    background: rgba(255, 255, 255, 0.2); 
+    /* 4. 毛玻璃质感 */
+    background: rgba(255, 255, 255, 0.15);
     backdrop-filter: blur(10px);
     -webkit-backdrop-filter: blur(10px);
-    
-    /* 3. 边框与圆角：圆角随尺寸缩小 */
     border: 1px solid rgba(255, 255, 255, 0.2);
-    border-radius: 10px; 
-    
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+
+    /* 5. 内部图标居中 */
     display: flex;
     align-items: center;
     justify-content: center;
-    
-    /* 4. 字体大小：从 20px 缩小到 16px */
-    font-size: 16px;
-    
-    cursor: pointer;
     color: rgba(255, 255, 255, 0.8);
-    z-index: 1001;
+    font-size: 16px;
+    text-align: center;
+    line-height: 32px;
+
+    /* 6. 交互动画：增加回弹效果 */
     transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
 /* 鼠标悬停：让按钮亮起来 */
@@ -247,18 +257,44 @@ body {
 
 /* 侧边栏主体 */
 .nt-sidebar {
+    /* 1. 定位与层级 */
     position: fixed;
     left: 0;
-    top: 0;
-    width: 280px;
-    height: 100%;
     z-index: 1000;
+    
+    /* 2. 悬浮容器感：上下留出 20px 间距，不顶死边缘 */
+    top: 20px;
+    height: calc(100vh - 40px);
+    width: 280px;
+    
+    /* 3. 形状：右侧大圆角（毛玻璃黄金搭档） */
+    border-radius: 0 24px 24px 0;
+    
+    /* 4. 毛玻璃核心质感 */
+    background: rgba(255, 255, 255, 0.1); 
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    
+    /* 5. 边框细节：增加 1px 的白色半透明边，模拟玻璃折射感 */
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-left: none; /* 左侧贴边不需要边框 */
+    
+    /* 6. 内部间距：适配刘海屏并留出“更多分类”标题位置 */
+    /* 我们用 padding-top 确保内容避开顶部和刘海 */
+    padding: calc(env(safe-area-inset-top) + 60px) 20px 20px;
+    
+    /* 7. 动画与溢出处理 */
     transform: translateX(-100%);
     transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     overflow-y: auto;
-    padding: 80px 20px 20px;
-				background: rgba(255, 255, 255, 0.8);
-				backdrop-filter: blur(15px);
+    
+    /* 隐藏原生滚动条，让 UI 更干净 */
+    scrollbar-width: none; /* Firefox */
+}
+
+/* 隐藏 Chrome/Safari 滚动条 */
+.nt-sidebar::-webkit-scrollbar {
+    display: none;
 }
 
 .nt-sidebar.open {
@@ -284,6 +320,14 @@ body {
     display: none;
     z-index: 999;
     backdrop-filter: blur(2px);
+				cursor: pointer;
+				  /* ✨ 专门针对 Safari 的补丁，强制开启硬件加速并声明它是可点击的 */
+				  -webkit-tap-highlight-color: transparent; 
+				  touch-action: manipulation;
+}
+/* 关键：侧边栏打开时，给背后的内容区加个“不可点”状态 */
+body.sidebar-open #nt-scroll-area {
+    pointer-events: none; /* 侧边栏打开时，首页所有的图标都变成“空气”，点不到 */
 }
 
 #nt-overlay.show {
@@ -294,7 +338,14 @@ body {
    5. 树状菜单组件
    ========================================================================== */
 .nt-tree { list-style: none; padding-left: 10px; }
-
+.sidebar-header{
+	color: #ffffff;
+	margin-top: 10px;
+	    margin-bottom: 20px;
+	    padding: 0 20px;
+	    font-weight: bold;
+	    color: rgba(255, 255, 255, 0.9);
+}
 .folder-label, 
 .nt-tree-item a {
     display: flex;
@@ -304,7 +355,7 @@ body {
     border-radius: 8px;
     font-size: 14px;
     text-decoration: none;
-    color: #444;
+    color: #ffffff;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -313,7 +364,10 @@ body {
 
 .folder-label:hover, 
 .nt-tree-item a:hover {
-    background: #f0f0f0;
+    background: rgba(255, 255, 255, 0.2);
+    /* 给边框一个微弱的渐变或者特定的亮色 */
+    border-color: rgba(255, 255, 255, 0.5); 
+    box-shadow: 0 0 15px rgba(255, 255, 255, 0.2);
 }
 
 .folder-label .arrow {
@@ -828,13 +882,14 @@ body {
 .modal-overlay {
     position: fixed; 
     inset: 0; 
-    background: rgba(0, 0, 0, 0.4); /* 背景稍浅一点，更有高级感 */
-    backdrop-filter: blur(15px); 
+    background: rgba(0, 0, 0, 0.4); /* 深色半透明，压住背景 */
+    backdrop-filter: blur(8px);    /* 轻微模糊背景，突出中间的白卡片 */
+    -webkit-backdrop-filter: blur(8px);
     display: none; 
     justify-content: center; 
     align-items: center; 
     z-index: 2000;
-				cursor: pointer; /* 在背景处显示手型 */
+    transition: all 0.3s ease;
 }
 
 .calendar-card {
@@ -1061,4 +1116,7 @@ body {
 .fc .fc-button-primary:hover {
     color: #1a73e8 !important;
     background-color: rgba(26, 115, 232, 0.1) !important;
+}
+.footer-poem-container {
+    padding-bottom: calc(env(safe-area-inset-bottom) + 20px);
 }

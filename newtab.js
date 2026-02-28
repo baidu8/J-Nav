@@ -19,41 +19,56 @@ document.addEventListener('DOMContentLoaded', () => {
         } else {
             sidebar.classList.remove('open');
             overlay.classList.remove('show');
-            body.classList.remove('sidebar-open');
             menuBtn.innerText = '☰';
+            
+            // ✨ 延迟一丁点（比如 300ms）再移除 body 状态
+            // 这样可以确保苹果手机那 300ms 的点击延迟结束后，图标才变回“可点”状态
+            setTimeout(() => {
+                body.classList.remove('sidebar-open');
+            }, 350); 
         }
     }
 
     // --- 交互逻辑整合 ---
-
-    // 1. 点击切换
-    menuBtn.onclick = () => {
+    // 1. 点击切换 (保持不变)
+    menuBtn.onclick = (e) => {
+        e.stopPropagation(); // 防止冒泡
         const isOpen = sidebar.classList.contains('open');
         toggleSidebar(!isOpen);
     };
-
-    // 2. 鼠标进入事件 (边缘、按钮、侧边栏)
-    const handleEnter = () => {
+    
+    // 2. 鼠标进入事件 (增加触屏判断)
+    const handleEnter = (e) => {
+        // ✨ 核心优化：如果是手机触屏触发的 enter，直接拦截，不执行悬停打开
+        // pointerType 为 'touch' 表示手指点击，只有 'mouse' 才允许悬停
+        if (e instanceof PointerEvent && e.pointerType === 'touch') return;
+        
+        // 如果你之前的环境不支持 PointerEvent，可以用下面的简单判断：
+        // if (window.matchMedia("(max-width: 768px)").matches) return;
+    
         clearTimeout(hoverTimer);
-        // 边缘触发设为 100ms，手感最快
         hoverTimer = setTimeout(() => toggleSidebar(true), 100);
     };
-
-    if (edgeTrigger) edgeTrigger.onmouseenter = handleEnter;
-    menuBtn.onmouseenter = handleEnter;
-    sidebar.onmouseenter = handleEnter;
-
-    // 3. 鼠标离开事件 (从侧边栏或按钮离开才关闭)
+    
+    // 修改绑定方式，建议改用 addEventListener 能获取更多事件信息
+    if (edgeTrigger) edgeTrigger.addEventListener('mouseenter', handleEnter);
+    menuBtn.addEventListener('mouseenter', handleEnter);
+    sidebar.addEventListener('mouseenter', handleEnter);
+    
+    // 3. 鼠标离开事件 (保持不变)
     const handleLeave = () => {
         clearTimeout(hoverTimer);
-        // 离开 400ms 后收起，防止误触
         hoverTimer = setTimeout(() => toggleSidebar(false), 400);
     };
-
+    
     sidebar.onmouseleave = handleLeave;
     menuBtn.onmouseleave = handleLeave;
-
-    // 遮罩层点击依然保留
+    
+    // 遮罩层点击
+				overlay.addEventListener('touchstart', (e) => {
+				    e.preventDefault(); // ✨ 阻止浏览器默认行为，防止点击穿透
+				    toggleSidebar(false);
+				}, { passive: false });
     overlay.onclick = () => toggleSidebar(false);
 
     // --- 核心优化：处理图标加载失败或超时 ---
@@ -125,17 +140,15 @@ document.addEventListener('DOMContentLoaded', () => {
         return html + '</ul>';
     }
 
-    // --- 1. 抢跑渲染：利用当前选中的分类瞬间出图 ---
-        const getSavedIndex = () => parseInt(localStorage.getItem('nt-selected-folder-index') || 0);
-        
-        // 初始瞬间注入缓存
-        const initialIndex = getSavedIndex();
-        const initialCache = localStorage.getItem('nt_cache_folder_' + initialIndex);
-        if (initialCache) {
-            featuredContainer.innerHTML = initialCache;
-            featuredContainer.className = 'nt-grid';
-            setTimeout(() => window.loadFolderIcons(featuredContainer), 0);
-        }
+    // --- 1. 核心逻辑：获取初始聚焦索引 ---
+        const getSavedIndex = (folders) => {
+            const saved = localStorage.getItem('nt-selected-folder-index');
+            if (saved !== null) return parseInt(saved);
+            
+            // ✨ 新用户默认逻辑：自动聚焦到最后一个分类 (folders.length - 1)
+            // 如果想固定到第2个，就把下面这行改为 return 1;
+            return folders ? folders.length - 1 : 0;
+        };
     
         function getAllBookmarks(items, result = []) {
             items.forEach(item => {
@@ -151,7 +164,18 @@ document.addEventListener('DOMContentLoaded', () => {
                 const folders = data[0].children;
                 const tabsContainer = document.getElementById('nt-category-tabs');
                 
-                // 1. 生成分类标签
+                // 获取最终要显示的索引（记忆值 或 最后一个）
+                const activeIdx = getSavedIndex(folders);
+    
+                // --- 2. 抢跑渲染：利用缓存瞬间出图 ---
+                const initialCache = localStorage.getItem('nt_cache_folder_' + activeIdx);
+                if (initialCache) {
+                    featuredContainer.innerHTML = initialCache;
+                    featuredContainer.className = 'nt-grid';
+                    setTimeout(() => window.loadFolderIcons(featuredContainer), 0);
+                }
+    
+                // --- 3. 生成分类标签 ---
                 const updateTabs = (activeIndex) => {
                     tabsContainer.innerHTML = folders.map((folder, index) => `
                         <div class="nt-tab ${index == activeIndex ? 'active' : ''}" data-index="${index}">
@@ -159,9 +183,9 @@ document.addEventListener('DOMContentLoaded', () => {
                         </div>
                     `).join('');
                 };
-                updateTabs(getSavedIndex());
+                updateTabs(activeIdx);
     
-                // 2. 增强版渲染函数：增加 forceUpdate 参数
+                // --- 4. 增强版渲染函数 ---
                 const renderFolder = (folderIndex, isFirstLoad = false, forceUpdate = false) => {
                     const targetFolder = folders[folderIndex];
                     if (!targetFolder) return;
@@ -180,7 +204,6 @@ document.addEventListener('DOMContentLoaded', () => {
                     const cacheKey = 'nt_cache_folder_' + folderIndex;
                     const oldHTML = localStorage.getItem(cacheKey);
     
-                    // 如果是强制更新（点选分类）或者内容确实变了，才刷 DOM
                     if (forceUpdate || newHTML !== oldHTML) {
                         featuredContainer.className = 'nt-grid'; 
                         featuredContainer.innerHTML = newHTML;
@@ -193,28 +216,22 @@ document.addEventListener('DOMContentLoaded', () => {
                     if (!isFirstLoad) document.getElementById('nt-scroll-area').scrollTop = 0;
                 };
     
-                // 3. 改进的点击事件：确保响应灵敏
+                // --- 5. 点击事件 ---
                 tabsContainer.onclick = (e) => {
                     const tab = e.target.closest('.nt-tab');
                     if (!tab) return;
-                    
-                    // 只有当拖拽距离真的很明显时才拦截，否则视为点击
                     if (typeof isDragging !== 'undefined' && isDragging) return;
     
                     const index = parseInt(tab.dataset.index);
-                    
-                    // 保存并更新 UI
                     localStorage.setItem('nt-selected-folder-index', index);
                     updateTabs(index); 
-                    
-                    // 核心：传入 true，告诉渲染函数“我是手动点的，必须给我换内容”
                     renderFolder(index, false, true); 
                 };
     
-                // 4. 初次加载
-                renderFolder(getSavedIndex(), true);
+                // --- 6. 执行初次渲染 ---
+                renderFolder(activeIdx, true);
+                sidebarContainer.innerHTML = createTreeHTML(folders);
     
-                sidebarContainer.innerHTML = createTreeHTML(folders.slice(1));
             } else {
                 setTimeout(init, 50);
             }
