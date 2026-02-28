@@ -42,21 +42,46 @@ body {
 body::-webkit-scrollbar {
     display: none;             /* Chrome, Safari and Opera */
 }
+/* ============================================================
+   1. Body 容器（精简后，负责内容布局）
+   ============================================================ */
 body {
     margin: 0;
-    background: url('https://bing.img.run/1920x1080.php') no-repeat center center fixed;
-    background-size: cover;
-    justify-content: center;
-    width: 100vw; /* 强制占满视口宽度 */
-    display: block; /* 放弃 flex 居中，改用 margin auto 居中更稳 */
     padding: 0;
+    width: 100vw;
     height: 100vh;
-    overflow: hidden; /* 强制切断外部滚动 */
-				user-select: none; /* 禁止选中文字 */
-				-webkit-tap-highlight-color: transparent; /* 去除手机端点击高亮 */
-				/* 确保整个 body 填充到安全区 */
-				padding-top: env(safe-area-inset-top);
-				padding-bottom: env(safe-area-inset-bottom);
+    display: block;
+    overflow: hidden;    /* 禁止网页整体溢出滚动，内部滚动由 scroll-area 负责 */
+    
+    /* 交互补丁 */
+    user-select: none;
+    -webkit-tap-highlight-color: transparent;
+    
+    /* 苹果安全区适配 */
+    padding-top: env(safe-area-inset-top);
+    padding-bottom: env(safe-area-inset-bottom);
+    
+    /* 移除原来的 background 属性，因为已经挪到 #nt-bg 了 */
+}
+
+/* ============================================================
+   2. 独立背景层（彻底解决苹果端背景移动、晃动）
+   ============================================================ */
+#nt-bg {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    /* 将背景图相关的属性挪到这里 */
+    background: url('https://bing.img.run/1920x1080.php') no-repeat center center;
+    background-size: cover;
+    z-index: -1;          /* 确保在最底层 */
+    pointer-events: none; /* 确保不响应任何点击，不干扰网页操作 */
+    
+    /* 苹果端丝滑补丁 */
+    transform: translateZ(0); 
+    -webkit-transform: translateZ(0); 
 }
 /* ==========================================================================
    2. 主内容容器 (毛玻璃面板)
@@ -381,12 +406,19 @@ body.sidebar-open #nt-scroll-area {
 
 .folder-children {
     display: none;
+				will-change: transform; /* 告诉浏览器提前准备硬件加速 */
     border-left: 1px dashed #ddd;
     margin-left: 18px;
 }
 
-.nt-tree-folder.active > .folder-children { display: block; }
-
+.nt-tree-folder.active > .folder-children { 
+	display: block;
+	animation: fadeIn 0.2s ease-out;
+}
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-5px); }
+    to { opacity: 1; transform: translateY(0); }
+}
 .nt-tree-item img,
 .nt-tree-item .nt-icon-text {
     width: 18px;
@@ -396,14 +428,18 @@ body.sidebar-open #nt-scroll-area {
 
 /* 文字图标通用样式 */
 .nt-icon-text {
-    display: inline-block;
-    flex-shrink: 0;
-    text-align: center;
-    font-weight: bold;
+    width: 48px;
+    height: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     color: white;
-    background: var(--nt-primary);
+    font-weight: bold;
+    border-radius: 14px;
+    /* 也可以给首字图标也加点毛玻璃感 */
+    backdrop-filter: blur(5px);
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
 }
-
 /* 侧边栏内的小图标 */
 .nt-tree-item .nt-icon-text {
     line-height: 18px;
@@ -956,88 +992,156 @@ body.sidebar-open #nt-scroll-area {
 }
 
 /* ============================================================
-   3. 右侧详情面板
+   右侧详情面板 - 沉浸式升级
    ============================================================ */
 .calendar-right {
-    flex: 1; 
-    padding: 30px; 
-    background: rgba(248, 249, 252, 0.7); 
-    display: flex; 
-    flex-direction: column; 
+    flex: 1;
+    padding: 40px 30px;
+    background: rgba(255, 255, 255, 0.4); /* 降低透明度，透出背景色 */
+    backdrop-filter: blur(15px); /* 强毛玻璃 */
+    -webkit-backdrop-filter: blur(15px);
+    display: flex;
+    flex-direction: column;
     align-items: center;
+    border-left: 1px solid rgba(255, 255, 255, 0.3);
 }
 
-/* 右侧日期大数字预览 */
+/* 顶部信息布局 */
+.right-header {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
 #res-date {
-    font-size: 64px;
-    font-weight: 700;
+    font-size: 80px; /* 字体加大，做成视觉焦点 */
+    font-weight: 800;
     color: #1a73e8;
     line-height: 1;
-    margin: 10px 0;
+    margin: 0;
+    text-shadow: 0 4px 10px rgba(26, 115, 232, 0.2); /* 淡淡的投影 */
 }
 
-/* 宜忌条目卡片化 */
-.lunar-item {
-    width: 100%;
-    margin-bottom: 12px;
-    padding: 12px;
-    border-radius: 12px;
-    background: #fff;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+#res-day {
+    font-size: 18px;
+    color: #333;
+    font-weight: 600;
+    margin-top: 10px;
 }
+
+#res-lunar {
+    font-size: 14px;
+    color: #666;
+    background: rgba(0, 0, 0, 0.05);
+    padding: 4px 12px;
+    border-radius: 20px;
+    margin-top: 8px;
+    display: inline-block;
+}
+
+/* 宜忌区域 - 模块化 */
+.lunar-info-box {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.lunar-item {
+    width: auto;
+    margin-bottom: 0;
+    padding: 16px;
+    border-radius: 16px;
+    background: rgba(255, 255, 255, 0.6);
+    border: 1px solid rgba(255, 255, 255, 0.5);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.03);
+    transition: transform 0.2s;
+}
+
+.lunar-item:hover {
+    transform: translateY(-2px);
+}
+
+/* 宜忌标签美化：去掉刺眼的红绿底色，改用侧边条设计 */
+#res-yi, #res-ji {
+    background: transparent;
+    padding: 0;
+    font-weight: 600;
+    font-size: 15px;
+    line-height: 1.6;
+    display: block;
+}
+
+#res-yi { color: #27ae60; border-left: 4px solid #27ae60; padding-left: 10px; }
+#res-ji { color: #e74c3c; border-left: 4px solid #e74c3c; padding-left: 10px; }
 
 .lunar-item .label {
-    font-size: 12px;
-    color: #aaa;
-    display: block;
-    margin-bottom: 4px;
+    font-size: 11px;
+    color: #999;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 6px;
 }
 
-/* 宜、忌 标签化显示 */
-#res-yi { 
-    color: #2ecc71; 
-    background: #eafff1; 
-    padding: 4px 8px; 
-    border-radius: 6px; 
-    font-weight: 500;
-}
-
-#res-ji { 
-    color: #e74c3c; 
-    background: #fff1f0; 
-    padding: 4px 8px; 
-    border-radius: 6px; 
-    font-weight: 500;
-}
-
-/* 关闭按钮美化 */
+/* 底部按钮 */
 .close-cal {
     margin-top: auto;
-    padding: 10px 30px;
+    width: 80%;
+    height: 46px;
     border: none;
-    background: #eee;
-    color: #666;
-    border-radius: 50px;
-    cursor: pointer;
-    transition: 0.3s;
+    background: rgba(0, 0, 0, 0.05);
+    color: #555;
+    font-weight: 600;
+    border-radius: 12px;
+    backdrop-filter: blur(5px);
+    transition: all 0.3s;
 }
 
 .close-cal:hover {
-    background: #e0e0e0;
-    color: #333;
+    background: rgba(0, 0, 0, 0.8);
+    color: #fff;
 }
 /* ============================================================
    4. 手机端适配补丁 (Screen width < 768px)
    ============================================================ */
 @media (max-width: 768px) {
+    .calendar-right {
+        border-left: none;
+        border-top: 1px solid rgba(0, 0, 0, 0.05);
+        flex: none; /* 手机端不拉伸 */
+    }
+
+    .lunar-info-box {
+        flex-direction: row; /* 手机端“宜”和“忌”左右并排 */
+        gap: 10px;
+    }
+
+    .lunar-item {
+        flex: 1;
+        padding: 12px;
+    }
+				.calendar-right {
+				    display: flex;
+				    flex-direction: column;
+				    align-items: center; /* 确保所有子元素水平居中 */
+				    padding: 30px;       /* 确保左右 padding 一致 */
+				}
+				
+				.close-cal {
+				    margin: 20px auto 0; /* 通过 auto 确保水平绝对居中 */
+				    width: auto;
+				    padding: 10px 40px;  /* 靠内边距撑开按钮大小 */
+				}
+}
+@media (max-width: 768px) {
     /* 1. 让卡片由横排变为竖排 */
     .calendar-card {
         flex-direction: column;
-        width: 95%;      /* 宽度几乎占满屏幕 */
-        height: 90vh;    /* 高度占屏幕 90%，防止内容装不下 */
+								height: 85vh; /* 留点缝隙给背景，不压抑 */
+								width: 92vw;
         overflow-y: auto; /* 允许竖向滚动 */
         border-radius: 16px;
 								cursor: default; /* 回到卡片内部时恢复普通光标，防止误导 */
+								padding-bottom: env(safe-area-inset-bottom);
     }
 
     /* 2. 左侧日历区域缩小内边距 */
@@ -1083,13 +1187,6 @@ body.sidebar-open #nt-scroll-area {
         padding: 10px;
         margin-bottom: 10px;
     }
-
-    /* 6. 底部关闭按钮固定 */
-    .close-cal {
-        margin-top: 20px;
-        width: 100%; /* 按钮撑满，方便手指点击 */
-        height: 44px;
-    }
 }
 /* 修改 Today 按钮样式 */
 .fc .fc-today-button {
@@ -1117,6 +1214,7 @@ body.sidebar-open #nt-scroll-area {
     color: #1a73e8 !important;
     background-color: rgba(26, 115, 232, 0.1) !important;
 }
+
 .footer-poem-container {
     padding-bottom: calc(env(safe-area-inset-bottom) + 20px);
 }

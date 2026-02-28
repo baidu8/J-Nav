@@ -21,17 +21,18 @@ document.addEventListener('DOMContentLoaded', () => {
             overlay.classList.remove('show');
             menuBtn.innerText = '☰';
             
-            // ✨ 延迟一丁点（比如 300ms）再移除 body 状态
-            // 这样可以确保苹果手机那 300ms 的点击延迟结束后，图标才变回“可点”状态
-            setTimeout(() => {
-                body.classList.remove('sidebar-open');
-            }, 350); 
+												menuBtn.style.pointerEvents = 'none';
+												   setTimeout(() => {
+												       body.classList.remove('sidebar-open');
+												       menuBtn.style.pointerEvents = 'auto'; // 只恢复按钮自己
+												   }, 350);
         }
     }
 
     // --- 交互逻辑整合 ---
     // 1. 点击切换 (保持不变)
     menuBtn.onclick = (e) => {
+        e.preventDefault();  // 增加这一行
         e.stopPropagation(); // 防止冒泡
         const isOpen = sidebar.classList.contains('open');
         toggleSidebar(!isOpen);
@@ -67,6 +68,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // 遮罩层点击
 				overlay.addEventListener('touchstart', (e) => {
 				    e.preventDefault(); // ✨ 阻止浏览器默认行为，防止点击穿透
+								e.stopPropagation();
 				    toggleSidebar(false);
 				}, { passive: false });
     overlay.onclick = () => toggleSidebar(false);
@@ -79,12 +81,9 @@ document.addEventListener('DOMContentLoaded', () => {
         div.className = 'nt-icon-text';
         div.innerText = firstChar;
         
-        // 这里的行高和字体大小需要匹配上面 CSS 的 48px
-        div.style.lineHeight = '48px'; 
-        div.style.fontSize = '20px'; 
-        
-        const colors = ['#4285f4', '#34a853', '#fbbc05', '#ea4335', '#673ab7', '#3f51b5', '#009688'];
+        const colors = ['#4285f4', '#34a853', '#fbbc05', '#ea4335'];
         div.style.backgroundColor = colors[firstChar.charCodeAt(0) % colors.length];
+        
         img.replaceWith(div);
     }
 
@@ -98,7 +97,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
             const timer = setTimeout(() => {
                 if (!img.complete || img.naturalWidth === 0) handleIconError(img, name);
-            }, 3000);
+            }, 2000);
 
             img.onload = () => clearTimeout(timer);
             img.onerror = () => { clearTimeout(timer); handleIconError(img, name); };
@@ -259,8 +258,8 @@ function initSearchEngine() {
     let menuTimer = null;
 
     // 1. 初始化：优先从本地存储读取
-    let selectedUrl = localStorage.getItem('nt_search_url') || 'https://www.baidu.com/s?wd=';
-    let selectedIcon = localStorage.getItem('nt_search_icon') || 'https://www.baidu.com/favicon.ico';
+    let selectedUrl = localStorage.getItem('nt_search_url') || 'https://cn.bing.com/search?q=';
+    let selectedIcon = localStorage.getItem('nt_search_icon') || 'icons/bing.svg';
     
     if (currentEngineIcon) currentEngineIcon.src = selectedIcon;
 
@@ -564,6 +563,10 @@ function openCalendar() {
     if (!calendar) {
         const calendarEl = document.getElementById('calendar-left');
         calendar = new FullCalendar.Calendar(calendarEl, {
+									   longPressDelay: 50,      // 缩短长按延迟，让触摸更灵敏
+									   fixedWeekCount: false,   // 重要：根据月份自动调整行数，不强制显示6行，省下空间给详情页
+									   handleWindowResize: true,
+									   aspectRatio: 0.85,       // 在手机端让格子稍微高一点，方便手指点击
             initialView: 'dayGridMonth',
             locale: 'zh-cn',
 												buttonHints: {
