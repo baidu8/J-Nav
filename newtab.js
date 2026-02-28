@@ -9,7 +9,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     let isSidebarTransitioning = false;
     let hoverTimer; // 确保这个变量在外部
-    
+				
     function toggleSidebar(isOpen) {
         if (isSidebarTransitioning) return;
         const currentOpen = sidebar.classList.contains('open');
@@ -39,47 +39,60 @@ document.addEventListener('DOMContentLoaded', () => {
             }, 350); 
         }
     }
+// --- 交互逻辑整合 ---
+ // 1. 点击按钮
+ menuBtn.onclick = (e) => {
+     e.stopPropagation();
+     e.preventDefault();
+     clearTimeout(hoverTimer);
+     const isOpen = sidebar.classList.contains('open');
+     toggleSidebar(!isOpen);
+ };
 
-    // --- 交互逻辑整合 ---
-        
-        // 1. 点击按钮
-        menuBtn.onclick = (e) => {
-            e.stopPropagation();
-            e.preventDefault();
-            clearTimeout(hoverTimer);
-            const isOpen = sidebar.classList.contains('open');
-            toggleSidebar(!isOpen);
-        };
-    
-        // 2. 鼠标进入 (处理悬停)
-        const handleEnter = (e) => {
-            if (isSidebarTransitioning) return;
-            if (e.pointerType === 'touch') return; // 手机触屏不触发悬停
-            
-            clearTimeout(hoverTimer);
-            hoverTimer = setTimeout(() => toggleSidebar(true), 150);
-        };
-    
-        // 3. 鼠标离开 (合并后的唯一版本)
-        const handleLeave = (e) => {
-            // 如果是触屏抬起，或者是动画中，或者本来就是关着的，则不执行自动关闭
-            if ((e && e.pointerType === 'touch') || isSidebarTransitioning || !sidebar.classList.contains('open')) return;
-    
-            clearTimeout(hoverTimer);
-            hoverTimer = setTimeout(() => toggleSidebar(false), 500); 
-        };
-    
-        // 统一绑定监听
-        menuBtn.addEventListener('pointerenter', handleEnter);
-        sidebar.addEventListener('pointerenter', handleEnter);
-        menuBtn.addEventListener('pointerleave', handleLeave);
-        sidebar.addEventListener('pointerleave', handleLeave);
-    
-        // 4. 遮罩层点击 (防穿透)
-        overlay.addEventListener('click', (e) => {
-            e.stopPropagation();
-            toggleSidebar(false);
-        });
+ // --- 交互逻辑整合 (终极合并版) ---
+     
+     // 1. 定义边缘触发逻辑
+     const handleEdgeEnter = (e) => {
+         if (e.pointerType === 'touch' || isSidebarTransitioning) return;
+         clearTimeout(hoverTimer);
+         hoverTimer = setTimeout(() => toggleSidebar(true), 50);
+     };
+ 
+     // 2. 鼠标进入逻辑 (按钮和侧边栏)
+     const handleEnter = (e) => {
+         if (isSidebarTransitioning || e.pointerType === 'touch') return;
+         clearTimeout(hoverTimer);
+         hoverTimer = setTimeout(() => toggleSidebar(true), 50);
+     };
+ 
+     // 3. 鼠标离开逻辑 (统一负责关闭)
+     const handleLeave = (e) => {
+         if ((e && e.pointerType === 'touch') || isSidebarTransitioning || !sidebar.classList.contains('open')) return;
+         clearTimeout(hoverTimer);
+         hoverTimer = setTimeout(() => toggleSidebar(false), 300); 
+     };
+ 
+     // 4. 统一绑定所有事件
+     if (edgeTrigger) {
+         edgeTrigger.addEventListener('pointerenter', handleEdgeEnter);
+     }
+     
+     menuBtn.onclick = (e) => {
+         e.stopPropagation();
+         e.preventDefault();
+         clearTimeout(hoverTimer);
+         toggleSidebar(!sidebar.classList.contains('open'));
+     };
+ 
+     menuBtn.addEventListener('pointerenter', handleEnter);
+     sidebar.addEventListener('pointerenter', handleEnter);
+     menuBtn.addEventListener('pointerleave', handleLeave);
+     sidebar.addEventListener('pointerleave', handleLeave);
+ 
+     overlay.addEventListener('click', (e) => {
+         e.stopPropagation();
+         toggleSidebar(false);
+     });
 
     // --- 核心优化：处理图标加载失败或超时 ---
     // 修改生成的 div 样式属性，适应大图标
