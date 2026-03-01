@@ -73,15 +73,30 @@ body {
     left: 0;
     width: 100%;
     height: 100%;
-    /* 将背景图相关的属性挪到这里 */
+    /* 初始背景 */
     background: url('https://bing.img.run/1920x1080.php') no-repeat center center;
     background-size: cover;
-    z-index: -1;          /* 确保在最底层 */
-    pointer-events: none; /* 确保不响应任何点击，不干扰网页操作 */
+    z-index: -1;
+    pointer-events: none;
+    
+    /* ✨ 新增：平滑过渡效果 */
+    transition: background-image 0.8s ease-in-out;
     
     /* 苹果端丝滑补丁 */
     transform: translateZ(0); 
     -webkit-transform: translateZ(0); 
+}
+#nt-bg video {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    min-width: 100%;
+    min-height: 100%;
+    width: auto;
+    height: auto;
+    transform: translate(-50%, -50%); /* 居中裁剪效果，类似 background-size: cover */
+    object-fit: cover;
+    z-index: -1;
 }
 /* ==========================================================================
    2. 主内容容器 (毛玻璃面板)
@@ -155,7 +170,7 @@ body {
    3. 首页图标网格 (四方块风格)
    ========================================================================== */
 .nt-title {
-    color: white;
+    color: var(--nt-card);
     text-shadow: 0 2px 4px rgba(0,0,0,0.3);
     font-size: 18px;
     font-weight: bold;
@@ -179,7 +194,6 @@ body {
     padding: 15px;
     border-radius: 18px;
     text-decoration: none;
-    color: var(--nt-text);
     border: 1px solid rgba(255, 255, 255, 0.1);
     transition: all 0.3s ease;
 }
@@ -211,7 +225,7 @@ body {
 
 /* 文字截断 */
 .nt-card span {
-	color: white;
+    color: var(--nt-card);
     font-size: 13px;
     font-weight: 500;
     width: 100%;
@@ -220,9 +234,6 @@ body {
     overflow: hidden;
     text-overflow: ellipsis;
     text-shadow: 0 2px 4px rgba(0,0,0,0.5);
-}
-.nt-card:hover span {
-    text-shadow: none;
 }
 
 /* ==========================================================================
@@ -433,7 +444,7 @@ body.sidebar-open #nt-scroll-area {
     display: flex;
     align-items: center;
     justify-content: center;
-    color: white;
+    color: var(--nt-card);
     font-weight: bold;
     border-radius: 14px;
     /* 也可以给首字图标也加点毛玻璃感 */
@@ -459,7 +470,7 @@ body.sidebar-open #nt-scroll-area {
 .nt-sidebar::-webkit-scrollbar-thumb { background: rgba(0,0,0,0.1); border-radius: 10px; }
 
 /* 引入一款极简高级字体 (可选，不引也会走系统默认极细) */
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300&display=swap');
+@import url('https://lf3-cdn-tos.bytecdntp.com/cdn/expire-1-M/inter/3.15.9/inter.css');
 
 /* ==========================================================================
    2. 顶部时间与搜索区 (视觉升级版)
@@ -467,13 +478,13 @@ body.sidebar-open #nt-scroll-area {
 .header-section {
     text-align: center;
     width: 100%;
-    color: white; /* 全局设为白色，更显干净 */
+    color: var(--nt-card); /* 全局设为白色，更显干净 */
 }
 
 /* 时间显示：极细、半透明、微发光 */
 .nt-clock {
     /* 优先使用 Inter，没有则用苹果/安卓的极细字体 */
-    font-family: 'Inter', 'Helvetica Neue', 'PingFang SC', 'Light', sans-serif;
+    font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", sans-serif;
     font-size: 90px;
     font-weight: 100; /* 越细越有高级感 */
     letter-spacing: -2px; /* 字符稍微靠拢，更有设计感 */
@@ -493,8 +504,13 @@ body.sidebar-open #nt-scroll-area {
     font-weight: 300;
     color: rgba(255, 255, 255, 0.7); /* 稍微调淡，拉开主次感 */
     letter-spacing: 2px; /* 增加字间距，显得精致 */
-    margin-bottom: 40px;
+    /* margin-bottom: 40px; */
     text-transform: uppercase; /* 英文或拼音时会变全大写 */
+				display: inline-table; /* 或者 inline-block，让宽度随字数变化 */
+    cursor: pointer;       /* 增加小手形状，明确告诉用户这里可点 */
+    margin: 0 auto;        /* 如果需要居中，配合 text-align: center 使用 */
+    padding: 2px 10px;    /* 适当增加内边距，让点击稍微容易点，但不占整行 */
+    width: auto !important; /* 强制覆盖可能存在的 width: 100% */
 }
 
 /* 分类标签容器 */
@@ -545,13 +561,14 @@ body.sidebar-open #nt-scroll-area {
 }
 
 .nt-tab:hover {
-    color: white;
+    color: var(--nt-card);
     background: rgba(255, 255, 255, 0.1);
 }
 
 /* 激活状态样式 */
 .nt-tab.active {
-    color: white;
+    color: var(--nt-card);
+				text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
     background: rgba(255, 255, 255, 0.2);
     border-color: rgba(255, 255, 255, 0.3);
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
@@ -590,16 +607,8 @@ body.sidebar-open #nt-scroll-area {
 }
 
 .nt-engine-item:hover {
-    transform: translateY(-2px);
-}
-
-.nt-engine-item img {
-    width: 32px;
-    height: 32px;
-    border-radius: 8px;
-    background: white; /* 保证透明图标也有底色 */
-    padding: 4px;
-    margin-bottom: 6px;
+    transform: translateY(
+				text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);-2px);
 }
 
 .nt-engine-item span {
@@ -639,8 +648,6 @@ body.sidebar-open #nt-scroll-area {
     background: transparent;
     border: none;
     outline: none;
-    color: white;
-    font-size: 15px;
     padding: 0 12px;
 }
 
@@ -705,7 +712,6 @@ body.sidebar-open #nt-scroll-area {
     padding: 5px;
     margin-bottom: 6px;
 }
-
 .nt-engine-item span {
     font-size: 11px;
     color: rgba(255, 255, 255, 0.9);
@@ -751,7 +757,7 @@ body.sidebar-open #nt-scroll-area {
 /* 每一个建议项 */
 .suggestion-item {
     padding: 10px 20px;
-    color: white;
+    color: var(--nt-card);
     font-size: 14px;
     cursor: pointer;
     transition: background 0.2s;
@@ -1233,7 +1239,7 @@ body.sidebar-open #nt-scroll-area {
     display: flex;
     align-items: center;
     justify-content: center;
-    color: white;
+    color: var(--nt-card);
     text-decoration: none;
     box-shadow: 0 4px 15px rgba(0,0,0,0.1);
     transition: all 0.3s ease;
@@ -1249,8 +1255,394 @@ body.sidebar-open #nt-scroll-area {
 @media (max-width: 768px) {
     #nt-page-switcher {
         right: 15px;
-        bottom: 80px; /* 避开可能存在的底部 Dock 栏 */
+        bottom: 20px; /* 避开可能存在的底部 Dock 栏 */
         width: 40px;
         height: 40px;
     }
+}
+
+/* 强制触发硬件加速，让动画更顺滑 */
+.nt-grid {
+    backface-visibility: hidden;
+    will-change: transform, opacity;
+}
+/* 切换动画 */
+@keyframes slideInRight {
+    from { opacity: 0; transform: translateX(50px); }
+    to { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes slideInLeft {
+    from { opacity: 0; transform: translateX(-50px); }
+    to { opacity: 1; transform: translateX(0); }
+}
+
+/* 加上 !important 确保样式不被覆盖 */
+.slide-in-right {
+    animation: slideInRight 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94) both !important;
+}
+
+.slide-in-left {
+    animation: slideInLeft 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94) both !important;
+}
+
+/* 切换壁纸 */
+/* --- 0. 基础重置（防止边距计算错误） --- */
+#wallpaper-modal, 
+#wallpaper-modal *, 
+#wallpaper-modal *::before, 
+#wallpaper-modal *::after {
+    box-sizing: border-box; /* 强制所有元素包含边距计算 */
+}
+
+/* --- 1. 触发按钮 --- */
+#nt-wallpaper-btn {
+    position: fixed; bottom: 80px; right: 20px;
+    width: 44px; height: 44px; border-radius: 50%;
+    background: rgba(255, 255, 255, 0.25); backdrop-filter: blur(15px);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    cursor: pointer; z-index: 1000; transition: 0.3s;
+    display: flex; align-items: center; justify-content: center;
+}
+#nt-wallpaper-btn:hover { background: rgba(255, 255, 255, 0.4); transform: rotate(90deg); }
+
+/* --- 2. 遮罩层 --- */
+.modal-overlay {
+    display: none; position: fixed; inset: 0;
+    background: rgba(0,0,0,0.5); backdrop-filter: blur(8px);
+    z-index: 2000; align-items: center; justify-content: center;
+    padding: 15px; /* 移动端防止贴边 */
+}
+
+/* --- 3. 弹窗窗口主体 --- */
+.modal-window {
+    display: flex;
+    flex-direction: row; /* 默认横向布局 */
+    width: 100%;
+    max-width: 900px;
+    height: 80vh;
+    background: rgba(255, 255, 255, 0.85);
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 20px 50px rgba(0,0,0,0.3);
+    border: 1px solid rgba(255,255,255,0.4);
+}
+
+/* --- 4. 侧边栏 (PC端) --- */
+.modal-sidebar {
+    width: 180px;
+    background: rgba(0, 0, 0, 0.03);
+    padding: 20px 10px;
+    display: flex;
+    flex-direction: column;
+    flex-shrink: 0; /* 禁止侧边栏被挤压 */
+}
+.sidebar-title { font-size: 20px; margin: 0 0 20px 15px; color: #333; font-weight: bold; }
+.sidebar-menu { list-style: none; padding: 0; margin: 0; }
+.sidebar-menu li {
+    padding: 10px 15px; margin: 4px 0; border-radius: 8px;
+    cursor: pointer; font-size: 14px; transition: 0.2s;
+}
+.sidebar-menu li.active { background: #007aff; color: #fff; }
+.sidebar-menu li:hover:not(.active) { background: rgba(0,0,0,0.05); }
+
+/* --- 5. 右侧内容区 --- */
+.modal-body {
+    flex: 1;
+    min-width: 0; /* 关键：允许 Flex 子项缩小到比内容小 */
+    display: flex;
+    flex-direction: column;
+    background: #fff;
+}
+.body-header {
+    padding: 15px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid rgba(0,0,0,0.05);
+    flex-shrink: 0;
+}
+.close-btn { 
+    border: none; background: #eee; width: 28px; height: 28px; 
+    border-radius: 50%; cursor: pointer; display: flex; 
+    align-items: center; justify-content: center;
+}
+
+/* --- 6. 核心图片网格 (解决溢出的关键) --- */
+.wallpaper-grid {
+    flex: 1;
+    /* display: grid; */
+    /* 强行指定 1fr，并配合 min-width:0 防止溢出 */
+    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+    gap: 12px;
+    padding: 15px;
+    overflow-y: auto;
+    width: 100%;
+				align-content: start;
+}
+
+.wp-thumb {
+    width: 100%;
+    aspect-ratio: 16/9;
+    background-size: cover;
+    background-position: center;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: 0.2s;
+    border: 2px solid transparent;
+    background-color: #f0f0f0;
+    position: relative;
+    min-width: 0; /* 防止 grid item 撑开 */
+}
+.wp-thumb:hover { transform: scale(1.02); border-color: #007aff; }
+
+/* 视频角标 */
+.play-badge {
+    position: absolute; top: 8px; right: 8px;
+    background: rgba(0,0,0,0.5); color: #fff;
+    padding: 2px 6px; border-radius: 4px; font-size: 10px;
+}
+.wp-date-tag {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    padding: 2px 8px;
+    background: rgba(0, 0, 0, 0.5);
+    color: #fff;
+    font-size: 10px;
+    backdrop-filter: blur(4px); /* 磨砂效果 */
+    border-top-right-radius: 8px;
+}
+/* --- 7. 手机端适配 (全量重写) --- */
+@media (max-width: 768px) {
+    #nt-wallpaper-btn {
+		   bottom: 65px;
+		   right: 15px;
+    }
+    .modal-window {
+        flex-direction: column; /* 变纵向 */
+        height: 85vh;
+    }
+
+    .modal-sidebar {
+        width: 100%;
+        height: auto;
+        padding: 10px;
+        flex-direction: row;
+        overflow-x: auto;
+        border-bottom: 1px solid rgba(0,0,0,0.05);
+    }
+    .sidebar-title { display: none; }
+    .sidebar-menu { display: flex; flex-direction: row; gap: 5px; }
+    .sidebar-menu li { white-space: nowrap; padding: 6px 12px; font-size: 13px; }
+
+    .wallpaper-grid {
+        /* 手机端死锁两列，minmax(0, 1fr) 强制不溢出 */
+        grid-template-columns: repeat(2, minmax(0, 1fr)) !important; 
+        gap: 8px;
+        padding: 10px;
+    }
+    
+    .body-header { padding: 10px 15px; }
+}
+
+/* 自定义输入框样式 */
+#custom-section { padding: 20px; }
+#custom-section input {
+    width: 100%; padding: 10px; border-radius: 8px;
+    border: 1px solid #ddd; margin-bottom: 10px;
+}
+/* 自定义区域容器 */
+#custom-section {
+    padding: 25px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    align-items: center;
+}
+
+/* 输入框美化 */
+.custom-input-group {
+    width: 100%;
+    display: flex;
+    gap: 10px;
+    align-items: baseline;
+}
+
+#wp-input {
+    flex: 1;
+    padding: 12px 16px;
+    border-radius: 12px;
+    border: 1px solid rgba(0,0,0,0.1);
+    background: rgba(255,255,255,0.5);
+    outline: none;
+    transition: 0.3s;
+}
+
+#wp-input:focus {
+    border-color: #007aff;
+    background: #fff;
+    box-shadow: 0 0 0 4px rgba(0,122,255,0.1);
+}
+
+/* 核心：把丑按钮藏起来，美化 Label */
+.file-upload-wrapper {
+    width: 100%;
+    position: relative;
+}
+
+#wp-file {
+    display: none; /* 隐藏原生输入框 */
+}
+
+.file-upload-label {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 120px;
+    border: 2px dashed rgba(0,0,0,0.1);
+    border-radius: 16px;
+    cursor: pointer;
+    transition: all 0.3s;
+    color: #666;
+    background: rgba(0,0,0,0.02);
+}
+
+.file-upload-label:hover {
+    background: rgba(0,122,255,0.05);
+    border-color: #007aff;
+    color: #007aff;
+}
+
+.file-upload-label i {
+    font-size: 24px;
+    margin-bottom: 8px;
+}
+
+/* 统一的动作按钮 */
+.primary-btn {
+    padding: 12px 24px;
+    background: linear-gradient(135deg, #007aff, #0051ff);
+    color: var(--nt-card);
+    border: none;
+    border-radius: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s;
+    box-shadow: 0 4px 12px rgba(0,122,255,0.3);
+}
+
+.primary-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 18px rgba(0,122,255,0.4);
+}
+
+.primary-btn:active {
+    transform: translateY(0);
+}
+/* ================================================= */
+/* 1. 基础样式：确保点击精准 */
+/* ================================================= */
+.header-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    pointer-events: none; /* 防止容器遮挡下方点击 */
+}
+
+#clock, #date {
+    display: inline-block;
+    width: fit-content;
+    pointer-events: auto; /* 仅文字可点 */
+    user-select: none;
+    cursor: pointer;
+}
+
+/* ================================================= */
+/* 2. 沉浸模式：清屏补丁（排除时间） */
+/* ================================================= */
+
+/* 隐藏所有干扰 UI，但不包括 .header-section */
+/* 1. 隐藏所有 UI 元素（已加入 nt-page-switcher） */
+.zen-mode #nt-search-container,
+.zen-mode #nt-category-tabs,
+.zen-mode #nt-scroll-area,
+.zen-mode #nt-menu-btn,
+.zen-mode #nt-wallpaper-btn,
+.zen-mode #poem-container,
+.zen-mode #weather-container,
+.zen-mode .nt-sidebar,
+.zen-mode #nt-edge-trigger,
+.zen-mode #nt-page-switcher {  /* <--- 就是这一行！ */
+    opacity: 0 !important;
+    visibility: hidden !important;
+    pointer-events: none !important;
+    transition: all 0.4s ease !important;
+}
+
+/* 重点：对付那个毛玻璃大方块 (.nt-main) */
+/* 我们不隐藏它（否则时间就没了），我们只剥离它的视觉特征 */
+body.zen-mode .nt-main {
+    background: transparent !important;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+    border: none !important;
+    box-shadow: none !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    max-width: none !important; /* 消除宽度限制对居中的影响 */
+}
+
+/* ================================================= */
+/* 3. 核心：时间居中并置顶 */
+/* ================================================= */
+
+body.zen-mode .header-section {
+    opacity: 1 !important;
+    visibility: visible !important;
+    position: fixed !important; /* 脱离文档流，绝对居中 */
+    top: 50% !important;
+    left: 50% !important;
+    transform: translate(-50%, -50%) scale(1.2) !important; /* 居中并放大 */
+    /* z-index: 999999 !important; */
+    transition: all 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) !important;
+    pointer-events: none; 
+}
+
+/* 确保文字依然可点，用于返回 */
+body.zen-mode #clock, 
+body.zen-mode #date {
+    pointer-events: auto !important;
+    text-shadow: 0 2px 15px rgba(0,0,0,0.3); /* 防止背景太亮看不清时间 */
+}
+
+/* ================================================= */
+/* 4. 背景与搜索框彻底清理 */
+/* ================================================= */
+.zen-mode #nt-bg {
+    filter: none !important;
+    backdrop-filter: none !important;
+}
+
+/* 彻底杀掉搜索框，不让它在居中位置留残影 */
+body.zen-mode #nt-search-container {
+    display: none !important;
+}
+
+/* 1. 强制修改输入框内的文字颜色 */
+#nt-search-input {
+    color: var(--nt-card); !important;
+    -webkit-text-fill-color: white !important; /* 解决部分浏览器渲染问题 */
+}
+
+/* 2. 顺便修改“请输入搜索内容...”占位符的颜色（否则它可能还是灰的） */
+#nt-search-input::placeholder {
+    color: var(--nt-card); !important;
+}
+
+/* 兼容旧版浏览器的写法 */
+#nt-search-input::-webkit-input-placeholder {
+    color: var(--nt-card); !important;
 }
