@@ -282,7 +282,7 @@ body {
     
     /* 动画 */
     transform: translateX(-100%);
-    transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    transition: transform 0.3s ease-out;
 }
 
 /* 侧边栏打开状态 */
@@ -343,6 +343,8 @@ body {
     cursor: pointer;
     z-index: 1002;
     transition: all 0.3s ease;
+				-webkit-tap-highlight-color: transparent;
+    user-select: none; /* 防止长按弹出菜单 */
 }
 
 #nt-menu-btn:hover {
@@ -384,7 +386,6 @@ body {
 
 #nt-overlay.show {
     /* --- 优化点：触发显示 --- */
-    display: block; /* 如果你 JS 里用的是 classList.add('show') */
     opacity: 1;
     visibility: visible;
 }
@@ -392,7 +393,13 @@ body {
 body.sidebar-open #nt-scroll-area {
     pointer-events: none; /* 侧边栏打开时，首页所有的图标都变成“空气”，点不到 */
 }
-
+/* 只有在支持鼠标的设备上才显示 hover 效果 */
+@media (hover: hover) {
+    #nt-menu-btn:hover {
+        padding-left: 5px;
+        background: rgba(255, 255, 255, 0.3);
+    }
+}
 /* ==========================================================================
    5. 树状菜单组件
    ========================================================================== */
@@ -888,6 +895,9 @@ body.sidebar-open #nt-scroll-area {
     .nt-card { width: 100%; padding: 10px 0; min-width: 0; }
     .nt-card img, .nt-card .nt-icon-text { width: 45px; height: 45px; }
     .nt-card span { font-size: 11px; max-width: 90%; }
+				#nt-menu-btn {
+					top: 50px;
+				}
 }
 /* 底部诗词 */
 /* PC端：右上角挂件模式 */

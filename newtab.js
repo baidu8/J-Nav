@@ -14,26 +14,37 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // --- 2. 侧边栏逻辑 ---
     function toggleSidebar(isOpen) {
+        // 1. 状态锁：无论是开还是关，动画期间都不允许再次触发
         if (isSidebarTransitioning) return;
+        
         const currentOpen = sidebar.classList.contains('open');
         if (isOpen === currentOpen) return;
-        
-        clearTimeout(hoverTimer);
+    
+        // 2. 删掉这一行，因为我们要废弃 hover 逻辑了
+        // clearTimeout(hoverTimer); 
+    
+        isSidebarTransitioning = true; // ✨ 开启状态锁
+    
         if (isOpen) {
             sidebar.classList.add('open');
             overlay.classList.add('show');
             body.classList.add('sidebar-open');
             menuBtn.innerText = '✕';
+            
+            // 打开动画结束后解锁
+            setTimeout(() => { isSidebarTransitioning = false; }, 350);
         } else {
             sidebar.classList.remove('open');
             overlay.classList.remove('show');
             menuBtn.innerText = '☰';
-            isSidebarTransitioning = true;
-            menuBtn.style.pointerEvents = 'none';
+            
+            // 按钮暂时禁用，防止连点
+            menuBtn.style.pointerEvents = 'none'; 
+            
             setTimeout(() => {
                 body.classList.remove('sidebar-open');
                 menuBtn.style.pointerEvents = 'auto';
-                isSidebarTransitioning = false;
+                isSidebarTransitioning = false; // ✨ 关闭动画结束后解锁
             }, 350); 
         }
     }
