@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>雪花背景特效</title>
+<style>
+    body {
+        margin: 0;
+        overflow: hidden; /* 防止滚动条出现 */
+        background: transparent; /* 背景透明，让主页面壁纸透过来 */
+    }
+    canvas {
+        display: block; /* 移除默认间隙 */
+        pointer-events: none; /* 鼠标穿透 */
+    }
+</style>
+</head>
+<body style="margin:0; background:black; overflow:hidden;">
+    <canvas id="snowCanvas"></canvas>
+
+    <script>
+        const canvas = document.getElementById('snowCanvas');
+        const ctx = canvas.getContext('2d');
+        let flakes = [];
+        const flakeCount = 100; // 雪花数量
+        const minFlakeSize = 2; // 最小雪花大小
+        const maxFlakeSize = 5; // 最大雪花大小
+
+        // 调整 Canvas 大小以适应窗口
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+        window.addEventListener('resize', resizeCanvas);
+        resizeCanvas(); // 初始化时调用一次
+
+        // 初始化雪花
+        function initSnow() {
+            flakes = [];
+            for (let i = 0; i < flakeCount; i++) {
+                flakes.push({
+                    x: Math.random() * canvas.width,
+                    y: Math.random() * canvas.height,
+                    size: Math.random() * (maxFlakeSize - minFlakeSize) + minFlakeSize,
+                    speed: Math.random() * 0.5 + 0.2, // 速度
+                    opacity: Math.random() * 0.5 + 0.5, // 透明度
+                    swing: Math.random() * Math.PI, // 左右摆动起始角度
+                    swingSpeed: Math.random() * 0.05 + 0.01 // 左右摆动速度
+                });
+            }
+        }
+
+        // 绘制雪花
+        function drawSnow() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height); // 清空画布
+            ctx.fillStyle = 'white'; // 雪花颜色
+
+            flakes.forEach(flake => {
+                ctx.globalAlpha = flake.opacity; // 设置透明度
+                ctx.beginPath();
+                ctx.arc(flake.x, flake.y, flake.size / 2, 0, Math.PI * 2);
+                ctx.fill();
+
+                // 更新雪花位置
+                flake.y += flake.speed;
+                flake.x += Math.cos(flake.swing) * 0.8; // 增加左右摆动
+                flake.swing += flake.swingSpeed;
+
+                // 如果雪花落到底部，重新从顶部出现
+                if (flake.y > canvas.height) {
+                    flake.y = -flake.size;
+                    flake.x = Math.random() * canvas.width;
+                }
+            });
+            requestAnimationFrame(drawSnow); // 循环动画
+        }
+
+        initSnow(); // 初始化雪花
+        drawSnow(); // 开始绘制动画
+    </script>
+</body>
+</html>

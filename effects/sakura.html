@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        body { 
+            margin: 0; 
+            overflow: hidden; 
+            /* ✨ 这里设置你的背景图 */
+            background: url('img/yinghua.jpg') no-repeat center center; 
+            background-size: cover; 
+            width: 100vw;
+            height: 100vh;
+        }
+        canvas { 
+            display: block; 
+            position: fixed;
+            top: 0;
+            left: 0;
+            pointer-events: none; 
+        }
+    </style>
+</head>
+<body>
+    <canvas id="canvas_sakura"></canvas>
+
+    <script>
+        const canvas = document.getElementById('canvas_sakura');
+        const ctx = canvas.getContext('2d');
+        
+        // 1. 加载樱花图片
+        const sakuraImg = new Image();
+        sakuraImg.src = "img/樱花.png"; // 👈 确保文件名准确
+
+        let sakuraList = [];
+
+        function resize() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+        window.addEventListener('resize', resize);
+        resize();
+
+        class Sakura {
+            constructor() {
+                this.init();
+            }
+            init() {
+                this.x = Math.random() * canvas.width;
+                this.y = Math.random() * canvas.height - canvas.height;
+                this.s = Math.random() * 0.4 + 0.2; // 缩放比例
+                this.r = Math.random() * Math.PI; // 初始旋转角度
+                this.vx = Math.random() * 1.5 - 0.5; // 水平飘移速度
+                this.vy = Math.random() * 1 + 1.2;    // 下落速度
+                this.vr = Math.random() * 0.03 + 0.01; // 旋转速度
+            }
+            draw() {
+                if(!sakuraImg.complete) return; // 图片没加载好就不画
+                ctx.save();
+                ctx.translate(this.x, this.y);
+                ctx.rotate(this.r);
+                // 绘制图片：渲染宽度和高度随缩放比例变化
+                const size = 40 * this.s;
+                ctx.drawImage(sakuraImg, 0, 0, size, size);
+                ctx.restore();
+            }
+            update() {
+                this.x += this.vx;
+                this.y += this.vy;
+                this.r += this.vr;
+                // 越界后从上方重新随机出现
+                if (this.y > canvas.height || this.x > canvas.width || this.x < -40) {
+                    this.init();
+                    this.y = -40; 
+                }
+            }
+        }
+
+        // 初始化樱花数量
+        function start() {
+            for (let i = 0; i < 40; i++) {
+                sakuraList.push(new Sakura());
+            }
+            animate();
+        }
+
+        function animate() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            sakuraList.forEach(s => {
+                s.update();
+                s.draw();
+            });
+            requestAnimationFrame(animate);
+        }
+
+        // 图片加载完成后再启动动画，防止闪烁
+        sakuraImg.onload = start;
+    </script>
+</body>
+</html>

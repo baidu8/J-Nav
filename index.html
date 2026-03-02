@@ -2,7 +2,7 @@
 <html lang="zh-CN" data-theme="light">
 <head>
     <meta charset="UTF-8">
-				<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+				<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
     <title>J-nav | 标签</title>
     <link rel="stylesheet" href="newtab.css">
 				<link rel="icon" type="image/svg+xml" href="icons/logo.svg" />
@@ -29,13 +29,20 @@
 	})();
 </script>
     <div id="nt-bg"></div>
+				
     <div id="nt-edge-trigger"></div>
+				
     <div id="nt-sidebar" class="nt-sidebar">
-        <div class="sidebar-header">更多分类</div>
-        <div id="nt-sidebar-content"></div>
+        <button id="nt-menu-btn">☰</button> 
+    
+        <div class="sidebar-scroll-wrapper">
+            <div class="sidebar-header">更多分类</div>
+            <div id="nt-sidebar-content"></div>
+        </div>
     </div>
+				
     <div id="nt-overlay"></div>
-    <button id="nt-menu-btn">☰</button> 
+    
 
 <div id="calendar-modal" class="modal-overlay">
     <div class="calendar-card">
@@ -81,8 +88,7 @@
         <header class="nt-header-sticky">
             <div class="header-section">
                 <div id="clock" class="nt-clock">00:00</div>
-																<div id="date" style="cursor: pointer;">2月27日 星期五</div>
-                <!-- <div id="date" class="nt-date">载入中...</div> -->
+                <div id="date" class="nt-date">载入中...</div>
             </div>
             
             <div class="nt-search">
@@ -128,10 +134,11 @@
 				                <li class="active" data-type="bing">API背景接口</li>
 																				<li data-type="history">必应</li>
 				                <li data-type="dynamic">动态壁纸</li>
-																				<li data-type="shouji">手机端</li>
+																				<li data-type="effects">特效背景</li>
 																				<li data-type="zipai">自己拍的</li>
+																				<li data-type="shouji">手机端</li>
+				                <li data-type="local">我的上传</li>
 				                <li data-type="custom">自定义壁纸</li>
-				                <!-- <li data-type="local">我的上传</li> -->
 				            </ul>
 				            <!-- <div class="sidebar-footer">⚙️ 参数设置</div> -->
 				        </div>
@@ -180,7 +187,6 @@
 				<script>
 				    if ('serviceWorker' in navigator) {
 				        window.addEventListener('load', () => {
-				            // 注意这里的路径，确保 sw.js 在同级目录
 				            navigator.serviceWorker.register('sw.js')
 				                .then(reg => console.log('NewTab SW Registered'))
 				                .catch(err => console.log('NewTab SW Failed', err));

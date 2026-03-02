@@ -47,13 +47,13 @@ document.addEventListener('DOMContentLoaded', () => {
     const handleEnter = (e) => {
         if (isSidebarTransitioning || e.pointerType === 'touch') return;
         clearTimeout(hoverTimer);
-        hoverTimer = setTimeout(() => toggleSidebar(true), 10);
+        hoverTimer = setTimeout(() => toggleSidebar(true), 50);
     };
 
     const handleLeave = (e) => {
         if ((e && e.pointerType === 'touch') || isSidebarTransitioning || !sidebar.classList.contains('open')) return;
         clearTimeout(hoverTimer);
-        hoverTimer = setTimeout(() => toggleSidebar(false), 200); 
+        hoverTimer = setTimeout(() => toggleSidebar(false), 400); 
     };
 
     if (edgeTrigger) edgeTrigger.addEventListener('pointerenter', handleEdgeEnter);
@@ -114,7 +114,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 const iconUrl = d ? `${WORKER_BASE}${d}` : '';
                 html += `<li class="nt-tree-item">
                     <a href="${item.url}" target="_blank" title="${item.name}" onclick="event.stopPropagation()">
-                        <img data-src="${iconUrl}" data-name="${item.name}" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7">
+                        <img loading="lazy" data-src="${iconUrl}" data-name="${item.name}" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7">
                         ${item.name}
                     </a></li>`;
             }
@@ -522,7 +522,8 @@ const wallpaperLib = {
         { name: '1', url: 'https://prod-streaming-video-msn-com.akamaized.net/54cabe89-17bd-4116-8908-8501ebe48f6d/2e8ba8c7-a691-46d9-b5ae-d18050ce273a.mp4' },
         { name: '1', url: 'https://prod-streaming-video-msn-com.akamaized.net/f9e318a4-7575-4809-b371-7b34a5807857/1f80c234-46af-41a5-8f50-8f0926e29a2c.mp4' },
         { name: '1', url: 'https://prod-streaming-video-msn-com.akamaized.net/87d3d62a-cfe2-4d03-8396-a1daf86b84ae/c2b325a7-0d9f-4b3f-a503-0568b15275b9.mp4' },
-        { name: '1', url: 'https://prod-streaming-video-msn-com.akamaized.net/15fc0eea-1091-4a28-a9b6-8caaf6013cf1/62b4c40f-ad3c-4099-a59a-bfbe324a461c.mp4' }
+								{ name: '1', url: 'https://prod-streaming-video-msn-com.akamaized.net/87d3d62a-cfe2-4d03-8396-a1daf86b84ae/c2b325a7-0d9f-4b3f-a503-0568b15275b9.mp4' },
+        { name: '1', url: 'https://v.828111.xyz/动态壁纸.mp4' }
     ],
 				'zipai': [
 					{ name: '自己拍的', url: 'https://note.youdao.com/yws/api/personal/file/WEBe5370dcfb2ac1c5d950d785f24af4375?method=download&amp;shareKey=1707539a369fc6cee2d21b0bf9c76c0b' },
@@ -543,6 +544,24 @@ const wallpaperLib = {
 					{ name: '自己拍的', url: 'https://note.youdao.com/yws/api/personal/file/WEB97588314c2ab885433773b3ee82ab51b?method=download&amp;shareKey=1707539a369fc6cee2d21b0bf9c76c0b' },
 					{ name: '自己拍的', url: 'https://note.youdao.com/yws/api/personal/file/WEB4ceadf6dc4e151feab542f15a96e0d38?method=download&amp;shareKey=1707539a369fc6cee2d21b0bf9c76c0b' },
 				],
+				'effects': [
+				    { 
+				        name: '黑客帝国', 
+				        url: 'effects/matrix.html',
+												icon: '🧑🏿‍💻️'
+				    },
+				    { 
+				        name: '雪花', 
+				        url: 'effects/xuehua.html',
+												icon: '❄️'
+				    },
+								{ name: '樱花飘落', url: 'effects/sakura.html', icon: '🌸' },
+				    { 
+				        name: '烟花', 
+				        url: 'effects/yanhua.html' ,
+												icon: '🎇'
+				    }
+				],
 				'shouji': [
 					{ name: '必应每日', url: 'https://bing.img.run/m.php' },
 					{ name: 'Lorem Picsum', url: 'https://picsum.photos/1080/1920' }
@@ -557,10 +576,10 @@ const wpSection = document.getElementById('custom-section');
 const categoryName = document.getElementById('wp-category-name');
 
 // --- 2. 核心渲染函数：生成右侧预览图 ---
-// --- 修改后的核心渲染函数 ---
 async function renderCategory(type) {
     const titles = { 
         bing: '收藏的api接口', 
+								effects: '特效背景', 
         history: '必应壁纸',
         dynamic: '精选动态壁纸', 
         shouji: '手机端', 
@@ -572,11 +591,11 @@ async function renderCategory(type) {
     if(categoryName) categoryName.innerText = titles[type] || '壁纸库';
 
     // 处理自定义界面
-    if (type === 'custom' || type === 'local') {
+    if (type === 'custom') {
         wpGrid.style.display = 'none';
         wpSection.style.display = 'block';
         return;
-    } 
+    }
 
     // 显示网格，清空旧内容
     wpGrid.style.display = 'grid';
@@ -588,41 +607,78 @@ async function renderCategory(type) {
     // --- 核心逻辑：如果是历史分类，动态抓取 README ---
     if (type === 'history') {
         list = await fetchBingHistory();
+    } else if (type === 'local') {
+        // ✨ 新增：从本地存储读取上传记录
+        list = JSON.parse(localStorage.getItem('nt_local_history') || '[]');
     } else {
         list = wallpaperLib[type] || [];
     }
 
     // 执行渲染
-    if (list.length === 0) {
-        wpGrid.innerHTML = '<div style="padding:20px;">暂无内容</div>';
+    if (list.length === 0 && type === 'local') {
+        wpGrid.innerHTML = '<div style="padding:20px; color:gray;">暂无上传记录，请先在“自定义”中上传。</div>';
         return;
     }
 
     wpGrid.innerHTML = list.map(item => {
         const isVideo = /\.(mp4|webm|ogg)$/i.test(item.url) || (item.url && item.url.includes('video'));
-        
+        const isEffect = type === 'effects'; // 判断是否为特效分类
+    
+        // 1. 定义删除按钮
+        const deleteBtn = (type === 'local') ? `
+            <div class="delete-wp" onclick="deleteLocalWp(event, '${item.url}')" 
+                 style="position:absolute; top:5px; right:5px; width:18px; height:18px; 
+                        background:rgba(255,0,0,0.5); color:white; border-radius:50%; 
+                        text-align:center; line-height:16px; cursor:pointer; font-size:14px; 
+                        z-index:10; backdrop-filter:blur(4px);">
+                 ×
+            </div>` : '';
+    
+        // --- 情况 A: 视频预览 ---
         if (isVideo) {
             return `
-                <div class="wp-thumb video-preview" onclick="setWallpaper('${item.url}')" style="position:relative; background:rgba(0, 0, 0, 0.08);">
+                <div class="wp-thumb video-preview" onclick="setWallpaper('${item.url}')">
                     <video src="${item.url}#t=0.1" preload="metadata" muted style="width:100%; height:100%; object-fit:cover; border-radius:12px;"></video>
                     <div class="play-badge">▶</div>
-																				<span style="position:absolute; bottom:5px; left:8px; font-size:10px; color:rgba(255,255,255,0.8); text-shadow:0 1px 2px rgba(0,0,0,0.5);">${item.name || ''}</span>
+                    <span style="position:absolute; bottom:5px; left:8px; font-size:10px; color:rgba(255,255,255,0.8); text-shadow:0 1px 2px rgba(0,0,0,0.5);">${item.name || ''}</span>
                 </div>`;
-        } else {
-            // --- 预览图优化 ---
-            const isHistory = !!item.fullUrl; // 判断是否为历史分类的数据
-            const thumb = (item.url.includes('bing.com') && !item.url.includes('&w=')) 
-                          ? item.url + '&w=480&h=270&c=7' 
-                          : item.url;
-            const finalWallpaper = item.fullUrl || item.url;
-    
+        } 
+        
+        // --- 情况 B: 特效预览 (重点修改) ---
+        if (isEffect) {
+            // 为不同的特效生成不同的渐变背景，解决裂图问题
+            const gradients = [
+                'linear-gradient(135deg, #1e3c72 0%, #2a5298 100%)', // 深蓝
+                'linear-gradient(135deg, #0f2027 0%, #2c5364 100%)', // 科技黑
+                'linear-gradient(135deg, #134e5e 0%, #71b280 100%)', // 绿意
+                'linear-gradient(135deg, #2c3e50 0%, #000000 100%)'  // 酷黑
+            ];
+            // 根据名称长度随机选一个渐变，保证每次打开看起来差不多
+            const bg = gradients[item.name.length % gradients.length];
+            
             return `
-                <div class="wp-thumb" 
-                     style="background-image: url('${thumb}');" 
-                     onclick="setWallpaper('${finalWallpaper}')">
-                     <span style="position:absolute; bottom:5px; left:8px; font-size:10px; color:rgba(255,255,255,0.8); text-shadow:0 1px 2px rgba(0,0,0,0.5);">${item.name || ''}</span>
+                <div class="wp-thumb" onclick="setWallpaper('${item.url}')" 
+                     style="overflow:hidden; background:${bg}; display:flex; align-items:center; justify-content:center;">
+                    <div style="font-size:24px; opacity:0.3; color:white; font-weight:bold;">${item.icon || 'FX'}</div>
+                    <span style="position:absolute; bottom:5px; left:8px; font-size:10px; color:rgba(255,255,255,0.8); text-shadow:0 1px 2px rgba(0,0,0,0.5);">${item.name || ''}</span>
                 </div>`;
         }
+    
+        // --- 情况 C: 普通图片预览 ---
+        const thumb = (item.url.includes('bing.com') && !item.url.includes('&w=')) 
+                      ? item.url + '&w=480&h=270&c=7' 
+                      : item.url;
+        const finalWallpaper = item.fullUrl || item.url;
+    
+        return `
+            <div class="wp-thumb" onclick="setWallpaper('${finalWallpaper}')" style="overflow:hidden;">
+                <img src="${thumb}" 
+                     loading="lazy" 
+                     style="width:100%; height:100%; object-fit:cover;" 
+                     alt="${item.name || ''}">
+                ${deleteBtn}
+                <span style="position:absolute; bottom:5px; left:8px; font-size:10px; color:rgba(255,255,255,0.8); text-shadow:0 1px 2px rgba(0,0,0,0.5);">${item.name || ''}</span>
+            </div>`;
     }).join('');
 }
 
@@ -682,13 +738,29 @@ document.querySelectorAll('.sidebar-menu li').forEach(li => {
     };
 });
 
-// --- 4. 核心设置函数 (支持图片和视频) ---
+// --- 4. 核心设置函数 (支持图片视频和特效) ---
 window.setWallpaper = (url) => {
     if (!url || !bgLayer) return;
-    const isVideo = /\.(mp4|webm|ogg)$/i.test(url) || url.includes('video');
 
-    if (isVideo) {
-        bgLayer.style.backgroundImage = 'none';
+    // --- 1. 彻底重置环境 ---
+    bgLayer.innerHTML = ''; // 清空 iframe 或 video
+    bgLayer.style.backgroundImage = 'none'; // 清空背景图
+    document.body.style.overflow = 'hidden'; // 再次确保 body 不会出现滚动条
+    
+    // --- 2. 识别类型 ---
+    const isImage = /\.(jpg|jpeg|png|gif|webp|base64)/i.test(url) || url.startsWith('data:image');
+    const isVideo = /\.(mp4|webm|ogg)/i.test(url) || url.includes('video');
+    const isHtml = url.includes('.html') || (url.startsWith('http') && !isImage && !isVideo);
+
+    if (isHtml) {
+        // --- 特效网页模式 ---
+        bgLayer.innerHTML = `
+            <iframe src="${url}" 
+                    style="width:100%; height:100%; border:none; display:block; pointer-events:none;"
+                    scrolling="no">
+            </iframe>`;
+    } else if (isVideo) {
+        // --- 视频背景 ---
         bgLayer.innerHTML = `
             <video autoplay loop muted playsinline style="
                 position: absolute; top: 50%; left: 50%; 
@@ -699,18 +771,37 @@ window.setWallpaper = (url) => {
                 <source src="${url}" type="video/mp4">
             </video>`;
     } else {
-        bgLayer.innerHTML = '';
-								bgLayer.style.transition = "background-image 0.5s ease-in-out";
+        // --- 图片背景 ---
+        bgLayer.style.transition = "background-image 0.5s ease-in-out";
         bgLayer.style.backgroundImage = `url(${url})`;
+        
+        // 本地上传记录逻辑
+        if (url.startsWith('data:image')) {
+            let localHistory = JSON.parse(localStorage.getItem('nt_local_history') || '[]');
+            localHistory = localHistory.filter(item => item.url !== url);
+            localHistory.unshift({ name: '本地上传 ' + new Date().toLocaleString(), url: url });
+            if (localHistory.length > 8) localHistory.pop();
+            localStorage.setItem('nt_local_history', JSON.stringify(localHistory));
+        }
     }
 
+    // --- 3. 永久保存状态 ---
     try {
         localStorage.setItem('nt_wallpaper', url);
     } catch (e) {
-        console.warn("Storage Full");
+        console.warn("存储已满");
     }
 };
+window.deleteLocalWp = (event, url) => {
+    event.stopPropagation(); // 双重保险，阻止触发设为壁纸
+    
+    let localHistory = JSON.parse(localStorage.getItem('nt_local_history') || '[]');
+    localHistory = localHistory.filter(item => item.url !== url);
+    localStorage.setItem('nt_local_history', JSON.stringify(localHistory));
 
+    // 重新渲染当前“本地记录”分类，让图片立刻消失
+    renderCategory('local');
+};
 // --- 5. 初始化 ---
 const savedWp = localStorage.getItem('nt_wallpaper');
 if (savedWp) setWallpaper(savedWp);
@@ -777,7 +868,7 @@ if (wpModal) {
         }
     };
 }
-// 1. 核心切换函数 (确保它是全局的)
+
 // --- 10. 沉浸模式逻辑 (纯净版：无遮罩) ---
 window.toggleZenMode = function(e) {
     if (e) {

@@ -73,18 +73,24 @@ body {
     left: 0;
     width: 100%;
     height: 100%;
-    /* 初始背景 */
-    background: url('https://bing.img.run/1920x1080.php') no-repeat center center;
     background-size: cover;
+    background-position: center center;
+    background-repeat: no-repeat;
     z-index: -1;
     pointer-events: none;
-    
-    /* ✨ 新增：平滑过渡效果 */
     transition: background-image 0.8s ease-in-out;
-    
-    /* 苹果端丝滑补丁 */
     transform: translateZ(0); 
     -webkit-transform: translateZ(0); 
+
+    /* 1. 默认设置（通常为电脑端 16:9） */
+    background-image: url('https://bing.img.run/1920x1080.php');
+}
+
+/* 2. 针对手机端（竖屏）的优化 */
+@media (max-width: 768px) and (orientation: portrait) {
+    #nt-bg {
+        background-image: url('https://bing.img.run/m.php'); 
+    }
 }
 #nt-bg video {
     position: absolute;
@@ -98,19 +104,42 @@ body {
     object-fit: cover;
     z-index: -1;
 }
+/* 强制让里面的 iframe 铺满 */
+/* 针对内部所有可能生成的元素进行重置 */
+#nt-bg iframe, 
+#nt-bg video {
+    width: 100% !important;
+    height: 100% !important;
+    border: none !important;
+    display: block;
+    margin: 0;
+    padding: 0;
+}
 /* ==========================================================================
    2. 主内容容器 (毛玻璃面板)
    ========================================================================== */
-/* 主容器：固定高度，不滚动 */
+/* 主容器：固定位置，杜绝跳动 */
 .nt-main {
+    /* 1. 核心定位修改：由 margin 改为 fixed 居中 */
+    position: fixed; 
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%); /* 完美居中，不受 margin 影响 */
+
     width: 95%;
     max-width: 1400px;
-    height: 85vh; /* 核心：限制大框高度 */
-    margin: 40px auto;
-    display: flex; /* 垂直排列头部和滚动区 */
+    height: 85vh; 
+    
+    display: flex; 
     flex-direction: column;
-    overflow: hidden; /* 剪掉容器外的滚动条 */
+    overflow: hidden; 
     box-sizing: border-box;
+
+    /* 2. 增加硬件加速，防止渲染残留 */
+    will-change: transform;
+    -webkit-font-smoothing: antialiased;
+
+    /* 原有样式保持不变 */
     background: rgba(255, 255, 255, 0.15);
     backdrop-filter: blur(25px);
     -webkit-backdrop-filter: blur(25px);
@@ -239,103 +268,91 @@ body {
 /* ==========================================================================
    4. 侧边栏与导航组件
    ========================================================================== */
-/* 菜单按钮 (独立定位) */
-#nt-menu-btn {
-    /* 1. 基础定位：固定在左上角 */
-    position: fixed;
-    z-index: 1001;
-    cursor: pointer;
-    
-    /* 2. 核心调整：避开刘海屏并保持呼吸感 */
-    /* 在安全区基础上向下挪 25px，向右挪 20px */
-    top: calc(env(safe-area-inset-top) + 25px);
-    left: 20px;
-
-    /* 3. 尺寸与形状：采用 32px 的圆形，显得更灵动 */
-    width: 32px;
-    height: 32px;
-    border-radius: 50%; /* 圆形按钮，完美契合侧栏圆角 */
-    
-    /* 4. 毛玻璃质感 */
-    background: rgba(255, 255, 255, 0.15);
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-
-    /* 5. 内部图标居中 */
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: rgba(255, 255, 255, 0.8);
-    font-size: 16px;
-    text-align: center;
-    line-height: 32px;
-
-    /* 6. 交互动画：增加回弹效果 */
-    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-}
-
-/* 鼠标悬停：让按钮亮起来 */
-#nt-menu-btn:hover {
-    background: rgba(255, 255, 255, 0.4);
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
-    transform: scale(1.1);
-    color: #fff;
-}
-
-/* 侧边栏打开时的按钮状态 */
-.sidebar-open #nt-menu-btn {
-    transform: translateX(240px) rotate(180deg);
-				background: rgba(255, 255, 255, 0.4);
-    color: #333;
-}
-
-/* 侧边栏主体 */
+/* --- 1. 侧边栏外层：负责定位、形状和动画 --- */
 .nt-sidebar {
-    /* 1. 定位与层级 */
     position: fixed;
     left: 0;
-    z-index: 1000;
-    
-    /* 2. 悬浮容器感：上下留出 20px 间距，不顶死边缘 */
     top: 20px;
     height: calc(100vh - 40px);
     width: 280px;
-    
-    /* 3. 形状：右侧大圆角（毛玻璃黄金搭档） */
+    z-index: 1000;
     border-radius: 0 24px 24px 0;
+    /* 核心：必须可见，否则拉环会被切掉 */
+    overflow: visible !important; 
     
-    /* 4. 毛玻璃核心质感 */
-    background: rgba(255, 255, 255, 0.1); 
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
-    
-    /* 5. 边框细节：增加 1px 的白色半透明边，模拟玻璃折射感 */
-    border: 1px solid rgba(255, 255, 255, 0.15);
-    border-left: none; /* 左侧贴边不需要边框 */
-    
-    /* 6. 内部间距：适配刘海屏并留出“更多分类”标题位置 */
-    /* 我们用 padding-top 确保内容避开顶部和刘海 */
-    padding: calc(env(safe-area-inset-top) + 60px) 20px 20px;
-    
-    /* 7. 动画与溢出处理 */
+    /* 动画 */
     transform: translateX(-100%);
-    transition: transform 0.2s cubic-bezier(0, 0.5, 0.5, 1); /* 0.3s 变 0.2s，体感快一倍 */
-    overflow-y: auto;
-    
-    /* 隐藏原生滚动条，让 UI 更干净 */
-    scrollbar-width: none; /* Firefox */
+    transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
 
-/* 隐藏 Chrome/Safari 滚动条 */
-.nt-sidebar::-webkit-scrollbar {
-    display: none;
-}
-
+/* 侧边栏打开状态 */
 .nt-sidebar.open {
     transform: translateX(0);
     box-shadow: 10px 0 30px rgba(0,0,0,0.15);
+}
+
+/* --- 2. 侧边栏内层包裹：负责毛玻璃、边框和滚动 --- */
+.sidebar-scroll-wrapper {
+    width: 100%;
+    height: 100%;
+    
+    /* 核心：分类多了在这里滚动 */
+    overflow-y: auto;
+    overflow-x: hidden;
+    scrollbar-width: none; /* 隐藏 Firefox 滚动条 */
+    
+    /* 形状与毛玻璃 */
+    border-radius: 0 24px 24px 0;
+    background: rgba(255, 255, 255, 0.1); 
+    backdrop-filter: blur(25px);
+    -webkit-backdrop-filter: blur(25px);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-left: none;
+    
+    /* 内部间距：适配刘海和内容 */
+    padding: calc(env(safe-area-inset-top) + 60px) 20px 20px;
+    box-sizing: border-box;
+}
+
+/* 隐藏 Chrome/Safari 滚动条 */
+.sidebar-scroll-wrapper::-webkit-scrollbar {
+    display: none;
+}
+
+/* --- 3. 菜单按钮 (拉环定位) --- */
+#nt-menu-btn {
+    position: absolute;
+    right: -32px; /* 挂在侧边栏右侧边缘 */
+    top: 25px; 
+    
+    width: 32px;
+    height: 40px;
+    border-radius: 0 8px 8px 0;
+    
+    /* 这里的毛玻璃可以稍微亮一点，突出点击感 */
+    background: rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-left: none;
+    
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    z-index: 1002;
+    transition: all 0.3s ease;
+}
+
+#nt-menu-btn:hover {
+    padding-left: 5px;
+    background: rgba(255, 255, 255, 0.3);
+}
+
+/* 侧边栏打开时的按钮状态 */
+.nt-sidebar.open #nt-menu-btn {
+    background: rgba(255, 255, 255, 0.4);
 }
 
 /* 边缘触发与遮罩 */
@@ -353,21 +370,27 @@ body {
     position: fixed;
     inset: 0;
     background: rgba(0,0,0,0.3);
-    display: none;
     z-index: 999;
     backdrop-filter: blur(2px);
-				cursor: pointer;
-				  /* ✨ 专门针对 Safari 的补丁，强制开启硬件加速并声明它是可点击的 */
-				  -webkit-tap-highlight-color: transparent; 
-				  touch-action: manipulation;
+    cursor: pointer;
+    -webkit-tap-highlight-color: transparent; 
+    touch-action: manipulation;
+
+    /* --- 优化点：由 display 改为 opacity 渐变 --- */
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0.3s;
+}
+
+#nt-overlay.show {
+    /* --- 优化点：触发显示 --- */
+    display: block; /* 如果你 JS 里用的是 classList.add('show') */
+    opacity: 1;
+    visibility: visible;
 }
 /* 关键：侧边栏打开时，给背后的内容区加个“不可点”状态 */
 body.sidebar-open #nt-scroll-area {
     pointer-events: none; /* 侧边栏打开时，首页所有的图标都变成“空气”，点不到 */
-}
-
-#nt-overlay.show {
-    display: block;
 }
 
 /* ==========================================================================
@@ -375,8 +398,7 @@ body.sidebar-open #nt-scroll-area {
    ========================================================================== */
 .nt-tree { list-style: none; padding-left: 10px; }
 .sidebar-header{
-	color: #ffffff;
-	margin-top: 10px;
+     margin-top: 10px;
 	    margin-bottom: 20px;
 	    padding: 0 20px;
 	    font-weight: bold;
@@ -650,7 +672,33 @@ body.sidebar-open #nt-scroll-area {
     outline: none;
     padding: 0 12px;
 }
+/* 强制覆盖浏览器的自动填充背景色 */
+#nt-search-input:-webkit-autofill,
+#nt-search-input:-webkit-autofill:hover, 
+#nt-search-input:-webkit-autofill:focus {
+    -webkit-box-shadow: 0 0 0px 1000px rgba(255, 255, 255, 0) inset !important;
+    -webkit-text-fill-color: white !important;
+    transition: background-color 5000s ease-in-out 0s;
+}
 
+.suggestion-item, 
+#nt-search-suggestions li {
+    background: transparent !important;
+    color: white !important;
+    padding: 12px 20px !important;
+    border: none !important;
+}
+
+/* 鼠标滑过历史记录时的颜色 */
+.suggestion-item:hover, 
+#nt-search-suggestions li:hover {
+    background: rgba(255, 255, 255, 0.1) !important;
+}
+
+/* 如果那个气泡有个白色的小尖角（伪元素），也把它变透明或隐藏 */
+#nt-search-suggestions::before {
+    display: none !important;
+}
 /* 3. 左侧引擎触发器 */
 .nt-engine-trigger {
     display: flex;
@@ -742,7 +790,7 @@ body.sidebar-open #nt-scroll-area {
     top: 100%; /* 紧贴搜索框底部 */
     left: 0;
     width: 100%;
-    background: rgba(255, 255, 255, 0.2); /* 毛玻璃底色 */
+    background: rgba(0,0,0,0.3); /* 毛玻璃底色 */
     backdrop-filter: blur(25px);
     border-radius: 20px;
     margin-top: 8px;
@@ -1573,13 +1621,14 @@ body.sidebar-open #nt-scroll-area {
 .zen-mode #nt-wallpaper-btn,
 .zen-mode #poem-container,
 .zen-mode #weather-container,
+.zen-mode #nt-featured-content,
 .zen-mode .nt-sidebar,
 .zen-mode #nt-edge-trigger,
 .zen-mode #nt-page-switcher {  /* <--- 就是这一行！ */
     opacity: 0 !important;
     visibility: hidden !important;
     pointer-events: none !important;
-    transition: all 0.4s ease !important;
+    transition: opacity 0.2s ease-out, visibility 0.2s !important;
 }
 
 /* 重点：对付那个毛玻璃大方块 (.nt-main) */
@@ -1633,16 +1682,21 @@ body.zen-mode #nt-search-container {
 
 /* 1. 强制修改输入框内的文字颜色 */
 #nt-search-input {
-    color: var(--nt-card); !important;
+    color: var(--nt-card) !important;
     -webkit-text-fill-color: white !important; /* 解决部分浏览器渲染问题 */
 }
 
 /* 2. 顺便修改“请输入搜索内容...”占位符的颜色（否则它可能还是灰的） */
 #nt-search-input::placeholder {
-    color: var(--nt-card); !important;
+    color: var(--nt-card) !important;
 }
 
 /* 兼容旧版浏览器的写法 */
 #nt-search-input::-webkit-input-placeholder {
-    color: var(--nt-card); !important;
+    color: var(--nt-card) !important;
+}
+/* 放在 CSS 最后面 */
+.zen-mode .nt-card {
+    opacity: 0 !important;
+    transition: none !important; /* 进入清屏模式时，图标不准有任何过渡，直接消失 */
 }

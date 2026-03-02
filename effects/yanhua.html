@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>烟花动画特效</title>
+</head>
+<body style="margin:0; background:black; overflow:hidden;">
+<canvas id="canvas"></canvas>
+<script>
+    const canvas = document.getElementById("canvas");
+    const ctx = canvas.getContext("2d");
+    let pi = Math.PI, cx, cy, playerX, playerY, playerZ, yaw, pitch, frames = 0;
+    let seeds = [], sparks = [], scale = 600, gravity = 0.02;
+    let seedTimer = 0, seedInterval = 20, seedLife = 100;
+
+    function initVars() {
+        resize();
+        playerZ = -25;
+        playerX = playerY = yaw = pitch = 0;
+    }
+
+    function resize() {
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+        cx = canvas.width / 2;
+        cy = canvas.height / 2;
+    }
+
+    // 3D 坐标转 2D 投影
+    function rasterizePoint(x, y, z) {
+        x -= playerX; y -= playerY; z -= playerZ;
+        let p = Math.atan2(x, z), d = Math.sqrt(x * x + z * z);
+        x = Math.sin(p - yaw) * d; z = Math.cos(p - yaw) * d;
+        p = Math.atan2(y, z); d = Math.sqrt(y * y + z * z);
+        y = Math.sin(p - pitch) * d; z = Math.cos(p - pitch) * d;
+        if (z <= 0) return { x: 0, y: 0, d: -1 };
+        return { x: cx + x / z * scale, y: cy + y / z * scale, d: z };
+    }
+
+    function spawnSeed() {
+        seeds.push({
+            x: -50 + Math.random() * 100, y: 25, z: -50 + Math.random() * 100,
+            vx: 0.1 - Math.random() * 0.2, vy: -1.5, vz: 0.1 - Math.random() * 0.2,
+            born: frames
+        });
+    }
+
+    function splode(x, y, z) {
+        let t = 50 + Math.random() * 100, sparkV = 1 + Math.random() * 2;
+        let color = `hsl(${Math.random() * 360}, 100%, 60%)`;
+        for (let m = 0; m < t; m++) {
+            let p1 = pi * 2 * Math.random(), p2 = pi * Math.random(), v = sparkV * (1 + Math.random() / 6);
+            sparks.push({
+                x: x, y: y, z: z,
+                vx: Math.sin(p1) * Math.sin(p2) * v,
+                vz: Math.cos(p1) * Math.sin(p2) * v,
+                vy: Math.cos(p2) * v,
+                radius: 20 + Math.random() * 30, alpha: 1, color: color
+            });
+        }
+    }
+
+    function doLogic() {
+        if (frames > seedTimer) {
+            seedTimer = frames + seedInterval + Math.random() * 20;
+            spawnSeed();
+        }
+        seeds.forEach((s, i) => {
+            s.vy += gravity; s.x += s.vx; s.y += s.vy; s.z += s.vz;
+            if (frames - s.born > seedLife) {
+                splode(s.x, s.y, s.z);
+                seeds.splice(i, 1);
+            }
+        });
+        sparks.forEach((s, i) => {
+            if (s.alpha > 0 && s.radius > 1) {
+                s.alpha -= 0.01; s.radius /= 1.02; s.vy += gravity;
+                s.x += s.vx; s.y += s.vy; s.z += s.vz;
+                s.vx /= 1.05; s.vy /= 1.05; s.vz /= 1.05;
+            } else {
+                sparks.splice(i, 1);
+            }
+        });
+        // 自动旋转视角
+        let d = 80 + Math.sin(frames / 100) * 20;
+        playerX = Math.sin(frames / 200) * d;
+        playerZ = Math.cos(frames / 200) * d;
+        yaw = Math.atan2(playerX, playerZ) + pi;
+    }
+
+    function draw() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        
+        // 绘制地面点阵
+        ctx.fillStyle = "rgba(255, 255, 136, 0.3)";
+        for (let i = -100; i <= 100; i += 10) {
+            for (let j = -100; j <= 100; j += 10) {
+                let pt = rasterizePoint(i, 25, j);
+                if (pt.d !== -1) {
+                    let size = 2 / pt.d * scale;
+                    ctx.fillRect(pt.x - size / 2, pt.y - size / 2, size, size);
+                }
+            }
+        }
+
+        // 绘制烟花种子
+        ctx.fillStyle = "#fff";
+        seeds.forEach(s => {
+            let pt = rasterizePoint(s.x, s.y, s.z);
+            if (pt.d !== -1) ctx.fillRect(pt.x - 1, pt.y - 1, 2, 2);
+        });
+
+        // 绘制爆炸粒子
+        sparks.forEach(s => {
+            let pt = rasterizePoint(s.x, s.y, s.z);
+            if (pt.d !== -1) {
+                let size = s.radius / pt.d;
+                ctx.globalAlpha = s.alpha;
+                ctx.fillStyle = s.color;
+                ctx.beginPath();
+                ctx.arc(pt.x, pt.y, size, 0, pi * 2);
+                ctx.fill();
+            }
+        });
+        ctx.globalAlpha = 1;
+    }
+
+    function frame() {
+        frames++;
+        doLogic();
+        draw();
+        requestAnimationFrame(frame);
+    }
+
+    window.addEventListener("resize", resize);
+    initVars();
+    frame();
+</script>
+</body>
+</html>
