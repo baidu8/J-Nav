@@ -1600,6 +1600,21 @@ body.sidebar-open #nt-scroll-area {
 .primary-btn:active {
     transform: translateY(0);
 }
+/* 橡皮筋抖动动画 */
+@keyframes rubberBandLeft {
+    0% { transform: translateX(0); }
+    30% { transform: translateX(20px); }
+    60% { transform: translateX(0); }
+}
+
+@keyframes rubberBandRight {
+    0% { transform: translateX(0); }
+    30% { transform: translateX(-20px); }
+    60% { transform: translateX(0); }
+}
+
+.edge-shake-left { animation: rubberBandLeft 0.4s ease-in-out; }
+.edge-shake-right { animation: rubberBandRight 0.4s ease-in-out; }
 /* ================================================= */
 /* 1. 基础样式：确保点击精准 */
 /* ================================================= */
@@ -1623,7 +1638,6 @@ body.sidebar-open #nt-scroll-area {
 /* ================================================= */
 
 /* 隐藏所有干扰 UI，但不包括 .header-section */
-/* 1. 隐藏所有 UI 元素（已加入 nt-page-switcher） */
 .zen-mode #nt-search-container,
 .zen-mode #nt-category-tabs,
 .zen-mode #nt-scroll-area,
@@ -1634,15 +1648,14 @@ body.sidebar-open #nt-scroll-area {
 .zen-mode #nt-featured-content,
 .zen-mode .nt-sidebar,
 .zen-mode #nt-edge-trigger,
-.zen-mode #nt-page-switcher {  /* <--- 就是这一行！ */
+.zen-mode #nt-page-switcher { 
     opacity: 0 !important;
     visibility: hidden !important;
     pointer-events: none !important;
     transition: opacity 0.2s ease-out, visibility 0.2s !important;
 }
 
-/* 重点：对付那个毛玻璃大方块 (.nt-main) */
-/* 我们不隐藏它（否则时间就没了），我们只剥离它的视觉特征 */
+/* 重点：对付毛玻璃大方块 (.nt-main) */
 body.zen-mode .nt-main {
     background: transparent !important;
     backdrop-filter: none !important;
@@ -1696,7 +1709,6 @@ body.zen-mode #nt-search-container {
     -webkit-text-fill-color: white !important; /* 解决部分浏览器渲染问题 */
 }
 
-/* 2. 顺便修改“请输入搜索内容...”占位符的颜色（否则它可能还是灰的） */
 #nt-search-input::placeholder {
     color: var(--nt-card) !important;
 }
@@ -1705,8 +1717,7 @@ body.zen-mode #nt-search-container {
 #nt-search-input::-webkit-input-placeholder {
     color: var(--nt-card) !important;
 }
-/* 放在 CSS 最后面 */
 .zen-mode .nt-card {
     opacity: 0 !important;
-    transition: none !important; /* 进入清屏模式时，图标不准有任何过渡，直接消失 */
+    transition: none !important;
 }

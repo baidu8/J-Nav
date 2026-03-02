@@ -149,7 +149,11 @@ document.addEventListener('DOMContentLoaded', () => {
                 
                 const activeIdx = (() => {
                     const saved = localStorage.getItem('nt-selected-folder-index');
-                    return saved !== null ? parseInt(saved) : (folders.length - 1);
+                    // 如果没有缓存，或者缓存的索引超出了当前文件夹长度，就定位到最后一个
+                    if (saved === null || parseInt(saved) >= folders.length) {
+                        return folders.length - 1; 
+                    }
+                    return parseInt(saved);
                 })();
     
                 // 抢跑渲染缓存
@@ -182,7 +186,6 @@ document.addEventListener('DOMContentLoaded', () => {
     
                     if (!forceUpdate && featuredContainer.innerHTML === newHTML) return;
     
-                    // ✨ 注意：这里去掉了 className = 'nt-grid'，改为保留现有 class
                     if (!featuredContainer.classList.contains('nt-grid')) {
                         featuredContainer.classList.add('nt-grid');
                     }
@@ -239,34 +242,49 @@ document.addEventListener('DOMContentLoaded', () => {
                 scrollArea.addEventListener('touchend', (e) => {
                     const dx = e.changedTouches[0].clientX - touchStartX;
                     const dy = e.changedTouches[0].clientY - touchStartY;
-    
+                
+                    if (touchStartX === -9999) return; 
+                
                     if (Math.abs(dx) > Math.abs(dy) && Math.abs(dx) > 60) {
-                        let index = parseInt(localStorage.getItem('nt-selected-folder-index')) || (folders.length - 1);
-                        let directionClass = '';
-    
-                        if (dx < 0 && index < folders.length - 1) {
-                            index++;
-                            directionClass = 'slide-in-right';
-                        } else if (dx > 0 && index > 0) {
-                            index--;
-                            directionClass = 'slide-in-left';
-                        } else {
-                            return;
+                        let currentIndex = parseInt(localStorage.getItem('nt-selected-folder-index'));
+                        if (isNaN(currentIndex)) currentIndex = folders.length - 1;
+                
+                        let newIndex = currentIndex;
+                
+                        if (dx < 0) { // 向左划
+                            if (currentIndex < folders.length - 1) {
+                                newIndex = currentIndex + 1;
+                            } else {
+                                // ✨ 已到最后，触发右侧抖动
+                                featuredContainer.classList.add('edge-shake-right');
+                                setTimeout(() => featuredContainer.classList.remove('edge-shake-right'), 400);
+                                return;
+                            }
+                        } else { // 向右划
+                            if (currentIndex > 0) {
+                                newIndex = currentIndex - 1;
+                            } else {
+                                // ✨ 已到最前，触发左侧抖动
+                                featuredContainer.classList.add('edge-shake-left');
+                                setTimeout(() => featuredContainer.classList.remove('edge-shake-left'), 400);
+                                return;
+                            }
                         }
-    
-                        // 动画处理
-                        featuredContainer.classList.remove('slide-in-right', 'slide-in-left');
-                        void featuredContainer.offsetWidth; // 强制重绘
-                        if (directionClass) featuredContainer.classList.add(directionClass);
-    
-                        localStorage.setItem('nt-selected-folder-index', index);
-                        updateTabs(index); 
-                        renderFolder(index, false, false);
+                
+                        // --- 正常切换逻辑 ---
+                        let directionClass = newIndex > currentIndex ? 'slide-in-right' : 'slide-in-left';
                         
-                        const targetTab = document.querySelector(`.nt-tab[data-index="${index}"]`);
+                        featuredContainer.classList.remove('slide-in-right', 'slide-in-left');
+                        void featuredContainer.offsetWidth; 
+                        featuredContainer.classList.add(directionClass);
+                
+                        localStorage.setItem('nt-selected-folder-index', newIndex);
+                        updateTabs(newIndex); 
+                        renderFolder(newIndex, false, false);
+                        
+                        const targetTab = document.querySelector(`.nt-tab[data-index="${newIndex}"]`);
                         if (targetTab) targetTab.scrollIntoView({ behavior: 'smooth', inline: 'center' });
                         
-                        // 动画结束后清理
                         setTimeout(() => featuredContainer.classList.remove('slide-in-right', 'slide-in-left'), 400);
                     }
                 }, { passive: true });
