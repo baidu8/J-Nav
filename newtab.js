@@ -384,16 +384,29 @@ function updateTime() {
 }
 setInterval(updateTime, 1000);
 updateTime();
-
+// 放穿透
 window.addEventListener('wheel', (e) => {
     const scrollArea = document.getElementById('nt-scroll-area');
+    
+    // 1. 获取所有可能开启的弹窗
     const calendarModal = document.getElementById('calendar-modal');
-    if (calendarModal?.style.display === 'flex') return;
+    const wallpaperModal = document.getElementById('wallpaper-modal');
+    const sidebar = document.getElementById('nt-sidebar');
+
+    // 2. 核心判断：只要这三个里面有一个是“打开状态”，就彻底拦截背景滚动
+    const isAnyModalOpen = 
+        (calendarModal && calendarModal.style.display === 'flex') || 
+        (wallpaperModal && wallpaperModal.style.display === 'flex') || 
+        (sidebar && sidebar.classList.contains('open'));
+
+    if (isAnyModalOpen) return; // 弹窗开启时，直接无视掉底层的滚动逻辑
+
+    // 3. 原有的正常页面滚动逻辑
     const path = e.composedPath();
     if (path.includes(scrollArea)) return;
     scrollArea.scrollTop += e.deltaY;
 }, { passive: true });
-
+// 放穿透
 // --- 8. 标签页拖拽惯性逻辑 ---
 const tabs = document.getElementById('nt-category-tabs');
 let isDown = false, startX, scrollLeft, isDragging = false, velocity = 0, lastX = 0, lastTime = 0, animationId;
@@ -537,67 +550,7 @@ function updateRightPanel(date) {
 window.openCalendar = openCalendar;
 window.closeCalendar = () => document.getElementById('calendar-modal').style.display = 'none';
 document.getElementById('calendar-modal').onclick = (e) => { if(e.target.id === 'calendar-modal') window.closeCalendar(); };
-
-// 切换壁纸
 // --- 1. 配置数据：在这里添加你的壁纸库链接 ---
-const wallpaperLib = {
-    'bing': [
-        { name: '必应每日', url: 'https://bing.img.run/1920x1080.php' },
-        { name: 'Lorem Picsum', url: 'https://picsum.photos/1920/1080' },
-        { name: '东方Project', url: 'https://img.paulzzh.com/touhou/random' }
-    ],
-    'dynamic': [
-        { name: '1', url: 'https://prod-streaming-video-msn-com.akamaized.net/3f6ca508-598d-4cbd-a3e2-43deea7bc377/b60c553e-9f3f-4164-8850-700a9a73a899.mp4' },
-        { name: '1', url: 'https://prod-streaming-video-msn-com.akamaized.net/54cabe89-17bd-4116-8908-8501ebe48f6d/2e8ba8c7-a691-46d9-b5ae-d18050ce273a.mp4' },
-        { name: '1', url: 'https://prod-streaming-video-msn-com.akamaized.net/f9e318a4-7575-4809-b371-7b34a5807857/1f80c234-46af-41a5-8f50-8f0926e29a2c.mp4' },
-        { name: '1', url: 'https://prod-streaming-video-msn-com.akamaized.net/87d3d62a-cfe2-4d03-8396-a1daf86b84ae/c2b325a7-0d9f-4b3f-a503-0568b15275b9.mp4' },
-								{ name: '1', url: 'https://prod-streaming-video-msn-com.akamaized.net/87d3d62a-cfe2-4d03-8396-a1daf86b84ae/c2b325a7-0d9f-4b3f-a503-0568b15275b9.mp4' },
-        { name: '1', url: 'https://v.828111.xyz/动态壁纸.mp4' }
-    ],
-				'zipai': [
-					{ name: '自己拍的', url: 'https://note.youdao.com/yws/api/personal/file/WEBe5370dcfb2ac1c5d950d785f24af4375?method=download&amp;shareKey=1707539a369fc6cee2d21b0bf9c76c0b' },
-					{ name: '自己拍的', url: 'https://note.youdao.com/yws/api/personal/file/WEBe8a5deb9a62575598ba64d6a26cc03cc?method=download&amp;shareKey=1707539a369fc6cee2d21b0bf9c76c0b' },
-					{ name: '自己拍的', url: 'https://note.youdao.com/yws/api/personal/file/WEB7c8bd92a23c14e81a7c05346c0e38b8f?method=download&amp;shareKey=1707539a369fc6cee2d21b0bf9c76c0b' },
-					{ name: '自己拍的', url: 'https://note.youdao.com/yws/api/personal/file/WEB3e66b6134aeab8f256373dacdfb15277?method=download&amp;shareKey=1707539a369fc6cee2d21b0bf9c76c0b' },
-					{ name: '自己拍的', url: 'https://note.youdao.com/yws/api/personal/file/WEBc01a7e16a207f0a401b77846e1c38644?method=download&amp;shareKey=1707539a369fc6cee2d21b0bf9c76c0b' },
-					{ name: '自己拍的', url: 'https://note.youdao.com/yws/api/personal/file/WEBa038144c6ff7972ee54157890c980bc0?method=download&amp;shareKey=1707539a369fc6cee2d21b0bf9c76c0b' },
-					{ name: '自己拍的', url: 'https://note.youdao.com/yws/api/personal/file/WEBbb4164e808fc644338de1bb2e525500b?method=download&amp;shareKey=1707539a369fc6cee2d21b0bf9c76c0b' },
-					{ name: '自己拍的', url: 'https://note.youdao.com/yws/api/personal/file/WEB5f1a5f4f736664b1cbab744f19f9731f?method=download&amp;shareKey=1707539a369fc6cee2d21b0bf9c76c0b' },
-					{ name: '自己拍的', url: 'https://note.youdao.com/yws/api/personal/file/WEBe8c0f59990cbbe00ed5bfaf506728f22?method=download&amp;shareKey=1707539a369fc6cee2d21b0bf9c76c0b' },
-					{ name: '自己拍的', url: 'https://note.youdao.com/yws/api/personal/file/WEB94bdf8493a4f8434846b1f74bd5890f4?method=download&amp;shareKey=1707539a369fc6cee2d21b0bf9c76c0b' },
-					{ name: '自己拍的', url: 'https://note.youdao.com/yws/api/personal/file/WEB7764aa2e35c0cd3db90f915ed86a5f78?method=download&amp;shareKey=1707539a369fc6cee2d21b0bf9c76c0b' },
-					{ name: '自己拍的', url: 'https://note.youdao.com/yws/api/personal/file/WEB1d1a5ab8cc560f02d99b7568a30f053c?method=download&amp;shareKey=1707539a369fc6cee2d21b0bf9c76c0b' },
-					{ name: '自己拍的', url: 'https://note.youdao.com/yws/api/personal/file/WEB047f3ed2483f93dd6565e0838be1a0d7?method=download&amp;shareKey=1707539a369fc6cee2d21b0bf9c76c0b' },
-					{ name: '自己拍的', url: 'https://note.youdao.com/yws/api/personal/file/WEB8112332c5d9fae2a567f5af95c025634?method=download&amp;shareKey=1707539a369fc6cee2d21b0bf9c76c0b' },
-					{ name: '自己拍的', url: 'https://note.youdao.com/yws/api/personal/file/WEB66fc3b08b2180b2f6ef07c9716dd92f8?method=download&amp;shareKey=1707539a369fc6cee2d21b0bf9c76c0b' },
-					{ name: '自己拍的', url: 'https://note.youdao.com/yws/api/personal/file/WEB97588314c2ab885433773b3ee82ab51b?method=download&amp;shareKey=1707539a369fc6cee2d21b0bf9c76c0b' },
-					{ name: '自己拍的', url: 'https://note.youdao.com/yws/api/personal/file/WEB4ceadf6dc4e151feab542f15a96e0d38?method=download&amp;shareKey=1707539a369fc6cee2d21b0bf9c76c0b' },
-				],
-				'effects': [
-				    { 
-				        name: '黑客帝国', 
-				        url: 'effects/matrix.html',
-												icon: '🧑🏿‍💻️'
-				    },
-				    { 
-				        name: '雪花', 
-				        url: 'effects/xuehua.html',
-												icon: '❄️'
-				    },
-								{ name: '樱花飘落', url: 'effects/sakura.html', icon: '🌸' },
-				    { 
-				        name: '烟花', 
-				        url: 'effects/yanhua.html' ,
-												icon: '🎇'
-				    }
-				],
-				'shouji': [
-					{ name: '必应每日', url: 'https://bing.img.run/m.php' },
-					{ name: 'Lorem Picsum', url: 'https://picsum.photos/1080/1920' }
-				],
-    'custom': [] // 自定义和上传逻辑
-};
-
 const bgLayer = document.getElementById('nt-bg');
 const wpModal = document.getElementById('wallpaper-modal');
 const wpGrid = document.getElementById('wallpaper-grid');
@@ -608,52 +561,58 @@ const categoryName = document.getElementById('wp-category-name');
 async function renderCategory(type) {
     const titles = { 
         bing: '收藏的api接口', 
-								effects: '特效背景', 
+        effects: '特效背景', 
         history: '必应壁纸',
-        dynamic: '精选动态壁纸', 
+        dynamic: '精选动态壁纸',
+        xiran: '惜染壁纸',
+        xrfj4k: '惜染风景4k',
         shouji: '手机端', 
-								zipai: '随手拍', 
+        zipai: '随手拍', 
         custom: '自定义设置', 
         local: '上传记录' 
     };
-    
+
+    // 设置标题
     if(categoryName) categoryName.innerText = titles[type] || '壁纸库';
 
-    // 处理自定义界面
+    // 1. 处理自定义界面
     if (type === 'custom') {
         wpGrid.style.display = 'none';
+        wpGrid.innerHTML = ''; // 清空大网格，防止残留
         wpSection.style.display = 'block';
         return;
     }
 
-    // 显示网格，清空旧内容
+    // 2. 显示网格，清空旧内容，显示加载中
     wpGrid.style.display = 'grid';
     wpSection.style.display = 'none';
     wpGrid.innerHTML = '<div style="color:gray; padding:20px;">加载中...</div>';
 
     let list = [];
 
-    // --- 核心逻辑：如果是历史分类，动态抓取 README ---
+    // 3. 核心逻辑：获取数据源
     if (type === 'history') {
         list = await fetchBingHistory();
     } else if (type === 'local') {
-        // ✨ 新增：从本地存储读取上传记录
         list = JSON.parse(localStorage.getItem('nt_local_history') || '[]');
     } else {
-        list = wallpaperLib[type] || [];
+        const source = window.wallpaperLib || {};
+        list = source[type] || [];
     }
 
-    // 执行渲染
-    if (list.length === 0 && type === 'local') {
-        wpGrid.innerHTML = '<div style="padding:20px; color:gray;">暂无上传记录，请先在“自定义”中上传。</div>';
+    // 4. 空数据处理
+    if (list.length === 0) {
+        const tip = (type === 'local') ? '暂无上传记录，请先在“自定义”中上传。' : '该分类下暂无内容';
+        wpGrid.innerHTML = `<div style="padding:20px; color:gray;">${tip}</div>`;
         return;
     }
 
+    // 5. 执行渲染
     wpGrid.innerHTML = list.map(item => {
         const isVideo = /\.(mp4|webm|ogg)$/i.test(item.url) || (item.url && item.url.includes('video'));
-        const isEffect = type === 'effects'; // 判断是否为特效分类
+        const isEffect = type === 'effects'; 
     
-        // 1. 定义删除按钮
+        // 定义删除按钮
         const deleteBtn = (type === 'local') ? `
             <div class="delete-wp" onclick="deleteLocalWp(event, '${item.url}')" 
                  style="position:absolute; top:5px; right:5px; width:18px; height:18px; 
@@ -673,16 +632,14 @@ async function renderCategory(type) {
                 </div>`;
         } 
         
-        // --- 情况 B: 特效预览 (重点修改) ---
+        // --- 情况 B: 特效预览 ---
         if (isEffect) {
-            // 为不同的特效生成不同的渐变背景，解决裂图问题
             const gradients = [
-                'linear-gradient(135deg, #1e3c72 0%, #2a5298 100%)', // 深蓝
-                'linear-gradient(135deg, #0f2027 0%, #2c5364 100%)', // 科技黑
-                'linear-gradient(135deg, #134e5e 0%, #71b280 100%)', // 绿意
-                'linear-gradient(135deg, #2c3e50 0%, #000000 100%)'  // 酷黑
+                'linear-gradient(135deg, #1e3c72 0%, #2a5298 100%)',
+                'linear-gradient(135deg, #0f2027 0%, #2c5364 100%)',
+                'linear-gradient(135deg, #134e5e 0%, #71b280 100%)',
+                'linear-gradient(135deg, #2c3e50 0%, #000000 100%)' 
             ];
-            // 根据名称长度随机选一个渐变，保证每次打开看起来差不多
             const bg = gradients[item.name.length % gradients.length];
             
             return `
@@ -694,19 +651,23 @@ async function renderCategory(type) {
         }
     
         // --- 情况 C: 普通图片预览 ---
-        const thumb = (item.url.includes('bing.com') && !item.url.includes('&w=')) 
-                      ? item.url + '&w=480&h=270&c=7' 
-                      : item.url;
+        let thumb = item.thumb || item.url;
+        if (thumb.includes('bing.com') && !thumb.includes('&w=')) {
+            thumb += '&w=480&h=270&c=7';
+        } 
+        if (thumb.includes('xiranimg.com') && !thumb.includes('index.php')) {
+            thumb = thumb.replace('https://xiranimg.com/', 'https://xiranimg.com/index.php?action=file&file=');
+            thumb += '&resize=320';
+        }
         const finalWallpaper = item.fullUrl || item.url;
-    
         return `
-            <div class="wp-thumb" onclick="setWallpaper('${finalWallpaper}')" style="overflow:hidden;">
+            <div class="wp-thumb" onclick="setWallpaper('${finalWallpaper}')">
                 <img src="${thumb}" 
                      loading="lazy" 
-                     style="width:100%; height:100%; object-fit:cover;" 
+                     onload="this.classList.add('loaded')" 
                      alt="${item.name || ''}">
                 ${deleteBtn}
-                <span style="position:absolute; bottom:5px; left:8px; font-size:10px; color:rgba(255,255,255,0.8); text-shadow:0 1px 2px rgba(0,0,0,0.5);">${item.name || ''}</span>
+                <span class="wp-thumb-name">${item.name || ''}</span>
             </div>`;
     }).join('');
 }
@@ -897,7 +858,6 @@ if (wpModal) {
         }
     };
 }
-
 // --- 10. 沉浸模式逻辑 (纯净版：无遮罩) ---
 window.toggleZenMode = function(e) {
     if (e) {
@@ -925,23 +885,19 @@ window.toggleZenMode = function(e) {
 const clockBtn = document.getElementById('clock');
 if (clockBtn) {
     clockBtn.style.cursor = 'pointer';
-    // 注意：这里不要用 addEventListener 重复绑定，直接赋值最稳
     clockBtn.onclick = window.toggleZenMode; 
 }
 
-// 移除那个不想要的遮罩层（如果有的话）
 const oldMask = document.getElementById('zen-mask');
 if (oldMask) oldMask.remove();
 
 // 3. 统一绑定入口 (直接获取元素绑定，不嵌套多层加载)
-// --- 终极绑定逻辑 ---
 (function() {
     const clock = document.getElementById('clock');
     const date = document.getElementById('date');
 
     if (clock) {
         clock.style.cursor = 'pointer';
-        // 这里的 onclick 会覆盖之前所有的错误绑定
         clock.onclick = (e) => {
             if (typeof window.toggleZenMode === 'function') window.toggleZenMode(e);
         };

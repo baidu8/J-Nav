@@ -16,6 +16,15 @@
 				<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 				<script src="https://gcore.jsdelivr.net/npm/fullcalendar@6.1.8/index.global.min.js"></script>
 				<script src="https://gcore.jsdelivr.net/npm/lunar-javascript/lunar.js"></script>
+				
+				<link rel="preconnect" href="https://bing.img.run">
+				<link rel="preconnect" href="https://prod-streaming-video-msn-com.akamaized.net">
+				<link rel="preconnect" href="https://note.youdao.com">
+				<link rel="preconnect" href="https://picsum.photos">
+				<link rel="preconnect" href="https://img.paulzzh.com">
+				<link rel="preconnect" href="https://v.828111.xyz">
+				<link rel="dns-prefetch" href="https://bing.img.run">
+				<link rel="dns-prefetch" href="https://note.youdao.com">
 </head>
 <body>
 <script>
@@ -117,8 +126,7 @@
         </header>
 
         <section id="nt-scroll-area" class="nt-scroll-area">
-            <div id="nt-featured-content">
-                </div>
+            <div id="nt-featured-content"></div>
         </section>
         <div id="poem-container" class="nt-poem">
             <span id="poem-content">正在撷取山河诗意...</span>
@@ -135,24 +143,26 @@
 																				<li data-type="history">必应</li>
 				                <li data-type="dynamic">动态壁纸</li>
 																				<li data-type="effects">特效背景</li>
+																				<li data-type="xiran">惜染壁纸</li>
+																				<li data-type="xrfj4k">惜染风景4k</li>
 																				<li data-type="zipai">自己拍的</li>
 																				<li data-type="shouji">手机端</li>
 				                <li data-type="local">我的上传</li>
 				                <li data-type="custom">自定义壁纸</li>
 				            </ul>
-				            <!-- <div class="sidebar-footer">⚙️ 参数设置</div> -->
 				        </div>
 				
 				        <div class="modal-body">
+													
 				            <div class="body-header">
 				                <span id="wp-category-name">必应每日壁纸</span>
 				                <button class="close-btn" onclick="closeWpModal()">✕</button>
 				            </div>
 				            
-				            <div id="wallpaper-grid" class="wallpaper-grid">
-				                </div>
+				            <div id="wallpaper-grid" class="wallpaper-grid"></div>
 				
 				            <div id="custom-section" style="display:none;">
+																	
 				                <div class="custom-input-group">
 				                    <input type="text" id="wp-input" placeholder="粘贴图片或视频直链 (mp4)...">
 				                    <button class="primary-btn" onclick="applyCustomWp()">应用</button>
@@ -172,7 +182,9 @@
 				                        <span style="font-size: 11px; margin-top: 5px; opacity: 0.5;">支持 JPG, PNG, MP4 (建议 < 4MB)</span>
 				                    </label>
 				                </div>
+																				
 				            </div>
+																
 				        </div>
 				    </div>
 				</div>
@@ -183,6 +195,7 @@
   </a>
 <script src="https://sdk.jinrishici.com/v2/browser/jinrishici.js" charset="utf-8"></script>
     <script src="data.js"></script>
+				<script src="wallpaper-data.js"></script>
     <script src="newtab.js"></script>
 				<script>
 				    if ('serviceWorker' in navigator) {

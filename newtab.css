@@ -42,6 +42,14 @@ body {
 body::-webkit-scrollbar {
     display: none;             /* Chrome, Safari and Opera */
 }
+/* 当侧边栏打开时，强制 body 不准动 */
+body.sidebar-open {
+    overflow: hidden !important;
+}
+
+#wallpaper-grid, #nt-sidebar {
+    overscroll-behavior: contain; /* 关键：防止滚动溢出到父级 */
+}
 /* ============================================================
    1. Body 容器（精简后，负责内容布局）
    ============================================================ */
@@ -1339,171 +1347,6 @@ body.sidebar-open #nt-scroll-area {
 .slide-in-right {
     animation: slideInRight 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94) both !important;
 }
-
-.slide-in-left {
-    animation: slideInLeft 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94) both !important;
-}
-
-/* 切换壁纸 */
-/* --- 0. 基础重置（防止边距计算错误） --- */
-#wallpaper-modal, 
-#wallpaper-modal *, 
-#wallpaper-modal *::before, 
-#wallpaper-modal *::after {
-    box-sizing: border-box; /* 强制所有元素包含边距计算 */
-}
-
-/* --- 1. 触发按钮 --- */
-#nt-wallpaper-btn {
-    position: fixed; bottom: 80px; right: 20px;
-    width: 44px; height: 44px; border-radius: 50%;
-    background: rgba(255, 255, 255, 0.25); backdrop-filter: blur(15px);
-    border: 1px solid rgba(255, 255, 255, 0.3);
-    cursor: pointer; z-index: 1000; transition: 0.3s;
-    display: flex; align-items: center; justify-content: center;
-}
-#nt-wallpaper-btn:hover { background: rgba(255, 255, 255, 0.4); transform: rotate(90deg); }
-
-/* --- 2. 遮罩层 --- */
-.modal-overlay {
-    display: none; position: fixed; inset: 0;
-    background: rgba(0,0,0,0.5); backdrop-filter: blur(8px);
-    z-index: 2000; align-items: center; justify-content: center;
-    padding: 15px; /* 移动端防止贴边 */
-}
-
-/* --- 3. 弹窗窗口主体 --- */
-.modal-window {
-    display: flex;
-    flex-direction: row; /* 默认横向布局 */
-    width: 100%;
-    max-width: 900px;
-    height: 80vh;
-    background: rgba(255, 255, 255, 0.85);
-    border-radius: 20px;
-    overflow: hidden;
-    box-shadow: 0 20px 50px rgba(0,0,0,0.3);
-    border: 1px solid rgba(255,255,255,0.4);
-}
-
-/* --- 4. 侧边栏 (PC端) --- */
-.modal-sidebar {
-    width: 180px;
-    background: rgba(0, 0, 0, 0.03);
-    padding: 20px 10px;
-    display: flex;
-    flex-direction: column;
-    flex-shrink: 0; /* 禁止侧边栏被挤压 */
-}
-.sidebar-title { font-size: 20px; margin: 0 0 20px 15px; color: #333; font-weight: bold; }
-.sidebar-menu { list-style: none; padding: 0; margin: 0; }
-.sidebar-menu li {
-    padding: 10px 15px; margin: 4px 0; border-radius: 8px;
-    cursor: pointer; font-size: 14px; transition: 0.2s;
-}
-.sidebar-menu li.active { background: #007aff; color: #fff; }
-.sidebar-menu li:hover:not(.active) { background: rgba(0,0,0,0.05); }
-
-/* --- 5. 右侧内容区 --- */
-.modal-body {
-    flex: 1;
-    min-width: 0; /* 关键：允许 Flex 子项缩小到比内容小 */
-    display: flex;
-    flex-direction: column;
-    background: #fff;
-}
-.body-header {
-    padding: 15px 20px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    border-bottom: 1px solid rgba(0,0,0,0.05);
-    flex-shrink: 0;
-}
-.close-btn { 
-    border: none; background: #eee; width: 28px; height: 28px; 
-    border-radius: 50%; cursor: pointer; display: flex; 
-    align-items: center; justify-content: center;
-}
-
-/* --- 6. 核心图片网格 (解决溢出的关键) --- */
-.wallpaper-grid {
-    flex: 1;
-    /* display: grid; */
-    /* 强行指定 1fr，并配合 min-width:0 防止溢出 */
-    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
-    gap: 12px;
-    padding: 15px;
-    overflow-y: auto;
-    width: 100%;
-				align-content: start;
-}
-
-.wp-thumb {
-    width: 100%;
-    aspect-ratio: 16/9;
-    background-size: cover;
-    background-position: center;
-    border-radius: 10px;
-    cursor: pointer;
-    transition: 0.2s;
-    border: 2px solid transparent;
-    background-color: #f0f0f0;
-    position: relative;
-    min-width: 0; /* 防止 grid item 撑开 */
-}
-.wp-thumb:hover { transform: scale(1.02); border-color: #007aff; }
-
-/* 视频角标 */
-.play-badge {
-    position: absolute; top: 8px; right: 8px;
-    background: rgba(0,0,0,0.5); color: #fff;
-    padding: 2px 6px; border-radius: 4px; font-size: 10px;
-}
-.wp-date-tag {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    padding: 2px 8px;
-    background: rgba(0, 0, 0, 0.5);
-    color: #fff;
-    font-size: 10px;
-    backdrop-filter: blur(4px); /* 磨砂效果 */
-    border-top-right-radius: 8px;
-}
-/* --- 7. 手机端适配 (全量重写) --- */
-@media (max-width: 768px) {
-    #nt-wallpaper-btn {
-		   bottom: 65px;
-		   right: 15px;
-    }
-    .modal-window {
-        flex-direction: column; /* 变纵向 */
-        height: 85vh;
-    }
-
-    .modal-sidebar {
-        width: 100%;
-        height: auto;
-        padding: 10px;
-        flex-direction: row;
-        overflow-x: auto;
-        border-bottom: 1px solid rgba(0,0,0,0.05);
-    }
-    .sidebar-title { display: none; }
-    .sidebar-menu { display: flex; flex-direction: row; gap: 5px; }
-    .sidebar-menu li { white-space: nowrap; padding: 6px 12px; font-size: 13px; }
-
-    .wallpaper-grid {
-        /* 手机端死锁两列，minmax(0, 1fr) 强制不溢出 */
-        grid-template-columns: repeat(2, minmax(0, 1fr)) !important; 
-        gap: 8px;
-        padding: 10px;
-    }
-    
-    .body-header { padding: 10px 15px; }
-}
-
 /* 自定义输入框样式 */
 #custom-section { padding: 20px; }
 #custom-section input {
@@ -1604,12 +1447,6 @@ body.sidebar-open #nt-scroll-area {
 @keyframes rubberBandLeft {
     0% { transform: translateX(0); }
     30% { transform: translateX(20px); }
-    60% { transform: translateX(0); }
-}
-
-@keyframes rubberBandRight {
-    0% { transform: translateX(0); }
-    30% { transform: translateX(-20px); }
     60% { transform: translateX(0); }
 }
 
@@ -1720,4 +1557,236 @@ body.zen-mode #nt-search-container {
 .zen-mode .nt-card {
     opacity: 0 !important;
     transition: none !important;
+}
+
+
+/* 切换壁纸 */
+/* --- 0. 基础重置（防止边距计算错误） --- */
+#wallpaper-modal, 
+#wallpaper-modal *, 
+#wallpaper-modal *::before, 
+#wallpaper-modal *::after {
+    box-sizing: border-box; /* 强制所有元素包含边距计算 */
+}
+
+/* --- 1. 触发按钮 --- */
+#nt-wallpaper-btn {
+    position: fixed; bottom: 80px; right: 20px;
+    width: 44px; height: 44px; border-radius: 50%;
+    background: rgba(255, 255, 255, 0.25); backdrop-filter: blur(15px);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    cursor: pointer; z-index: 1000; transition: 0.3s;
+    display: flex; align-items: center; justify-content: center;
+}
+#nt-wallpaper-btn:hover { background: rgba(255, 255, 255, 0.4); transform: rotate(90deg); }
+
+/* --- 2. 遮罩层 --- */
+.modal-overlay {
+    display: none; position: fixed; inset: 0;
+    background: rgba(0,0,0,0.5); backdrop-filter: blur(8px);
+    z-index: 2000; align-items: center; justify-content: center;
+    padding: 15px; /* 移动端防止贴边 */
+}
+
+/* --- 3. 弹窗窗口主体 --- */
+.modal-window {
+    display: flex;
+    flex-direction: row; /* 默认横向布局 */
+    width: 100%;
+    max-width: 900px;
+    height: 80vh;
+    background: rgba(255, 255, 255, 0.85);
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 20px 50px rgba(0,0,0,0.3);
+    border: 1px solid rgba(255,255,255,0.4);
+}
+
+/* --- 4. 侧边栏 (PC端) --- */
+.modal-sidebar {
+    width: 180px;
+    background: rgba(0, 0, 0, 0.03);
+    padding: 20px 10px;
+    display: flex;
+    flex-direction: column;
+    flex-shrink: 0; /* 禁止侧边栏被挤压 */
+}
+.sidebar-title { font-size: 20px; margin: 0 0 20px 15px; color: #333; font-weight: bold; }
+.sidebar-menu { list-style: none; padding: 0; margin: 0; }
+.sidebar-menu li {
+    padding: 10px 15px; margin: 4px 0; border-radius: 8px;
+    cursor: pointer; font-size: 14px; transition: 0.2s;
+}
+.sidebar-menu li.active { background: #007aff; color: #fff; }
+.sidebar-menu li:hover:not(.active) { background: rgba(0,0,0,0.05); }
+
+/* --- 5. 右侧内容区 --- */
+.modal-body {
+    flex: 1;
+    min-width: 0; /* 关键：允许 Flex 子项缩小到比内容小 */
+    display: flex;
+    flex-direction: column;
+    background: #fff;
+}
+.body-header {
+    padding: 15px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid rgba(0,0,0,0.05);
+    flex-shrink: 0;
+}
+.close-btn { 
+    border: none; background: #eee; width: 28px; height: 28px; 
+    border-radius: 50%; cursor: pointer; display: flex; 
+    align-items: center; justify-content: center;
+}
+
+/* --- 6. 核心图片网格 (解决溢出的关键) --- */
+/* 使用 ID 选择器确保最高优先级，彻底解决堆叠 */
+#wallpaper-grid {
+    display: grid !important; 
+    /* PC端强制4列，不管有没有滚动条都不动摇 */
+    grid-template-columns: repeat(4, 1fr) !important; 
+    gap: 12px !important;
+    padding: 15px !important;
+    width: 100% !important;
+    
+    /* 解决滚动的核心：必须有高度 */
+    height: 100% !important; 
+    max-height: 100% !important;
+    overflow-y: auto !important; 
+    align-content: start;
+    /* 强制分行排布，不要让它变成单行横向滚动 */
+    grid-auto-flow: row !important; 
+    align-content: start !important;
+}
+
+/* 手机端适配：彻底解决不滚动 */
+@media (max-width: 768px) {
+    #wallpaper-grid {
+        /* 手机端强制2列 */
+        grid-template-columns: repeat(2, 1fr) !important; 
+        
+        /* 关键：给手机端一个固定高度，否则无法滚动 */
+        overflow-y: auto !important;
+        -webkit-overflow-scrolling: touch !important; /* 增加滑动顺滑度 */
+        
+        gap: 8px !important;
+        padding: 10px !important;
+    }
+}
+.wp-thumb {
+    /* 1. 布局与尺寸 */
+    width: 100%;
+    aspect-ratio: 16 / 9;      /* 锁定 16:9 比例，防止挤压变形 */
+    position: relative;
+    min-width: 0;              /* 关键：防止被 Grid 内容撑开导致布局错乱 */
+    height: 13vh;
+    /* 2. 视觉样式 */
+    overflow: hidden;          /* 必须开启，否则子元素图片圆角会失效 */
+    border-radius: 10px;       /* 统一圆角大小 */
+    background-color: #f0f0f0; /* 图片加载前的占位底色 */
+    border: 2px solid transparent; /* 为 Hover 边框预留位置 */
+    
+    /* 3. 交互与动画 */
+    cursor: pointer;
+    transition: all 0.2s ease; /* 让缩放和边框变化更平滑 */
+}
+
+/* 悬停效果：轻微放大并显示蓝色边框 */
+.wp-thumb:hover { transform: scale(1.02); border-color: #007aff; }
+
+/* 当图片加载完成后，通过 JS 给它加上这个类 */
+.wp-thumb img.loaded {
+    opacity: 1;
+}
+/* 2. 图片：核心魔法 */
+/* 图片基础样式 */
+.wp-thumb img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* 核心：防变形 */
+    display: block;
+    opacity: 0; /* 默认透明，配合 onload 动画 */
+    transition: opacity 0.3s ease;
+}
+
+/* 图片加载后的状态 */
+.wp-thumb img.loaded {
+    opacity: 1;
+}
+
+/* 名字标签优化 */
+.wp-thumb-name {
+    position: absolute; 
+    /* bottom: 5px; */
+    /* left: 8px; */
+    font-size: 10px; 
+    color: rgba(255,255,255,0.9); 
+    text-shadow: 0 1px 2px rgba(0,0,0,0.6);
+    pointer-events: none; /* 关键：点击文字也能穿透到外层触发换壁纸 */
+    max-width: 90%;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis; /* 名字太长显示省略号，防止破屏 */
+				background: linear-gradient(transparent, rgba(0,0,0,0.6)) !important; /* 改用渐变，不遮挡图片 */
+    width: 100%;
+    left: 0 !important;
+    bottom: 0 !important;
+    padding: 15px 8px 5px 8px !important; /* 增加顶部透明过渡 */
+}
+/* 3. 针对手机端的 2 列布局 */
+@media (max-width: 768px) {
+    .wp-thumb {
+        /* 手机端也可以换个比例，比如 4:3 看起来大一点 */
+        aspect-ratio: 4 / 3; 
+								height: 13vh;
+    }
+}
+/* 视频角标 */
+.play-badge {
+    position: absolute; top: 8px; right: 8px;
+    background: rgba(0,0,0,0.5); color: #fff;
+    padding: 2px 6px; border-radius: 4px; font-size: 10px;
+}
+.wp-date-tag {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    padding: 2px 8px;
+    background: rgba(0, 0, 0, 0.5);
+    color: #fff;
+    font-size: 10px;
+    backdrop-filter: blur(4px); /* 磨砂效果 */
+    border-top-right-radius: 8px;
+				background: rgba(0, 0, 0, 0.4) !important;
+    font-size: 9px !important;
+    padding: 1px 4px !important;
+    border-top-right-radius: 0 !important;
+    border-bottom-right-radius: 8px !important;
+}
+/* --- 7. 手机端适配 (全量重写) --- */
+@media (max-width: 768px) {
+    #nt-wallpaper-btn {
+		   bottom: 65px;
+		   right: 15px;
+    }
+    .modal-window {
+        flex-direction: column; /* 变纵向 */
+        height: 85vh;
+    }
+
+    .modal-sidebar {
+        width: 100%;
+        height: auto;
+        padding: 10px;
+        flex-direction: row;
+        overflow-x: auto;
+        border-bottom: 1px solid rgba(0,0,0,0.05);
+    }
+    .sidebar-title { display: none; }
+    .sidebar-menu { display: flex; flex-direction: row; gap: 5px; }
+    .sidebar-menu li { white-space: nowrap; padding: 6px 12px; font-size: 13px; }
+    .body-header { padding: 10px 15px; }
 }

@@ -1,5 +1,5 @@
 // 1. 升级版本号，确保新加入的日历逻辑能立即生效
-const CACHE_NAME = 'j-nav-pro-v4'; 
+const CACHE_NAME = 'j-nav-v5'; 
 
 const PRE_CACHE_ASSETS = [
     '/',
@@ -8,10 +8,15 @@ const PRE_CACHE_ASSETS = [
     'script.js',
     'data.js',
     'icons/logo.svg',
-    // ✨ 新增这三个文件到缓存列表
-    'newtab.html',
+    'new.html',
     'newtab.css',
-    'newtab.js'
+    'newtab.js',
+				'/effects/matrix.html',
+    '/effects/sakura.html',
+    '/effects/xuehua.html',
+    '/effects/yanhua.html',
+    '/effects/img/樱花.png',
+    '/effects/img/yinghua.jpg'
 ];
 
 const EMPTY_IMAGE_BASE64 = 'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7';
@@ -21,8 +26,6 @@ self.addEventListener('install', event => {
     self.skipWaiting();
     event.waitUntil(
         caches.open(CACHE_NAME).then(cache => {
-            // 使用 addAll 时，如果有一个文件路径错了，整个缓存都会失败
-            // 建议检查文件名是否完全匹配
             return cache.addAll(PRE_CACHE_ASSETS);
         })
     );
