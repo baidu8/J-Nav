@@ -59,7 +59,6 @@ window.wallpaperLib = {
 						{ name: '惜染高清26', url: 'https://xiranimg.com/3440X1440%E5%A3%81%E7%BA%B8/%E5%85%BD%E8%80%B3%20%E7%8C%AB%E8%80%B3%E7%BE%8E%E5%A5%B3%20%E7%9F%AD%E5%8F%91%20%E7%8C%AB%E5%B0%BE%E5%B7%B4%204k%E5%8A%A8%E6%BC%AB%E5%A3%81%E7%BA%B8%203840_2160.jpg' },
 						{ name: '惜染高清27', url: 'https://xiranimg.com/3440X1440%E5%A3%81%E7%BA%B8/%E5%94%AF%E7%BE%8E%E5%8F%A4%E9%9F%B5%20%E5%8F%A4%E9%A3%8E%E7%BE%8E%E5%A5%B3%204k%E5%8A%A8%E6%BC%AB%E5%A3%81%E7%BA%B8%203840_2160.jpg' },
 						{ name: '惜染高清28', url: 'https://xiranimg.com/3440X1440%E5%A3%81%E7%BA%B8/%E5%94%AF%E7%BE%8E%E5%B0%91%E5%A5%B3%20%E9%A9%AC%E5%B0%BE%E8%BE%AB4K%E5%8A%A8%E6%BC%AB%E5%A3%81%E7%BA%B83840_2160.jpg' },
-						{ name: '惜染高清28', url: 'https://xiranimg.com/3440X1440%E5%A3%81%E7%BA%B8/%E5%94%AF%E7%BE%8E%E5%B0%91%E5%A5%B3%20%E9%A9%AC%E5%B0%BE%E8%BE%AB4K%E5%8A%A8%E6%BC%AB%E5%A3%81%E7%BA%B83840_2160.jpg' },
 						{ name: '惜染高清29', url: 'https://xiranimg.com/3440X1440%E5%A3%81%E7%BA%B8/cosplay%E7%BE%8E%E5%A5%B3%20cos%E6%B5%B7%E7%90%B4%E7%83%9F3440x1440%E5%B8%A6%E9%B1%BC%E5%B1%8F%E5%A3%81%E7%BA%B8.jpg' }
 					],
 					'xrfj4k': [
@@ -143,6 +142,7 @@ window.wallpaperLib = {
 					],
 					'shouji': [
 						{ name: '必应每日', url: 'https://bing.img.run/m.php' },
+						{ name: '和平', url: 'https://v.828111.xyz/heping.mp4' },
 						{ name: 'Lorem Picsum', url: 'https://picsum.photos/1080/1920' }
 					],
 					'custom': []

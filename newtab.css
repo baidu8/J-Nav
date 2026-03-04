@@ -1348,7 +1348,6 @@ body.sidebar-open #nt-scroll-area {
     animation: slideInRight 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94) both !important;
 }
 /* 自定义输入框样式 */
-#custom-section { padding: 20px; }
 #custom-section input {
     width: 100%; padding: 10px; border-radius: 8px;
     border: 1px solid #ddd; margin-bottom: 10px;
@@ -1360,6 +1359,8 @@ body.sidebar-open #nt-scroll-area {
     flex-direction: column;
     gap: 20px;
     align-items: center;
+				width: 100%;
+    height: auto;
 }
 
 /* 输入框美化 */
@@ -1627,6 +1628,8 @@ body.zen-mode #nt-search-container {
     display: flex;
     flex-direction: column;
     background: #fff;
+				overflow-y: auto !important;
+				max-height: 80vh;
 }
 .body-header {
     padding: 15px 20px;
@@ -1654,6 +1657,7 @@ body.zen-mode #nt-search-container {
     
     /* 解决滚动的核心：必须有高度 */
     height: 100% !important; 
+				height: auto;
     max-height: 100% !important;
     overflow-y: auto !important; 
     align-content: start;
@@ -1712,11 +1716,6 @@ body.zen-mode #nt-search-container {
     transition: opacity 0.3s ease;
 }
 
-/* 图片加载后的状态 */
-.wp-thumb img.loaded {
-    opacity: 1;
-}
-
 /* 名字标签优化 */
 .wp-thumb-name {
     position: absolute; 
@@ -1726,7 +1725,7 @@ body.zen-mode #nt-search-container {
     color: rgba(255,255,255,0.9); 
     text-shadow: 0 1px 2px rgba(0,0,0,0.6);
     pointer-events: none; /* 关键：点击文字也能穿透到外层触发换壁纸 */
-    max-width: 90%;
+    max-width: 100%;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis; /* 名字太长显示省略号，防止破屏 */
