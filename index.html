@@ -133,6 +133,20 @@
             <div id="poem-info">—— <span id="poem-author">加载中</span>《<span id="poem-title">加载中</span>》</div>
         </div>
     </main>
+
+				<div id="bottom-dock" class="dock-container">
+				    <div class="dock-content">
+				        <button class="dock-item" onclick="toggleWpModal()">🖼️</button>
+				        <button class="dock-item" onclick="location.reload()">🔄</button>
+				        <button class="dock-item" onclick="showSearch()">🔍</button>
+				        <button class="dock-item" onclick="showSetup()">⚙️</button>
+				    </div>
+				</div>
+				
+				<button id="dock-trigger" onclick="toggleDock()">
+				    <span class="icon">☰</span>
+				</button>
+
 				<button id="nt-wallpaper-btn" title="切换壁纸">🖼️</button>
 				<div id="wallpaper-modal" class="modal-overlay">
 				    <div class="modal-window">
@@ -196,6 +210,7 @@
   </a>
 <script src="https://sdk.jinrishici.com/v2/browser/jinrishici.js" charset="utf-8"></script>
     <script src="data.js"></script>
+				<script src="js/main.js"></script> <script src="js/dock.js"></script>
 				<script src="wallpaper-data.js"></script>
     <script src="newtab.js"></script>
 				<script>

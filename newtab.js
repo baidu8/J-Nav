@@ -197,35 +197,46 @@ document.addEventListener('DOMContentLoaded', () => {
                 };
     
                 tabsContainer.onclick = (e) => {
-                const tab = e.target.closest('.nt-tab');
-                if (!tab || (typeof isDragging !== 'undefined' && isDragging)) return;
+                    // 1. 明确获取点击的 Tab 元素
+                    const tab = e.target.closest('.nt-tab');
+                    if (!tab) return;
+                    
+                    // 2. 这里的 isDragging 判定要严谨，防止滑动分类栏时误触发点击
+                    if (window.isDragging) return;
                 
-                const newIndex = parseInt(tab.dataset.index);
-                const currentIndex = parseInt(localStorage.getItem('nt-selected-folder-index')) || (folders.length - 1);
+                    const newIndex = parseInt(tab.dataset.index);
+                    
+                    // 3. 获取当前索引（修复 0 的假值问题）
+                    const saved = localStorage.getItem('nt-selected-folder-index');
+                    const currentIndex = saved !== null ? parseInt(saved) : -1; // 初始化设为 -1 确保第一次必点中
                 
-                if (newIndex === currentIndex) return; // 没变就不动
-
-                // ✨ 自动判断动画方向
-                let directionClass = newIndex > currentIndex ? 'slide-in-right' : 'slide-in-left';
-
-                // 触发动画逻辑
-                featuredContainer.classList.remove('slide-in-right', 'slide-in-left');
-                void featuredContainer.offsetWidth; // 强行触发重绘
-                featuredContainer.classList.add(directionClass);
-
-                // 更新状态与渲染
-                localStorage.setItem('nt-selected-folder-index', newIndex);
-                updateTabs(newIndex); 
-                renderFolder(newIndex, false, false);
+                    if (newIndex === currentIndex) return;
                 
-                // 让标签自动居中滚动
-                tab.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
-
-                // 动画结束后清理类名
-                setTimeout(() => {
+                    // 4. 计算动画方向
+                    let directionClass = newIndex > currentIndex ? 'slide-in-right' : 'slide-in-left';
+                
+                    // 5. 执行 UI 更新
+                    // 先更新 Tab 的激活状态（不重新 innerHTML，防止失去焦点或滚动失效）
+                    tabsContainer.querySelectorAll('.nt-tab').forEach(t => t.classList.remove('active'));
+                    tab.classList.add('active');
+                
+                    // 6. 执行内容区动画与渲染
                     featuredContainer.classList.remove('slide-in-right', 'slide-in-left');
-                }, 400);
-            };
+                    void featuredContainer.offsetWidth; 
+                    featuredContainer.classList.add(directionClass);
+                
+                    localStorage.setItem('nt-selected-folder-index', newIndex);
+                    renderFolder(newIndex, false, false);
+                    
+                    // 7. ✨ 核心修复：延迟执行滚动，确保 DOM 已经渲染稳固
+                    setTimeout(() => {
+                        tab.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
+                    }, 50);
+                
+                    setTimeout(() => {
+                        featuredContainer.classList.remove('slide-in-right', 'slide-in-left');
+                    }, 400);
+                };
     
                 renderFolder(activeIdx, true);
                 sidebarContainer.innerHTML = createTreeHTML(folders);

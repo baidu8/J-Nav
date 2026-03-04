@@ -71,7 +71,15 @@ body {
     
     /* 移除原来的 background 属性，因为已经挪到 #nt-bg 了 */
 }
-
+body {
+    display: flex;
+    flex-direction: column; /* 垂直排列 */
+    align-items: center;    /* 水平居中 */
+    justify-content: center; /* 垂直居中 */
+    height: 100vh;
+    margin: 0;
+    overflow: hidden;
+}
 /* ============================================================
    2. 独立背景层（彻底解决苹果端背景移动、晃动）
    ============================================================ */
@@ -129,11 +137,14 @@ body {
 /* 主容器：固定位置，杜绝跳动 */
 .nt-main {
     /* 1. 核心定位修改：由 margin 改为 fixed 居中 */
-    position: fixed; 
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%); /* 完美居中，不受 margin 影响 */
-
+    /* position: fixed; */
+    /* top: 50%; */
+    /* left: 50%; */
+    /* transform: translate(-50%, -50%); */
+    position: relative; 
+    max-height: calc(100vh - 120px) !important; 
+    margin-bottom: 20px;
+				
     width: 95%;
     max-width: 1400px;
     height: 85vh; 
@@ -845,14 +856,28 @@ body.sidebar-open #nt-scroll-area {
 @media (max-width: 768px) {
     /* 1. 基础布局容器重置 */
     .nt-main {
-        position: fixed; top: 0; left: 0;
-        width: 100%; height: 100vh;
-        margin: 0; border: none; border-radius: 0;
         padding: 0; overflow: visible; /* 允许菜单溢出显示 */
         background: rgba(0, 0, 0, 0.2);
         backdrop-filter: blur(15px); transform: none;
+        /* 1. 核心修复：最小高度占满屏幕（减去底部边距） */
+        min-height: 100vh !important; 
+        
+        /* 2. 移除之前可能干扰的限制 */
+        height: auto !important; 
+        max-height: none !important; 
+        
+        /* 3. 确保背景延伸到底部 */
+        margin-bottom: 0 !important;
+        padding-bottom: 100px !important; /* 给底部的 Dock 留出足够的透明呼吸空间 */
+        
+        /* 4. 彻底重置定位，防止面板漂浮 */
+        top: 0 !important;
+        position: absolute !important; /* 改为绝对定位，确保从顶到底无缝衔接 */
+        left: 0 !important;
+        width: 100% !important;
+        transform: none !important;
+        border-radius: 0 !important; /* 手机端全屏通常不需要圆角，更像原生 App */
     }
-
     /* 2. 头部、时间与导航标签 */
     .nt-header-sticky { padding: 60px 20px 10px; overflow: visible; }
     .nt-clock { font-size: 50px; margin-bottom: 0; }
@@ -1486,6 +1511,7 @@ body.sidebar-open #nt-scroll-area {
 .zen-mode #nt-featured-content,
 .zen-mode .nt-sidebar,
 .zen-mode #nt-edge-trigger,
+.zen-mode #bottom-dock,
 .zen-mode #nt-page-switcher { 
     opacity: 0 !important;
     visibility: hidden !important;
@@ -1788,4 +1814,144 @@ body.zen-mode #nt-search-container {
     .sidebar-menu { display: flex; flex-direction: row; gap: 5px; }
     .sidebar-menu li { white-space: nowrap; padding: 6px 12px; font-size: 13px; }
     .body-header { padding: 10px 15px; }
+}
+
+/* Dock */
+/* --- 基础容器 (PC端) --- */
+.dock-container {
+    /* 核心居中代码 */
+    position: relative !important;
+    bottom: auto !important;
+    left: auto !important;
+    transform: none !important;
+				
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-radius: 16px;
+    padding: 8px 15px; /* 左右稍微加点内边距更好看 */
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    /* z-index: 2000; */
+    /* 注意：这里的 transition 要包含 transform，否则动画会卡顿 */
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.dock-content {
+    display: flex;
+    gap: 8px;
+}
+
+.dock-item {
+    background: transparent;
+    border: none;
+    color: white;
+    padding: 10px 15px;
+    font-size: 14px;
+    border-radius: 10px;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: background 0.2s;
+}
+
+.dock-item {
+    /* 取消 CSS 的 transition，或者设置得非常短(0.1s)，否则 JS 计算会延迟 */
+    transition: transform 0.1s ease-out, margin 0.1s ease-out; 
+    transform-origin: bottom center;
+    will-change: transform; /* 告诉浏览器优化这个属性 */
+}
+
+.dock-item:hover {
+    background: rgba(255, 255, 255, 0.15);
+}
+.dock-item {
+    margin: 0 10px !important; /* 间距固定，不再随缩放改变 */
+    flex-shrink: 0;           /* 防止被挤压变形 */
+}
+.dock-item {
+    /* 增加一个非常短的 transition，过滤掉高频微颤 */
+    transition: transform 0.2s cubic-bezier(0.2, 0, 0.2, 1); 
+    will-change: transform;
+}
+/* PC端隐藏触发按钮 */
+#dock-trigger {
+    display: none;
+}
+
+/* --- 📱 手机端适配 --- */
+@media (max-width: 768px) {
+    /* 2. Dock 容器基础状态：缩在下面 */
+.dock-container {
+    position: fixed !important;
+    left: 15px !important;
+    /* 初始状态：向下偏移 + 缩小 */
+    transform: translateY(20px) scale(0.8) !important; 
+    transform-origin: bottom center; /* 确保缩放从底部开始 */
+    
+    bottom: -300px !important; 
+    opacity: 0;
+    pointer-events: none;
+    
+    /* 使用更灵动的贝塞尔曲线 (回弹效果) */
+    transition: transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275), 
+                bottom 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275), 
+                opacity 0.4s ease !important;
+    
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 10px 5px;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(15px);
+    border-radius: 20px;
+}
+    /* ✨ 关键修复：定义展开后的样子 (active 类) */
+    .dock-container.active {
+        bottom: 85px !important; /* 弹出到按钮上方 */
+        opacity: 1;
+        pointer-events: auto;
+        transform: translateY(0) scale(1) !important; 
+    }
+    .dock-content {
+        flex-direction: column; /* 纵向排列 */
+    }
+
+    .dock-item {
+        text-align: left;
+        /* width: 150px; */
+        padding: 12px 5px;
+        /* background: rgba(255, 255, 255, 0.05); */
+        margin-bottom: 5px;
+        opacity: 0;
+        transform: translateY(10px);
+        transition: all 0.4s ease;
+}
+/* 当父级激活时，图标恢复 */
+.dock-container.active .dock-item {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* 给每个图标设置延迟，形成阶梯感 */
+.dock-container.active .dock-item:nth-child(1) { transition-delay: 0.1s; }
+.dock-container.active .dock-item:nth-child(2) { transition-delay: 0.15s; }
+.dock-container.active .dock-item:nth-child(3) { transition-delay: 0.2s; }
+.dock-container.active .dock-item:nth-child(4) { transition-delay: 0.25s; }
+    /* 3. 左下角触发按钮 */
+    #dock-trigger {
+        display: flex !important; /* 确保显示 */
+        align-items: center;
+        justify-content: center;
+        position: fixed;
+        left: 20px;
+        bottom: 20px;
+        width: 50px;
+        height: 50px;
+        border-radius: 15px;
+        background: rgba(255, 255, 255, 0.1);
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        color: white;
+        /* z-index: 2001; */
+    }
 }
