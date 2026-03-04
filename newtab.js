@@ -567,6 +567,7 @@ async function renderCategory(type) {
         xiran: '惜染壁纸',
         xrfj4k: '惜染风景4k',
         shouji: '手机端', 
+								xiransj: '惜染手机端壁纸',
         zipai: '随手拍', 
         custom: '自定义设置', 
         local: '上传记录' 
