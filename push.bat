@@ -1,6 +1,13 @@
 @echo off
+echo [Checking Status...]
+git status -s
+
+echo.
 echo [1/3] Adding changes...
 git add .
+
+echo These files will be uploaded:
+git diff --name-only --cached
 
 set /p msg="Enter commit message (default: Update UI): "
 if "%msg%"=="" set msg=Update UI
