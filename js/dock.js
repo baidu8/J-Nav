@@ -63,14 +63,12 @@
         
         // ✨ 新增：根据屏幕动态调整初始大小
         if (!isMobile()) {
-            // PC端：宽度占屏幕 70%，高度占 60%，但设定最大最小值防止太夸张
             const initW = Math.min(Math.max(window.innerWidth * 0.6, 600), 1200);
-            const initH = Math.min(Math.max(window.innerHeight * 0.6, 400), 800);
+            const initH = Math.min(Math.max(window.innerHeight * 0.6, 600), 800);
             win.style.width = initW + 'px';
             win.style.height = initH + 'px';
 												
-            const topPos = (window.innerHeight - initH) / 2.5;
-            // 居中显示逻辑（可选，如果要配合你的偏移逻辑，就把这两行删掉）
+            const topPos = (window.innerHeight - initH) / 3.5;
             win.style.top = (topPos + (windowCount % 6 * 20)) + 'px';
             win.style.left = (window.innerWidth - initW) / 2 + (windowCount % 6 * 20) + 'px';
         }

@@ -498,6 +498,10 @@ window.openCalendar = function() {
     if (!calendar) {
         calendar = new FullCalendar.Calendar(document.getElementById('calendar-left'), {
             initialView: 'dayGridMonth', 
+												height: '100%',        // 让日历高度跟随父容器
+            handleWindowResize: true,
+            expandRows: true,
+												stickyHeaderDates: false,
             locale: 'zh-cn', // 核心本地化设置
             fixedWeekCount: false,
             // --- 新增：强制覆盖按钮文字为中文 ---

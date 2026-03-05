@@ -517,8 +517,6 @@ body.sidebar-open #nt-scroll-area {
 .nt-sidebar::-webkit-scrollbar { width: 4px; }
 .nt-sidebar::-webkit-scrollbar-thumb { background: rgba(0,0,0,0.1); border-radius: 10px; }
 
-/* 引入一款极简高级字体 (可选，不引也会走系统默认极细) */
-@import url('https://lf3-cdn-tos.bytecdntp.com/cdn/expire-1-M/inter/3.15.9/inter.css');
 
 /* ==========================================================================
    2. 顶部时间与搜索区 (视觉升级版)
@@ -529,6 +527,8 @@ body.sidebar-open #nt-scroll-area {
     color: var(--nt-card); /* 全局设为白色，更显干净 */
 }
 
+/* 引入一款极简高级字体 (可选，不引也会走系统默认极细) */
+@import url('https://cdn.jsdelivr.net/npm/inter-ui@3.19.3/inter.css');
 /* 时间显示：极细、半透明、微发光 */
 .nt-clock {
     /* 优先使用 Inter，没有则用苹果/安卓的极细字体 */
@@ -857,20 +857,26 @@ body.sidebar-open #nt-scroll-area {
     /* 1. 基础布局容器重置 */
     .nt-main {
      background: rgba(0, 0, 0, 0.2);
-     backdrop-filter: blur(15px);
      transform: none;
      max-height: none !important;
-     margin-bottom: 0 !important;
-     width: 100% !important;
      border-radius: 0 !important;
      position: fixed !important;
-     width: 100% !important;
-     height: 100% !important;
      display: flex !important;
      flex-direction: column !important;
      margin: 0 !important;
      padding: 0 !important;
      overflow: hidden !important;
+					/* 1. 强制绝对定位到顶角 */
+     top: 0 !important;   /* 必须加这个，确保从屏幕最上方开始 */
+     left: 0 !important;
+     
+     /* 2. 强制占满全屏，不留缝隙 */
+     width: 100vw !important;  /* 使用 vw 代替 % 更稳 */
+     height: 100vh !important; /* 使用 vh 确保占满整个视图高度 */
+     
+     /* 3. 消除所有可能的边距 */
+     padding-top: 0 !important; 
+     box-sizing: border-box !important;
 				}
     /* 2. 头部、时间与导航标签 */
     .nt-header-sticky { padding: 60px 20px 10px; overflow: visible; }
@@ -1005,312 +1011,176 @@ body.sidebar-open #nt-scroll-area {
 
 /* 日历 */
 /* ============================================================
-   1. 日历弹窗整体布局 (毛玻璃效果)
+   1. 基础容器与遮罩 (毛玻璃全屏)
    ============================================================ */
 .modal-overlay {
-    position: fixed; 
-    inset: 0; 
-    background: rgba(0, 0, 0, 0.4); /* 深色半透明，压住背景 */
-    backdrop-filter: blur(8px);    /* 轻微模糊背景，突出中间的白卡片 */
-    -webkit-backdrop-filter: blur(8px);
-    display: none; 
-    justify-content: center; 
-    align-items: center; 
-    z-index: 2000;
-    transition: all 0.3s ease;
+    /* 1. 基础定位：全屏覆盖 */
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    
+    /* 2. 布局：让内部卡片（日历）绝对居中 */
+    display: none; /* 由 JS 控制显示/隐藏 */
+    justify-content: center;
+    align-items: center;
+    
+    /* 3. 层级：确保在所有窗口和 Dock 之上 */
+    z-index: 99999; 
+    
+    /* 4. 视觉：深色半透明 + 强力磨砂感 */
+    background: rgba(0, 0, 0, 0.45); /* 稍微深一点，更有沉浸感 */
+    backdrop-filter: blur(15px) saturate(150%); /* 增加饱和度，颜色更高级 */
+    -webkit-backdrop-filter: blur(15px) saturate(150%);
+    
+    /* 5. 动画预设（可选）：让弹出更丝滑 */
+    transition: opacity 0.3s ease;
 }
 
+/* 日历主卡片 */
 .calendar-card {
-    display: flex; 
-    width: 900px; 
-    height: 600px;
-    background: rgba(255, 255, 255, 0.95); /* 增加一点透明度 */
-    border-radius: 24px; 
+    display: flex; /* 默认横排 */
+    flex-direction: row;
+    width: 920px;
+    height: 620px;
+    background: rgba(255, 255, 255, 0.9);
+    border-radius: 24px;
     overflow: hidden;
     box-shadow: 0 30px 60px rgba(0, 0, 0, 0.3);
+    border: 1px solid rgba(255, 255, 255, 0.4);
 }
 
 /* ============================================================
-   2. 左侧日历区域 (FullCalendar 适配)
+   2. 左侧：日历主体区 (FullCalendar)
    ============================================================ */
-#calendar-left { 
-    flex: 1.8; 
-    padding: 20px; 
-    border-right: 1px solid #f0f0f0; 
+#calendar-left {
+    flex: 1.8;
+    padding: 24px;
+    background: #fff;
+    border-right: 1px solid rgba(0, 0, 0, 0.05);
 }
 
-/* 标题样式优化 */
-.fc .fc-toolbar-title {
-    font-size: 1.4rem !important;
-    font-weight: 600;
-    color: #333;
+/* 内部 FullCalendar 样式美化 */
+.fc .fc-toolbar-title { font-size: 1.4rem !important; font-weight: 600; color: #333; }
+.fc-daygrid-day-top { flex-direction: column !important; align-items: center !important; padding-top: 6px !important; }
+.fc-daygrid-day-number { font-size: 14px; color: #444; text-decoration: none !important; }
+.fc-day-sat .fc-daygrid-day-number, .fc-day-sun .fc-daygrid-day-number { color: #ff4d4f !important; }
+
+/* 农历与节日 */
+.lunar-text, .lunar-day-text { font-size: 10px; color: #999; margin-top: 2px; }
+.is-festival { color: #1a73e8 !important; font-weight: 500; }
+
+/* FullCalendar 按钮 */
+.fc .fc-today-button {
+    background-color: #1a73e8 !important; border: none !important; border-radius: 8px !important; padding: 5px 15px !important;
+}
+.fc .fc-button-primary:not(.fc-today-button) {
+    background: transparent !important; border: none !important; color: #666 !important;
+}
+/* 强制取消日程区域的最小高度限制，解决6行月份截断问题 */
+.fc-daygrid-body-unbalanced .fc-daygrid-day-events {
+    min-height: 0 !important;
 }
 
-/* 日期格子顶部对齐：数字与农历垂直排列 */
-.fc-daygrid-day-top {
-    flex-direction: column !important;
-    align-items: center !important;
-    justify-content: center !important;
-    padding-top: 6px !important;
+/* 配合这个效果更好：让单元格内容区域也取消最小高度 */
+.fc-daygrid-day-frame {
+    min-height: 0 !important;
 }
-
-/* 公历数字样式 */
-.fc-daygrid-day-number {
-    padding: 0 !important;
-    font-size: 14px;
-    color: #444;
-}
-
-/* 农历小文字基础样式 */
-.lunar-text, .lunar-day-text {
-    font-size: 10px;
-    color: #999;
-    margin-top: 2px;
-    text-align: center;
-    font-weight: normal;
-    pointer-events: none;
-}
-
-/* 周六周日数字变红 */
-.fc-day-sat .fc-daygrid-day-number, 
-.fc-day-sun .fc-daygrid-day-number {
-    color: #ff4d4f !important;
-}
-
-/* 节日或节气高亮 (蓝色) */
-.is-festival, .lunar-text:contains("节") {
-    color: #1a73e8 !important;
-    font-weight: 500;
-}
-
 /* ============================================================
-   右侧详情面板 - 沉浸式升级
+   3. 右侧：沉浸式详情面板
    ============================================================ */
 .calendar-right {
     flex: 1;
     padding: 40px 30px;
-    background: rgba(255, 255, 255, 0.4); /* 降低透明度，透出背景色 */
-    backdrop-filter: blur(15px); /* 强毛玻璃 */
-    -webkit-backdrop-filter: blur(15px);
+    background: rgba(255, 255, 255, 0.3);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
     display: flex;
     flex-direction: column;
     align-items: center;
-    border-left: 1px solid rgba(255, 255, 255, 0.3);
-}
-
-/* 顶部信息布局 */
-.right-header {
     text-align: center;
-    margin-bottom: 30px;
 }
 
 #res-date {
-    font-size: 80px; /* 字体加大，做成视觉焦点 */
+    font-size: 84px;
     font-weight: 800;
     color: #1a73e8;
     line-height: 1;
-    margin: 0;
-    text-shadow: 0 4px 10px rgba(26, 115, 232, 0.2); /* 淡淡的投影 */
+    text-shadow: 0 4px 15px rgba(26, 115, 232, 0.15);
 }
 
-#res-day {
-    font-size: 18px;
-    color: #333;
-    font-weight: 600;
-    margin-top: 10px;
-}
+#res-day { font-size: 20px; color: #333; font-weight: 600; margin: 15px 0 5px; }
+#res-lunar { font-size: 14px; color: #666; background: rgba(0,0,0,0.05); padding: 4px 12px; border-radius: 20px; }
 
-#res-lunar {
-    font-size: 14px;
-    color: #666;
-    background: rgba(0, 0, 0, 0.05);
-    padding: 4px 12px;
-    border-radius: 20px;
-    margin-top: 8px;
-    display: inline-block;
-}
-
-/* 宜忌区域 - 模块化 */
-.lunar-info-box {
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
-}
-
+/* 宜忌区 */
+.lunar-info-box { width: 100%; margin-top: 30px; display: flex; flex-direction: column; gap: 16px; }
 .lunar-item {
-    width: auto;
-    margin-bottom: 0;
     padding: 16px;
-    border-radius: 16px;
-    background: rgba(255, 255, 255, 0.6);
+    border-radius: 18px;
+    background: rgba(255, 255, 255, 0.8);
     border: 1px solid rgba(255, 255, 255, 0.5);
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.03);
-    transition: transform 0.2s;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.02);
+    text-align: left;
 }
+.lunar-item .label { font-size: 11px; color: #bbb; letter-spacing: 1px; margin-bottom: 8px; display: block; }
 
-.lunar-item:hover {
-    transform: translateY(-2px);
-}
+#res-yi { color: #27ae60; border-left: 4px solid #27ae60; padding-left: 12px; font-weight: 600; }
+#res-ji { color: #e74c3c; border-left: 4px solid #e74c3c; padding-left: 12px; font-weight: 600; }
 
-/* 宜忌标签美化：去掉刺眼的红绿底色，改用侧边条设计 */
-#res-yi, #res-ji {
-    background: transparent;
-    padding: 0;
-    font-weight: 600;
-    font-size: 15px;
-    line-height: 1.6;
-    display: block;
-}
-
-#res-yi { color: #27ae60; border-left: 4px solid #27ae60; padding-left: 10px; }
-#res-ji { color: #e74c3c; border-left: 4px solid #e74c3c; padding-left: 10px; }
-
-.lunar-item .label {
-    font-size: 11px;
-    color: #999;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    margin-bottom: 6px;
-}
-
-/* 底部按钮 */
+/* 底部关闭按钮 */
 .close-cal {
     margin-top: auto;
-    width: 80%;
-    height: 46px;
+    width: 85%;
+    padding: 12px;
     border: none;
-    background: rgba(0, 0, 0, 0.05);
+    background: rgba(0, 0, 0, 0.06);
     color: #555;
     font-weight: 600;
-    border-radius: 12px;
-    backdrop-filter: blur(5px);
-    transition: all 0.3s;
+    border-radius: 14px;
+    cursor: pointer;
+    transition: 0.3s;
 }
+.close-cal:hover { background: #333; color: #fff; }
 
-.close-cal:hover {
-    background: rgba(0, 0, 0, 0.8);
-    color: #fff;
-}
 /* ============================================================
-   4. 手机端适配补丁 (Screen width < 768px)
+   4. 移动端适配 (重点修复)
    ============================================================ */
 @media (max-width: 768px) {
-    .calendar-right {
-        border-left: none;
-        border-top: 1px solid rgba(0, 0, 0, 0.05);
-        flex: none; /* 手机端不拉伸 */
-    }
-
-    .lunar-info-box {
-        flex-direction: row; /* 手机端“宜”和“忌”左右并排 */
-        gap: 10px;
-    }
-
-    .lunar-item {
-        flex: 1;
-        padding: 12px;
-    }
-				.calendar-right {
-				    display: flex;
-				    flex-direction: column;
-				    align-items: center; /* 确保所有子元素水平居中 */
-				    padding: 30px;       /* 确保左右 padding 一致 */
-				}
-				
-				.close-cal {
-				    margin: 20px auto 0; /* 通过 auto 确保水平绝对居中 */
-				    width: auto;
-				    padding: 10px 40px;  /* 靠内边距撑开按钮大小 */
-				}
-}
-@media (max-width: 768px) {
-    /* 1. 让卡片由横排变为竖排 */
     .calendar-card {
-        flex-direction: column;
-								height: 85vh; /* 留点缝隙给背景，不压抑 */
-								width: 92vw;
-        overflow-y: auto; /* 允许竖向滚动 */
-        border-radius: 16px;
-								cursor: default; /* 回到卡片内部时恢复普通光标，防止误导 */
-								padding-bottom: env(safe-area-inset-bottom);
+        flex-direction: column; /* 强制变竖排 */
+        width: 94vw;
+        height: 88vh;
+        overflow-y: auto;
     }
 
-    /* 2. 左侧日历区域缩小内边距 */
     #calendar-left {
-        flex: none;      /* 取消原来的比例 */
+        flex: none;
         width: 100%;
-        padding: 10px;
+        padding: 15px;
         border-right: none;
-        border-bottom: 1px solid #f0f0f0; /* 分隔线移到下面 */
+        border-bottom: 1px solid rgba(0,0,0,0.05);
     }
 
-    /* 3. 缩小 FullCalendar 的文字和格子，适配窄屏 */
-    .fc .fc-toolbar-title {
-        font-size: 1.1rem !important;
-    }
-    .fc .fc-button {
-        padding: 4px 8px !important; /* 缩小按钮 */
-        font-size: 12px !important;
-    }
-    .fc-daygrid-day-number {
-        font-size: 12px;
-    }
-    .lunar-text {
-        font-size: 9px; /* 农历再小一点 */
-    }
-
-    /* 4. 右侧详情区域调整 */
     .calendar-right {
         flex: none;
         width: 100%;
-        padding: 20px;
-        background: #fff; /* 手机端背景统一，减少视觉混乱 */
+        padding: 25px 0px;
+        background: #fff; /* 手机端取消右侧毛玻璃，保证性能 */
     }
 
-    /* 缩小大数字焦点 */
-    #res-date {
-        font-size: 48px;
-        margin: 5px 0;
+    #res-date { font-size: 56px; }
+    
+    .lunar-info-box {
+        flex-direction: row; /* 宜忌在手机上左右并排 */
+        gap: 10px;
     }
-
-    /* 5. 调整宜忌卡片，手机上两列变一列 */
-    .lunar-item {
-        padding: 10px;
-        margin-bottom: 10px;
-    }
-}
-/* 修改 Today 按钮样式 */
-.fc .fc-today-button {
-    background-color: #1a73e8 !important;
-    border: none !important;
-    opacity: 1 !important;
-    text-transform: capitalize;
-    padding: 5px 15px !important;
-    border-radius: 8px !important;
+    .lunar-item { flex: 1; padding: 12px; }
 }
 
-.fc .fc-today-button:disabled {
-    background-color: #ccc !important;
-    cursor: not-allowed;
-}
-
-/* 左右切换按钮美化 */
-.fc .fc-button-primary {
-    background-color: transparent !important;
-    border: none !important;
-    color: #666 !important;
-}
-
-.fc .fc-button-primary:hover {
-    color: #1a73e8 !important;
-    background-color: rgba(26, 115, 232, 0.1) !important;
-}
-
-.footer-poem-container {
-    padding-bottom: calc(env(safe-area-inset-bottom) + 20px);
-}
-/* 切换按钮 */
+/* =============
+    切换按钮
+============= */
 #nt-page-switcher {
     position: fixed;
     right: 20px;
@@ -1603,14 +1473,6 @@ body.zen-mode #nt-search-container {
 }
 #nt-wallpaper-btn:hover { background: rgba(255, 255, 255, 0.4); transform: rotate(90deg); }
 
-/* --- 2. 遮罩层 --- */
-.modal-overlay {
-    display: none; position: fixed; inset: 0;
-    background: rgba(0,0,0,0.5); backdrop-filter: blur(8px);
-    z-index: 2000; align-items: center; justify-content: center;
-    padding: 15px; /* 移动端防止贴边 */
-}
-
 /* --- 3. 弹窗窗口主体 --- */
 .modal-window {
     display: flex;
@@ -1872,7 +1734,37 @@ body.zen-mode #nt-search-container {
 #dock-trigger {
     display: none;
 }
+.app-icon {
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 10px; /* 经典的 App 圆角 */
+    box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+    transition: all 0.2s ease;
+}
 
+/* svg渐变底色 */
+.yanhua-bg {
+    background: linear-gradient(135deg, #FF512F 0%, #DD2476 100%);
+    color: white; /* 让里面的 SVG 变白色 */
+}
+.calendar-bg {
+    background: linear-gradient(135deg, #FF5E62 0%, #FF9966 100%);
+    color: white;
+}
+.daye-bg {
+    background: linear-gradient(135deg, #fff 0%, rgba(255, 255, 255, 0.1) 100%);
+    color: white;
+}
+.cesu-bg {
+    background: linear-gradient(135deg, #aec0d1 0%, #007aff 100%);
+    color: white;
+}
+.dock-item:hover .app-icon {
+    transform: translateY(-5px) scale(1.1);
+}
 /* --- 📱 手机端适配 --- */
 @media (max-width: 768px) {
     /* 2. Dock 容器基础状态：缩在下面 */
@@ -2151,16 +2043,6 @@ body.zen-mode #nt-search-container {
     transition: all 0.2s ease-out;
 }
 
-/* 万能弹窗 (旧有逻辑) */
-.modal-overlay {
-    display: none; position: fixed;
-    top: 0; left: 0; width: 100%; height: 100%;
-    background: rgba(0, 0, 0, 0.7);
-    backdrop-filter: blur(12px);
-    z-index: 99999;
-    justify-content: center; align-items: center;
-}
-
 .modal-content {
     background: #222; border-radius: 20px;
     padding: 15px; width: 85%; max-width: 900px;
@@ -2174,6 +2056,7 @@ body.zen-mode #nt-search-container {
     align-items: center; /* 垂直居中 */
     gap: 5px;           /* 按钮之间的间距 */
 }
+
 /* --- 6. 移动端适配 --- */
 @media (max-width: 768px) {
     .win-container {

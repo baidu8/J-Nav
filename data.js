@@ -279,6 +279,11 @@ window.bookmarkData = [
                 "name": "彼岸壁纸",
                 "type": "bookmark",
                 "url": "http://www.netbian.com/"
+              },
+              {
+                "name": "Bing每日壁纸档案库",
+                "type": "bookmark",
+                "url": "https://bing.img.run/"
               }
             ]
           },
@@ -1079,6 +1084,11 @@ window.bookmarkData = [
                     "url": "https://www.onecommander.com/"
                   },
                   {
+                    "name": "Files(文件管理器)",
+                    "type": "bookmark",
+                    "url": "https://files.community/"
+                  },
+                  {
                     "name": "蓝莓投屏官网",
                     "type": "bookmark",
                     "url": "http://www.deeprd.com/"
@@ -1097,6 +1107,11 @@ window.bookmarkData = [
             "name": "🧰工具箱",
             "type": "folder",
             "children": [
+              {
+                "name": "即时工具",
+                "type": "bookmark",
+                "url": "https://www.67tool.com/"
+              },
               {
                 "name": "UU工具",
                 "type": "bookmark",
@@ -1153,6 +1168,11 @@ window.bookmarkData = [
                 "name": "压缩图像",
                 "type": "bookmark",
                 "url": "https://zh.recompressor.com/"
+              },
+              {
+                "name": "在线视频剪辑器",
+                "type": "bookmark",
+                "url": "https://www.apowersoft.com/trim-video-online"
               },
               {
                 "name": "Online（在线剪音频）",
@@ -1930,6 +1950,11 @@ window.bookmarkData = [
                 "name": "favicons(图标api)",
                 "type": "bookmark",
                 "url": "https://favicons.fuzqing.workers.dev/api/getFavicon?url="
+              },
+              {
+                "name": "每日bing",
+                "type": "bookmark",
+                "url": "https://bing.biturl.top/?resolution=3840&format=image&index=0"
               }
             ]
           },
@@ -2371,6 +2396,11 @@ window.bookmarkData = [
             "name": "微软",
             "type": "folder",
             "children": [
+              {
+                "name": "必应",
+                "type": "bookmark",
+                "url": "https://cn.bing.com/"
+              },
               {
                 "name": "微软开发者",
                 "type": "bookmark",
