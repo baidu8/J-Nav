@@ -209,9 +209,25 @@
 
         header.onmousedown = (e) => startInteraction(e, 'drag');
         header.ontouchstart = (e) => startInteraction(e, 'drag');
+        // --- 在 attachWinEvents 函数内部 ---
+        
+        // 这里的 r 是每一个拉伸小方块（t, b, l, r, br 等）
         win.querySelectorAll('.resizer').forEach(r => {
+            // 获取当前拉伸器的方向（比如 'br', 'r' 等）
             const d = Array.from(r.classList).find(c => c !== 'resizer');
-            r.onmousedown = (e) => { e.preventDefault(); startInteraction(e, 'resize', d); };
+            
+            // 1. 鼠标拉伸（保留原有）
+            r.onmousedown = (e) => { 
+                e.preventDefault(); 
+                startInteraction(e, 'resize', d); 
+            };
+        
+            // 2. ✨ 新增：手指触摸拉伸
+            r.ontouchstart = (e) => { 
+                // 阻止页面滚动等默认行为，确保只触发拉伸
+                if (e.cancelable) e.preventDefault(); 
+                startInteraction(e, 'resize', d); 
+            };
         });
     }
 })();

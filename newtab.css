@@ -1798,9 +1798,6 @@ body.zen-mode #nt-search-container {
         pointer-events: auto;
         transform: translateY(0) scale(1) !important; 
     }
-    .dock-content {
-        flex-direction: column; /* 纵向排列 */
-    }
 
     .dock-item {
         text-align: left;
@@ -2056,15 +2053,67 @@ body.zen-mode #nt-search-container {
     gap: 5px;           /* 按钮之间的间距 */
 }
 
-/* --- 6. 移动端适配 --- */
+/* --- 6. 移动端适配：悬浮卡片风格 --- */
 @media (max-width: 768px) {
     .win-container {
-        top: 0 !important; left: 0 !important;
-        width: 100% !important; height: 100% !important;
-        border-radius: 0;
-        backdrop-filter: none; /* 减轻移动端负担 */
+        /* 1. 位置：居中悬浮，不再顶死边缘 */
+        top: 50% !important;
+        left: 50% !important;
+        transform: translate(-50%, -50%) !important; /* 绝对居中 */
+        
+        /* 2. 尺寸：留出边距，露出背景 */
+        width: 90vw !important;    /* 宽度占 90% */
+        height: 75vh !important;   /* 高度占 75% */
+        max-height: 600px;         /* 防止在长屏手机上拉得太长 */
+        
+        /* 3. 视觉：找回圆角和阴影 */
+        border-radius: 20px !important; 
+        background: rgba(35, 35, 35, 0.9) !important;
+        backdrop-filter: blur(20px) !important;
+        -webkit-backdrop-filter: blur(20px) !important;
+        border: 1px solid rgba(255, 255, 255, 0.1) !important;
+        box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5) !important;
+        
+        display: none; /* 初始隐藏 */
+        flex-direction: column !important;
     }
-    .resizer { display: none; }
-    .win-header { height: 50px; padding: 0 15px; }
-    .win-btn { width: 34px; height: 34px; }
+
+    /* 4. 标题栏：精致化 */
+    .win-header {
+        height: 48px !important;
+        background: transparent !important; /* 保持通透 */
+        border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    }
+
+    /* 5. 按钮：手机端只保留一个明显的关闭按钮 */
+    .win-controls-right { display: flex !important; }
+    .win-btn.close {
+        width: 28px !important;
+        height: 28px !important;
+        background: rgba(255, 255, 255, 0.1) !important; /* 柔和的灰色圆圈 */
+        color: #eee !important;
+        border-radius: 50% !important;
+        font-size: 16px !important;
+    }
+.win-controls-left { display: flex !important; }
+    /* 隐藏不需要的按钮 */
+    .win-btn.maximize, .win-btn.minimize { display: none !important; }
+
+    /* 6. 内容区：圆角收尾 */
+    .win-body {
+        margin: 5px !important;
+        border-radius: 12px !important;
+        background: #fff; /* 或者跟随主题色 */
+    }
+				/* --- 核心：增加一个右下角的拉伸视觉反馈 --- */
+    .resizer.br {
+        display: block !important;
+        width: 30px !important;  /* 增加感应区域，方便手指按 */
+        height: 30px !important;
+        background: linear-gradient(135deg, transparent 50%, rgba(255,255,255,0.2) 50%);
+        bottom: 5px;
+        right: 5px;
+        border-radius: 0 0 12px 0;
+        cursor: nwse-resize;
+    }
 }
