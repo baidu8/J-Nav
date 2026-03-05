@@ -2105,15 +2105,4 @@ body.zen-mode #nt-search-container {
         border-radius: 12px !important;
         background: #fff; /* 或者跟随主题色 */
     }
-				/* --- 核心：增加一个右下角的拉伸视觉反馈 --- */
-    .resizer.br {
-        display: block !important;
-        width: 30px !important;  /* 增加感应区域，方便手指按 */
-        height: 30px !important;
-        background: linear-gradient(135deg, transparent 50%, rgba(255,255,255,0.2) 50%);
-        bottom: 5px;
-        right: 5px;
-        border-radius: 0 0 12px 0;
-        cursor: nwse-resize;
-    }
 }

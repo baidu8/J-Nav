@@ -1,11 +1,10 @@
-// 1. 升级版本号，确保新加入的日历逻辑能立即生效
-const CACHE_NAME = 'j-nav-v5'; 
+const CACHE_NAME = 'j-nav-v6'; 
 
 const PRE_CACHE_ASSETS = [
     '/',
     'index.html',
-    'style.css',
-    'script.js',
+    'css/style.css',
+    'js/script.js',
     'data.js',
     'icons/logo.svg',
     'icons/baidu.svg',
@@ -18,9 +17,10 @@ const PRE_CACHE_ASSETS = [
     'icons/google.png',
     'icons/favicon.ico',
     'new.html',
-    'newtab.css',
-    'newtab.js',
-    'wallpaper-data.js',
+    'css/newtab.css',
+    'js/newtab.js',
+				'js/dock.js',
+    'js/wallpaper-data.js',
     '/effects/matrix.html',
     '/effects/sakura.html',
     '/effects/xuehua.html',
