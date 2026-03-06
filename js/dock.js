@@ -364,3 +364,28 @@ window.zoomPhoto = function(imgSrc) {
     winBody.appendChild(overlay);
     setTimeout(() => overlay.style.opacity = 1, 10);
 };
+// 监听全局滚轮事件
+document.addEventListener('wheel', function(e) {
+    // 1. 检查鼠标当前是不是在“窗口”或者“相册网格”里面
+    const isInsideWindow = e.target.closest('.win-body, .gallery-main, .modal-body');
+
+    if (isInsideWindow) {
+        // 2. 如果在窗口里，我们手动控制滚动，并阻止它“传给”背景
+        const container = e.target.closest('.win-body, .gallery-main, .modal-body');
+        
+        // 计算滚动位置
+        const scrollTop = container.scrollTop;
+        const scrollHeight = container.scrollHeight;
+        const height = container.clientHeight;
+        const delta = e.deltaY;
+
+        // 3. 核心：如果已经滚到顶还往上滚，或者滚到底还往下滚
+        // 或者只要在窗口里，就切断冒泡，不让背景的 .nt-scroll-area 响应
+        if ((delta < 0 && scrollTop <= 0) || (delta > 0 && scrollTop + height >= scrollHeight)) {
+            e.preventDefault(); // 强行拉住，不让背景动
+        }
+        
+        // 阻止事件冒泡到 .nt-scroll-area
+        e.stopPropagation();
+    }
+}, { passive: false }); // 必须加 false，否则无法 preventDefault

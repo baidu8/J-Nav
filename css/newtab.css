@@ -59,7 +59,7 @@ body {
     width: 100vw;
     height: 100vh;
     display: block;
-    overflow: hidden;    /* 禁止网页整体溢出滚动，内部滚动由 scroll-area 负责 */
+    overflow: hidden;
     
     /* 交互补丁 */
     user-select: none;
@@ -68,8 +68,6 @@ body {
     /* 苹果安全区适配 */
     padding-top: env(safe-area-inset-top);
     padding-bottom: env(safe-area-inset-bottom);
-    
-    /* 移除原来的 background 属性，因为已经挪到 #nt-bg 了 */
 }
 body {
     display: flex;
@@ -934,7 +932,6 @@ body.sidebar-open #nt-scroll-area {
 				}
 }
 /* 底部诗词 */
-/* PC端：右上角挂件模式 */
 .nt-poem {
     position: absolute; /* 相对于父容器定位 */
     top: 35px;         /* 距离顶部的距离，你可以根据视觉微调 */
@@ -2099,10 +2096,8 @@ body.zen-mode #nt-search-container {
         font-size: 16px !important;
     }
 .win-controls-left { display: flex !important; }
-    /* 隐藏不需要的按钮 */
     .win-btn.maximize, .win-btn.minimize { display: none !important; }
 
-    /* 6. 内容区：圆角收尾 */
     .win-body {
         margin: 5px !important;
         border-radius: 12px !important;
